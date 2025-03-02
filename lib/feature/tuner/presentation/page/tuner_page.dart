@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class TunerPage extends StatelessWidget {
   const TunerPage({super.key});
 
-  static const path = 'tuner';
+
+  static const path = '/tuner';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Center(child: Text('TUNER'),),
+    );
   }
 }
