@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ChordsPage extends StatelessWidget {
-  const ChordsPage({super.key});
+class MetronomePage extends StatelessWidget {
+  const MetronomePage({super.key});
 
+  static const path = 'metronome';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
