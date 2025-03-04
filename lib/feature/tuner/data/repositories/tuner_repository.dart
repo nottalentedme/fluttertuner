@@ -1,10 +1,11 @@
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:record/record.dart';
-import 'package:tuner/features/tuner/domain/models/note_model.dart';
-import 'package:tuner/features/tuner/domain/repositories/i_tuner_repository.dart';
 import 'dart:math';
 import 'dart:typed_data';
+
+import '../../domain/models/note_model.dart';
+import '../../domain/repositories/i_tuner_repository.dart';
 
 class TunerRepository implements ITunerRepository {
   final _audioRecorder = AudioRecorder();

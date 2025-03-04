@@ -1,4 +1,6 @@
-import 'package:tuner/features/tuner/domain/models/note_model.dart';
+
+
+import '../../domain/models/note_model.dart';
 
 abstract class TunerState {
   const TunerState();

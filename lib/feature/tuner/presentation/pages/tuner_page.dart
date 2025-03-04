@@ -1,14 +1,19 @@
+
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tuner/features/tuner/data/repositories/tuner_repository.dart';
-import 'package:tuner/features/tuner/presentation/bloc/tuner_bloc.dart';
-import 'package:tuner/features/tuner/presentation/bloc/tuner_event.dart';
-import 'package:tuner/features/tuner/presentation/bloc/tuner_state.dart';
-import 'package:tuner/features/tuner/presentation/widgets/note_display.dart';
+
+import '../../data/repositories/tuner_repository.dart';
+import '../bloc/tuner_bloc.dart';
+import '../bloc/tuner_event.dart';
+import '../bloc/tuner_state.dart';
+import '../widgets/note_display.dart';
 
 class TunerPage extends StatelessWidget {
   const TunerPage({super.key});
 
+  static const path = '/tuner';
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

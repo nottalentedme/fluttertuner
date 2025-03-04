@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertuner/core/router/app_router.dart';
+
+import 'core/router/app_router.dart';
+
 
 void main() {
   runApp(const MyApp());

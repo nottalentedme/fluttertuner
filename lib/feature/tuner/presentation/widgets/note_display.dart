@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tuner/features/tuner/domain/models/note_model.dart';
+
+import '../../domain/models/note_model.dart';
+
+
+
 
 class NoteDisplay extends StatelessWidget {
   final NoteModel note;

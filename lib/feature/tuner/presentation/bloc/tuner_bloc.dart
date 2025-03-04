@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tuner/features/tuner/domain/repositories/i_tuner_repository.dart';
+
+import '../../domain/repositories/i_tuner_repository.dart';
 import 'tuner_event.dart';
 import 'tuner_state.dart';
+
 
 class TunerBloc extends Bloc<TunerEvent, TunerState> {
   final ITunerRepository _repository;
