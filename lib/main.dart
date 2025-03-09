@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertuner/feature/tuner/data/repositories/tuner_repository.dart';
 
 import 'core/router/app_router.dart';
 
@@ -13,8 +15,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: AppRouter.router,
+    return RepositoryProvider(
+      create: (context) => TunerRepository(),
+      child: MaterialApp.router(
+        routerConfig: AppRouter.router,
+      ),
     );
   }
 }

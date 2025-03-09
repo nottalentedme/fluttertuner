@@ -15,10 +15,6 @@ class NoteDisplay extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          'Текущая нота:',
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
         const SizedBox(height: 20),
         Text(
           note.note,
@@ -26,7 +22,7 @@ class NoteDisplay extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Text(
-          'Частота: ${note.frequency.toStringAsFixed(2)} Hz',
+          '${note.frequency.toStringAsFixed(2)} Hz',
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ],
