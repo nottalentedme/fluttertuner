@@ -32,7 +32,7 @@ class TunerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Гитарный тюнер'),
+        title: const Text('Гитарный тюнерф'),
       ),
       body: Center(
         child: BlocConsumer<TunerBloc, TunerState>(

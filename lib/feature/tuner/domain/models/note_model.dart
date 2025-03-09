@@ -6,4 +6,4 @@ class NoteModel {
     required this.note,
     required this.frequency,
   });
-} 
+}
