@@ -1,0 +1,1 @@
+C:\Users\Denis\Documents\projects\flutter\fluttertuner\fluttertuner\build\app\intermediates\cxx\Debug\3g6w5d12\obj\arm64-v8a
