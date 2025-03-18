@@ -1,0 +1,17 @@
+import 'package:flutter/material.dart';
+import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_painter.dart';
+import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_scale.dart';
+
+class TunerScaleWidget extends StatelessWidget {
+  final double value;
+
+  TunerScaleWidget({required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      size: Size(300, 150),
+      painter: TunerPainter(value: value),
+    );
+  }
+}
