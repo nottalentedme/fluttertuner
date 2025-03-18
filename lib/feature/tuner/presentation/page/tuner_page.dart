@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/tuner/cubit/pitch_cubit.dart';
-import 'package:fluttertuner/feature/tuner/cubit/tunning_state.dart';
 import 'package:fluttertuner/feature/tuner/domain/ChangeString/change_string.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/instrument_title_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/string_button_widget.dart';
@@ -33,11 +32,10 @@ class _TunerPageState extends State<TunerPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('FlutterTune',
-            style: TextStyle(
-                fontSize: 34,
-                fontWeight:
-                    FontWeight.lerp(FontWeight.w700, FontWeight.w500, 0.5))),
+        title: const Text(
+          'FlutterTune',
+          style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Center(
           child: Column(
@@ -56,7 +54,7 @@ class _TunerPageState extends State<TunerPage> {
             ],
           ),
           const SizedBox(
-            height: 50,
+            height: 100,
           ),
           Column(
             spacing: 10,
@@ -66,7 +64,7 @@ class _TunerPageState extends State<TunerPage> {
               TunerScaleWidget(value: 0),
               TunerTextWidget(pitchCubitState: pitchCubitState),
               const SizedBox(
-                height: 50,
+                height: 75,
               ),
               Row(
                 spacing: 8,

@@ -15,18 +15,18 @@ class StringButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(8),
+      customBorder: const CircleBorder(),
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
+            shape: BoxShape.circle,
             border: Border.all(width: 2),
             color: isActive ? Colors.white : Colors.black),
         padding: const EdgeInsets.all(16),
         child: Text(
           text,
           style: TextStyle(
-              fontSize: 25, color: isActive ? Colors.black : Colors.white),
+              fontSize: 30, color: isActive ? Colors.black : Colors.white),
         ),
       ),
     );
