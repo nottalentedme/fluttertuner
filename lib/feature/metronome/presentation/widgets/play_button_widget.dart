@@ -11,23 +11,28 @@ class PlayButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MetronomeCubit, MetronomeState>(
-        builder: (context, state) {
-      // Проверяем текущее состояние иконки
-      return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(width: 2, color: Colors.black),
-          ),
-          padding: const EdgeInsets.all(16.0),
-          child: InkWell(
-            onTap: () {
-              // Переключаем состояние метронома
-              context.read<MetronomeCubit>().toggleMetronome();
-            },
+      builder: (context, state) {
+        // Проверяем текущее состояние иконки
+        return InkWell(
+          customBorder: const CircleBorder(),
+          onTap: () {
+            // Переключаем состояние метронома
+            context.read<MetronomeCubit>().toggleMetronome();
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.black,
+              shape: BoxShape.circle,
+              border: Border.all(width: 2, color: Colors.black),
+            ),
+            padding: const EdgeInsets.all(16.0),
             child: Icon(
               state.isRunning ? Icons.pause_rounded : Icons.play_arrow_rounded,
+              color: Colors.white,
             ),
-          ));
-    });
+          ),
+        );
+      },
+    );
   }
 }

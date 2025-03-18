@@ -46,14 +46,30 @@ class MetronomePage extends StatelessWidget {
                 context.read<MetronomeCubit>().setTempo(value.toInt());
               },
             ),
-            const Row(
+            Row(
               spacing: 8,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                AddBPMWidget(icon: Icon(Icons.add_rounded)),
+                AddBPMWidget(
+                  icon: const Icon(
+                    Icons.remove_rounded,
+                    color: Colors.white,
+                  ),
+                  onTap: () {
+                    context.read<MetronomeCubit>().setTempo(state.tempo - 1);
+                  },
+                ),
                 PlayButtonWidget(),
-                AddBPMWidget(icon: Icon(Icons.remove_rounded)),
+                AddBPMWidget(
+                  icon: const Icon(
+                    Icons.add_rounded,
+                    color: Colors.white,
+                  ),
+                  onTap: () {
+                    context.read<MetronomeCubit>().setTempo(state.tempo + 1);
+                  },
+                ),
               ],
             ),
           ],
