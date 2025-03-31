@@ -6,10 +6,7 @@ import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/pitch_handler.dart';
 import 'package:pitchupdart/tuning_status.dart';
 
-
 import 'package:record/record.dart';
-
-
 
 class PitchCubit extends Cubit<TunningState> {
   final AudioRecorder _audioRecorder;
@@ -19,6 +16,13 @@ class PitchCubit extends Cubit<TunningState> {
   PitchCubit(this._audioRecorder, this._pitchDetector, this._pitchHandler)
       : super(TunningState(note: "N/A", status: "Сыграйте что-нибудь")) {
     _init();
+    print('PitchCubit created');
+  }
+
+  @override
+  Future<void> close() async {
+    print('PitchCubit destroyed');
+    return super.close();
   }
 
   _init() async {

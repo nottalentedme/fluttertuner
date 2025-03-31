@@ -19,35 +19,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider<AudioRecorder>(
-          create: (context) => AudioRecorder(),
-        ),
-        RepositoryProvider<PitchDetector>(
-          create: (context) => PitchDetector(),
-        ),
-        RepositoryProvider<PitchHandler>(
-          create: (context) => PitchHandler(InstrumentType.guitar),
-        ),
-      ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<MetronomeCubit>(
-            create: (context) => MetronomeCubit(),
-          ),
-          BlocProvider<PitchCubit>(
-            create: (context) => PitchCubit(
-              context.read<AudioRecorder>(),
-              context.read<PitchDetector>(),
-              context.read<PitchHandler>(),
-            ),
-          ),
-        ],
-        child: MaterialApp.router(
-          routerConfig: AppRouter.router,
-        ),
-      ),
+    return MaterialApp.router(
+      routerConfig: AppRouter.router,
     );
   }
 }

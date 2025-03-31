@@ -8,7 +8,9 @@ class MetronomeCubit extends Cubit<MetronomeState> {
   Ticker? _ticker;
   int _tickCount = 0;
 
-  MetronomeCubit() : super(MetronomeState.initial());
+  MetronomeCubit() : super(MetronomeState.initial()) {
+    print('MetronomeCubit created');
+  }
 
   void setTempo(int tempo) {
     emit(state.copyWith(tempo: tempo));
@@ -51,6 +53,7 @@ class MetronomeCubit extends Cubit<MetronomeState> {
   @override
   Future<void> close() {
     _stopTicker();
+    print('MetronomeCubit destroyed');
     _metronomePlayer.dispose();
     return super.close();
   }
