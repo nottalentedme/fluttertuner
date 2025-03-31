@@ -1,3 +1,10 @@
+# Android
+/android/app/build/
+/android/build/
+/android/.gradle/
+/android/local.properties
+*.jks
+*.keystore
 # Miscellaneous
 *.class
 *.log
