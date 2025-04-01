@@ -60,7 +60,7 @@ class MetronomePage extends StatelessWidget {
                     context.read<MetronomeCubit>().setTempo(state.tempo - 1);
                   },
                 ),
-                PlayButtonWidget(),
+                const PlayButtonWidget(),
                 AddBPMWidget(
                   icon: const Icon(
                     Icons.add_rounded,
@@ -71,6 +71,41 @@ class MetronomePage extends StatelessWidget {
                   },
                 ),
               ],
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => _showTapTempoDialog(context),
+              child: const Text('Tap Tempo'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showTapTempoDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Tap Tempo'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  context.read<MetronomeCubit>().registerTap();
+                },
+                child: const Text('Тык'),
+              ),
+              const SizedBox(height: 10),
+              const Text('Тут будет бпм')
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Закрыть'),
             ),
           ],
         );
