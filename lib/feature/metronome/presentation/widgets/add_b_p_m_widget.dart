@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertuner/core/theme/color_scheme.dart';
 
 class AddBPMWidget extends StatelessWidget {
   const AddBPMWidget({
@@ -16,10 +17,10 @@ class AddBPMWidget extends StatelessWidget {
         child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.black,
+              color: AppColorScheme.primary,
               border: Border.all(
                 width: 2,
-                color: Colors.black,
+                color: AppColorScheme.primary,
               ),
             ),
             padding: const EdgeInsets.all(16.0),
