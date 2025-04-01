@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertuner/core/theme/color_scheme.dart';
 
-class AddBPMWidget extends StatelessWidget {
-  const AddBPMWidget({
+class ChangeBPMWidget extends StatelessWidget {
+  const ChangeBPMWidget({
     super.key,
     required this.icon,
     required this.onTap,

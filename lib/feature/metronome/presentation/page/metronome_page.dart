@@ -4,8 +4,9 @@ import 'package:fluttertuner/core/theme/color_scheme.dart';
 import 'package:fluttertuner/core/theme/text_theme.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_cubit.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_state.dart';
-import 'package:fluttertuner/feature/metronome/presentation/widgets/add_b_p_m_widget.dart';
+import 'package:fluttertuner/feature/metronome/presentation/widgets/change_bpm_widget.dart';
 import 'package:fluttertuner/feature/metronome/presentation/widgets/play_button_widget.dart';
+import 'package:fluttertuner/feature/metronome/presentation/widgets/tap_tempo_button_widget.dart';
 
 class MetronomePage extends StatelessWidget {
   const MetronomePage({super.key});
@@ -21,6 +22,7 @@ class MetronomePage extends StatelessWidget {
               height: 400,
             ),
             Column(
+              spacing: 8,
               children: [
                 Text(
                   '${state.tempo}',
@@ -47,25 +49,44 @@ class MetronomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                AddBPMWidget(
-                  icon: const Icon(
-                    Icons.remove_rounded,
-                    color: AppColorScheme.textwhile,
-                  ),
-                  onTap: () {
-                    context.read<MetronomeCubit>().setTempo(state.tempo - 1);
-                  },
+                Column(
+                  spacing: 8,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ChangeBPMWidget(
+                      icon: const Icon(
+                        Icons.add_rounded,
+                        color: AppColorScheme.textwhile,
+                      ),
+                      onTap: () {
+                        context
+                            .read<MetronomeCubit>()
+                            .setTempo(state.tempo + 1);
+                      },
+                    ),
+                    ChangeBPMWidget(
+                      icon: const Icon(
+                        Icons.remove_rounded,
+                        color: AppColorScheme.textwhile,
+                      ),
+                      onTap: () {
+                        context
+                            .read<MetronomeCubit>()
+                            .setTempo(state.tempo - 1);
+                      },
+                    ),
+                  ],
                 ),
-                PlayButtonWidget(),
-                AddBPMWidget(
-                  icon: const Icon(
-                    Icons.add_rounded,
-                    color: AppColorScheme.textwhile,
-                  ),
-                  onTap: () {
-                    context.read<MetronomeCubit>().setTempo(state.tempo + 1);
-                  },
-                ),
+                const Column(
+                  spacing: 8,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PlayButtonWidget(),
+                    TapTempoButtonWidget(),
+                  ],
+                )
               ],
             ),
           ],

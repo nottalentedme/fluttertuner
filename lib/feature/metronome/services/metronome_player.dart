@@ -1,14 +1,24 @@
 import 'package:audioplayers/audioplayers.dart';
 
 class MetronomePlayer {
-  final AudioPlayer _audioPlayer = AudioPlayer();
-  final String _soundPath = 'sounds/metronome_click.mp3';
+  final AudioPlayer _audioPlayer = AudioPlayer()
+    ..setReleaseMode(ReleaseMode.stop);
+  static const String _soundPath = 'sounds/metronome_click.mp3';
+  bool _isLoaded = false;
 
-  Future<void> play() async {
-    await _audioPlayer.play(AssetSource(_soundPath));
+  MetronomePlayer() {
+    _preload();
   }
 
-  // почему-то дура лагает в вебе, надо будет затестить на андроид, я так понимаю проблема в HTML5
+  Future<void> _preload() async {
+    await _audioPlayer.setSource(AssetSource(_soundPath));
+    _isLoaded = true;
+  }
+
+  Future<void> play() async {
+    if (!_isLoaded) await _preload();
+    _audioPlayer.resume();
+  }
 
   void dispose() {
     _audioPlayer.dispose();
