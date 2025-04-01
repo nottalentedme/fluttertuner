@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_cubit.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_state.dart';
-import 'package:fluttertuner/feature/metronome/presentation/widgets/add_b_p_m_widget.dart';
+import 'package:fluttertuner/feature/metronome/presentation/widgets/change_bpm_widget.dart';
 import 'package:fluttertuner/feature/metronome/presentation/widgets/play_button_widget.dart';
 
 class MetronomePage extends StatelessWidget {
@@ -51,7 +51,7 @@ class MetronomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                AddBPMWidget(
+                ChangeBPMWidget(
                   icon: const Icon(
                     Icons.remove_rounded,
                     color: Colors.white,
@@ -61,7 +61,7 @@ class MetronomePage extends StatelessWidget {
                   },
                 ),
                 const PlayButtonWidget(),
-                AddBPMWidget(
+                ChangeBPMWidget(
                   icon: const Icon(
                     Icons.add_rounded,
                     color: Colors.white,
@@ -73,33 +73,51 @@ class MetronomePage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _showTapTempoDialog(context),
-              child: const Text('Tap Tempo'),
-            ),
+            //TAP button
+            InkWell(
+              customBorder: const CircleBorder(),
+              onTap: () => context.read<MetronomeCubit>().registerTap(),
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.black,
+                  border: Border.all(
+                    width: 2,
+                    color: Colors.black,
+                  ),
+                ),
+                padding: const EdgeInsets.all(16.0),
+                child: const Text(
+                  'Tap',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            )
           ],
         );
       },
     );
   }
 
+//хз зачем отдельное окно под тап темпо
   void _showTapTempoDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: const Text('Tap Tempo'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              const Text('Тут будет бпм'),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
                   context.read<MetronomeCubit>().registerTap();
                 },
                 child: const Text('Тык'),
               ),
-              const SizedBox(height: 10),
-              const Text('Тут будет бпм')
             ],
           ),
           actions: [
