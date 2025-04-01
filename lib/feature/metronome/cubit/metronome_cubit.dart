@@ -8,7 +8,9 @@ class MetronomeCubit extends Cubit<MetronomeState> {
   Timer? _timer;
   final List<DateTime> _tapTimes = [];
 
-  MetronomeCubit() : super(MetronomeState.initial());
+  MetronomeCubit() : super(MetronomeState.initial()) {
+    print('MetronomeCubit created');
+  }
 
   void setTempo(int tempo) {
     if (state.tempo == tempo) return;
@@ -75,6 +77,7 @@ class MetronomeCubit extends Cubit<MetronomeState> {
   @override
   Future<void> close() {
     _stopTimer();
+    print('MetronomeCubit destroyed');
     _metronomePlayer.dispose();
     return super.close();
   }
