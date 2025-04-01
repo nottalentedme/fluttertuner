@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertuner/core/theme/color_scheme.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_cubit.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_state.dart';
 
@@ -21,14 +22,14 @@ class PlayButtonWidget extends StatelessWidget {
           },
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.black,
+              color: AppColorScheme.primary,
               shape: BoxShape.circle,
-              border: Border.all(width: 2, color: Colors.black),
+              border: Border.all(width: 2, color: AppColorScheme.primary),
             ),
             padding: const EdgeInsets.all(16.0),
             child: Icon(
               state.isRunning ? Icons.pause_rounded : Icons.play_arrow_rounded,
-              color: Colors.white,
+              color: AppColorScheme.textwhile,
             ),
           ),
         );

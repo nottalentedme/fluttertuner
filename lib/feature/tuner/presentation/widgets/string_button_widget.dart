@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertuner/core/theme/color_scheme.dart';
 
 class StringButtonWidget extends StatelessWidget {
   const StringButtonWidget({
@@ -21,12 +22,12 @@ class StringButtonWidget extends StatelessWidget {
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(width: 2),
-            color: isActive ? Colors.white : Colors.black),
+            color: isActive ? AppColorScheme.textwhile : AppColorScheme.primary),
         padding: const EdgeInsets.all(16),
         child: Text(
           text,
           style: TextStyle(
-              fontSize: 30, color: isActive ? Colors.black : Colors.white),
+              fontSize: 30, color: isActive ? AppColorScheme.primary : AppColorScheme.textwhile),
         ),
       ),
     );

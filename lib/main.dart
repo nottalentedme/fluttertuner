@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertuner/core/theme/app_theme.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_cubit.dart';
 import 'package:fluttertuner/feature/tuner/cubit/pitch_cubit.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp.router(
           routerConfig: AppRouter.router,
+          theme: AppTheme.theme,
         ),
       ),
     );

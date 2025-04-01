@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:fluttertuner/core/theme/color_scheme.dart';
 
 class TunerPainter extends CustomPainter {
   final double value;
@@ -13,7 +14,7 @@ class TunerPainter extends CustomPainter {
 
     // Отрисовка шкалы
     final paint = Paint()
-      ..color = Colors.black
+      ..color = AppColorScheme.primary
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.0;
 
@@ -39,7 +40,7 @@ class TunerPainter extends CustomPainter {
         textPainter.text = TextSpan(
             text: '$i',
             style: const TextStyle(
-                color: Colors.black,
+                color: AppColorScheme.primary,
                 fontSize: 14,
                 fontWeight: FontWeight.bold));
         textPainter.layout();

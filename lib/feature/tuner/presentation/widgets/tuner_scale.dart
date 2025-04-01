@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_scale_widget.dart';
 
 class TunerScale extends StatefulWidget {

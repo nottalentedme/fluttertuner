@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertuner/core/theme/color_scheme.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tunning_state.dart';
 
 class TunerTextWidget extends StatelessWidget {
@@ -18,14 +19,14 @@ class TunerTextWidget extends StatelessWidget {
           Text(
             pitchCubitState.note,
             style: const TextStyle(
-                color: Colors.black87,
+                color: AppColorScheme.primary,
                 fontSize: 65.0,
                 fontWeight: FontWeight.bold),
           ),
           Text(
             pitchCubitState.status,
             style: const TextStyle(
-              color: Colors.black87,
+              color: AppColorScheme.primary,
               fontSize: 18.0,
             ),
           ),

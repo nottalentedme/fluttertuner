@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertuner/core/theme/color_scheme.dart';
+import 'package:fluttertuner/core/theme/text_theme.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_cubit.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_state.dart';
 import 'package:fluttertuner/feature/metronome/presentation/widgets/add_b_p_m_widget.dart';
@@ -22,24 +24,18 @@ class MetronomePage extends StatelessWidget {
               children: [
                 Text(
                   '${state.tempo}',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 42,
-                  ),
+                  style: AppTextTheme
+                      .textTheme.displayLarge, //Прописан только Large
                 ),
-                const Text(
+                Text(
                   'BPM',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: AppTextTheme.textTheme.bodySmall,
                 ),
               ],
             ),
             Slider(
               value: state.tempo.toDouble(),
-              activeColor: Colors.black,
+              activeColor: AppColorScheme.primary,
               min: 40,
               max: 200,
               onChanged: (value) {
@@ -54,7 +50,7 @@ class MetronomePage extends StatelessWidget {
                 AddBPMWidget(
                   icon: const Icon(
                     Icons.remove_rounded,
-                    color: Colors.white,
+                    color: AppColorScheme.textwhile,
                   ),
                   onTap: () {
                     context.read<MetronomeCubit>().setTempo(state.tempo - 1);
@@ -64,7 +60,7 @@ class MetronomePage extends StatelessWidget {
                 AddBPMWidget(
                   icon: const Icon(
                     Icons.add_rounded,
-                    color: Colors.white,
+                    color: AppColorScheme.textwhile,
                   ),
                   onTap: () {
                     context.read<MetronomeCubit>().setTempo(state.tempo + 1);

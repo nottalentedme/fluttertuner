@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertuner/core/theme/color_scheme.dart';
 
 class TuningModeSwitchWidget extends StatefulWidget {
   const TuningModeSwitchWidget({
@@ -31,12 +32,12 @@ class _TuningModeSwitchWidgetState extends State<TuningModeSwitchWidget> {
       padding: const EdgeInsets.all(10),
       child: Row(
         children: [
-          Text(
+          const Text(
             'Авто',
             style: TextStyle(
                 fontSize: 30,
-                fontWeight:
-                    FontWeight.lerp(FontWeight.w700, FontWeight.w500, 0.5)),
+                fontWeight: FontWeight.bold,
+                color: AppColorScheme.primary),
           ),
           const SizedBox(
             width: 10,
@@ -45,7 +46,7 @@ class _TuningModeSwitchWidgetState extends State<TuningModeSwitchWidget> {
           Switch(
             value: isActive,
             onChanged: toggleSwitch,
-            activeTrackColor: Colors.black,
+            activeTrackColor: AppColorScheme.primary,
           )
         ],
       ),

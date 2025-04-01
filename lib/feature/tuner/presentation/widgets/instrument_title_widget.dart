@@ -13,14 +13,13 @@ class InstrumentTitleWidget extends StatelessWidget {
         children: [
           //TODO Заменить иконку потом на DropDownMenu
           DropdownButton(
-            items: [
+            items: const [
               DropdownMenuItem(
                 child: Text(
                   'Гитара',
                   style: TextStyle(
                       fontSize: 30,
-                      fontWeight: FontWeight.lerp(
-                          FontWeight.w700, FontWeight.w500, 0.5)),
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ],
