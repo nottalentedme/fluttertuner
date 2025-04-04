@@ -50,6 +50,7 @@ class PitchCubit extends Cubit<TunningState> {
                 emit(TunningState(
                   note: pitchResult.note,
                   status: pitchResult.tuningStatus.getDescription(),
+                  frequency: detectedPitch.pitch,
                 ))
               });
         }

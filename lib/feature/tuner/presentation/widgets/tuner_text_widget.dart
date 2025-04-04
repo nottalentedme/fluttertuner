@@ -15,13 +15,28 @@ class TunerTextWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            pitchCubitState.note,
-            style: const TextStyle(
-                color: AppColorScheme.primary,
-                fontSize: 65.0,
-                fontWeight: FontWeight.bold),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                pitchCubitState.note,
+                style: const TextStyle(
+                  color: AppColorScheme.primary,
+                  fontSize: 65.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                '${pitchCubitState.frequency.toStringAsFixed(1)} Гц',
+                style: const TextStyle(
+                  color: AppColorScheme.primary,
+                  fontSize: 24.0,
+                ),
+              ),
+            ],
           ),
           Text(
             pitchCubitState.status,
