@@ -39,53 +39,50 @@ class _TunerPageState extends State<TunerPage> {
             style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
           ),
         ),
-        body: Center(
-            child: Column(
-          spacing: 8,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            const Row(
-              spacing: 8,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                InstrumentTitleWidget(),
-                TuningModeSwitchWidget(),
-              ],
-            ),
-            const SizedBox(
-              height: 100,
-            ),
-            Column(
-              spacing: 10,
-              children: [
-                //TODO передавать в value частоту которая сейчас
-                //TODO надо как-то передавать частоту
-                TunerScaleWidget(value: 0),
-                TunerTextWidget(pitchCubitState: pitchCubitState),
-                const SizedBox(
-                  height: 75,
-                ),
-                Row(
-                  spacing: 8,
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InstrumentTitleWidget(),
+                  TuningModeSwitchWidget(),
+                ],
+              ),
+              Expanded(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    TunerScaleWidget(value: 0),
+                    const SizedBox(height: 20),
+                    TunerTextWidget(pitchCubitState: pitchCubitState),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: GuitarString.values
                       .map(
-                        (e) => StringButtonWidget(
+                        (e) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: StringButtonWidget(
                             text: e.noteName,
                             onTap: () => setActiveString(e),
-                            isActive: e == guitarString),
+                            isActive: e == guitarString,
+                          ),
+                        ),
                       )
                       .toList(),
                 ),
-              ],
-            )
-          ],
-        )),
+              ),
+            ],
+          ),
+        ),
       );
     });
   }
