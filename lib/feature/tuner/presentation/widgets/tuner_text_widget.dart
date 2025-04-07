@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertuner/core/theme/color_scheme.dart';
-import 'package:fluttertuner/feature/tuner/cubit/tunning_state.dart';
+import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
 
 class TunerTextWidget extends StatelessWidget {
   const TunerTextWidget({
@@ -8,7 +8,7 @@ class TunerTextWidget extends StatelessWidget {
     required this.pitchCubitState,
   });
 
-  final TunningState pitchCubitState;
+  final TuningState pitchCubitState;
 
   @override
   Widget build(BuildContext context) {
@@ -30,20 +30,13 @@ class TunerTextWidget extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text(
-                '${pitchCubitState.frequency.toStringAsFixed(1)} Гц',
+                '${pitchCubitState.diffFrequency.toStringAsFixed(1)} Гц',
                 style: const TextStyle(
                   color: AppColorScheme.primary,
                   fontSize: 24.0,
                 ),
               ),
             ],
-          ),
-          Text(
-            pitchCubitState.status,
-            style: const TextStyle(
-              color: AppColorScheme.primary,
-              fontSize: 18.0,
-            ),
           ),
         ],
       ),

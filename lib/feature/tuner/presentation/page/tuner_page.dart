@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/tuner/cubit/pitch_cubit.dart';
-import 'package:fluttertuner/feature/tuner/cubit/tunning_state.dart';
+import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
 import 'package:fluttertuner/feature/tuner/domain/ChangeString/change_string.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/instrument_title_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/string_button_widget.dart';
@@ -31,7 +31,7 @@ class _TunerPageState extends State<TunerPage> {
   Widget build(BuildContext context) {
     final pitchCubitState = context.watch<PitchCubit>().state;
 
-    return BlocBuilder<PitchCubit, TunningState>(builder: (context, state) {
+    return BlocBuilder<PitchCubit, TuningState>(builder: (context, state) {
       return Scaffold(
         appBar: AppBar(
           title: const Text(

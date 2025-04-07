@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_interface_service.dart';
+import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:record/record.dart';
 
-class AudioRecorderService implements TunerAudioRecorderService {
+class AudioRecorderServiceImpl implements AudioRecorderService {
   final AudioRecorder _record = AudioRecorder();
 
   @override
@@ -21,26 +22,19 @@ class AudioRecorderService implements TunerAudioRecorderService {
   }
 
   @override
-  Future<void> startRecording() async {
+  Future<Stream<Uint8List>> startRecording() async {
     if (await hasPermission()) {
       try {
-        final stream = await _record.startStream(
-            const RecordConfig(encoder: AudioEncoder.pcm16bits)); //Либо стрим
-        stream.listen(
-          (data) {
-            print(
-              _record.convertBytesToInt16(Uint8List.fromList(data)),
-            );
-          },
-          onError: (error) {
-            print('Ошибка аудиостриминга: $error');
-          },
-          onDone: () {
-            print("Все успешно");
-          },
-        );
+        final recordStream = await _record.startStream(const RecordConfig(
+          encoder: AudioEncoder.pcm16bits,
+          numChannels: 1,
+          bitRate: 128000,
+          sampleRate: PitchDetector.DEFAULT_SAMPLE_RATE,
+        ));
+        return recordStream;
       } catch (e) {
         print('Ошибка аудиостриминга: $e');
+        throw Exception('Не удалось начать аудиозапись');
       }
     } else {
       throw ('Нет разрешения');

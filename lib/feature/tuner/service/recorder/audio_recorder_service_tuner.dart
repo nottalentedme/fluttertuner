@@ -1,12 +1,14 @@
+import 'dart:typed_data';
+
 import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_impl_service.dart';
-import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_interface_service.dart';
 
 class AudioRecorderServiceTuner {
-  final TunerAudioRecorderService _audioRecorderService;
+  final AudioRecorderServiceImpl _audioRecorderService;
 
-  AudioRecorderServiceTuner() : _audioRecorderService = AudioRecorderService();
+  AudioRecorderServiceTuner()
+      : _audioRecorderService = AudioRecorderServiceImpl();
   @override
-  Future<void> startRecording() async {
+  Future<Stream<Uint8List>> startRecording() async {
     return await _audioRecorderService.startRecording();
   }
 

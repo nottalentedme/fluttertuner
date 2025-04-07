@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_cubit.dart';
 import 'package:fluttertuner/feature/tuner/cubit/pitch_cubit.dart';
+import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_interface.dart';
+import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_interface_service.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/instrument_type.dart';
@@ -62,9 +64,9 @@ abstract class AppRouter {
                       providers: [
                         BlocProvider<PitchCubit>(
                           create: (context) => PitchCubit(
-                            context.read<AudioRecorder>(),
+                            context.read<AudioRecorderService>(),
                             context.read<PitchDetector>(),
-                            context.read<PitchHandler>(),
+                            context.read<BufferService>(),
                           ),
                         ),
                       ],
