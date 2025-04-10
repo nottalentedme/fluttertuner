@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_state.dart';
 import 'package:fluttertuner/feature/metronome/services/metronome_player.dart';
@@ -70,7 +71,8 @@ class MetronomeCubit extends Cubit<MetronomeState> {
           .map((e) => e.value.difference(_tapTimes[e.key - 1]).inMilliseconds);
       final avgInterval = intervals.reduce((a, b) => a + b) / intervals.length;
       final bpm = (60000 / avgInterval).round();
-      emit(state.copyWith(tempo: bpm));
+      final cappedBpm = min(bpm, 200);
+      emit(state.copyWith(tempo: cappedBpm));
     }
   }
 
