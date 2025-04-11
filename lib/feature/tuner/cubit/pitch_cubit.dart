@@ -27,14 +27,6 @@ class PitchCubit extends Cubit<TuningState> {
     print('PitchCubit created');
   }
 
-  @override
-  Future<void> close() async {
-    print('PitchCubit destroyed');
-    await _audioRecorderService.stopRecording();
-    await _audioRecorderService.dispose();
-    return super.close();
-  }
-
   Future<void> startTuning() async {
     final recordStream = await _audioRecorderService.startRecording();
     var audioSampleBufferedStream = _bufferService.toBuffer(recordStream);
@@ -57,9 +49,9 @@ class PitchCubit extends Cubit<TuningState> {
     });
   }
 
-  Future<void> stopStream() async {
+  Future<void> stopTuning() async {
     await _audioStreamSubscription?.cancel();
-    await _audioRecorderService.cancelRecording();
+    await _audioRecorderService.stopRecording();
   }
 }
 
