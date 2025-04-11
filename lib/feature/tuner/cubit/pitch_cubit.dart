@@ -1,61 +1,57 @@
-import 'package:buffered_list_stream/buffered_list_stream.dart';
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertuner/feature/tuner/cubit/tunning_state.dart';
+import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
+import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_interface.dart';
+import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_interface_service.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/pitch_handler.dart';
 import 'package:pitchupdart/tuning_status.dart';
 
-import 'package:record/record.dart';
-
-class PitchCubit extends Cubit<TunningState> {
-  final AudioRecorder _audioRecorder;
+class PitchCubit extends Cubit<TuningState> {
+  final AudioRecorderService _audioRecorderService;
   final PitchDetector _pitchDetector;
+  final BufferService _bufferService;
   final PitchHandler _pitchHandler;
+  StreamSubscription? _audioStreamSubscription;
 
-  PitchCubit(this._audioRecorder, this._pitchDetector, this._pitchHandler)
-      : super(TunningState(note: "N/A", status: "Сыграйте что-нибудь")) {
-    _init();
+  PitchCubit(
+    this._audioRecorderService,
+    this._pitchDetector,
+    this._bufferService,
+    this._pitchHandler,
+  ) : super(TuningState(
+          note: "N/A",
+          diffFrequency: 0.0,
+        )) {
     print('PitchCubit created');
   }
 
-  @override
-  Future<void> close() async {
-    print('PitchCubit destroyed');
-    return super.close();
-  }
+  Future<void> startTuning() async {
+    final recordStream = await _audioRecorderService.startRecording();
+    var audioSampleBufferedStream = _bufferService.toBuffer(recordStream);
 
-  _init() async {
-    final recordStream = await _audioRecorder.startStream(const RecordConfig(
-      encoder: AudioEncoder.pcm16bits,
-      numChannels: 1,
-      bitRate: 128000,
-      sampleRate: PitchDetector.DEFAULT_SAMPLE_RATE,
-    ));
-
-    var audioSampleBufferedStream = bufferedListStream(
-      recordStream.map((event) {
-        return event.toList();
-      }),
-      //The library converts a PCM16 to 8bits internally. So we need twice as many bytes
-      PitchDetector.DEFAULT_BUFFER_SIZE * 2,
-    );
-
-    await for (var audioSample in audioSampleBufferedStream) {
+    _audioStreamSubscription = audioSampleBufferedStream.listen((audioSample) {
       final intBuffer = Uint8List.fromList(audioSample);
 
-      _pitchDetector.getPitchFromIntBuffer(intBuffer).then((detectedPitch) {
+      _pitchDetector
+          .getPitchFromIntBuffer(intBuffer)
+          .then((detectedPitch) async {
         if (detectedPitch.pitched) {
           _pitchHandler.handlePitch(detectedPitch.pitch).then((pitchResult) => {
-                emit(TunningState(
+                emit(TuningState(
                   note: pitchResult.note,
-                  status: pitchResult.tuningStatus.getDescription(),
-                  frequency: detectedPitch.pitch,
+                  diffFrequency: detectedPitch.pitch,
                 ))
               });
         }
       });
-    }
+    });
+  }
+
+  Future<void> stopTuning() async {
+    await _audioStreamSubscription?.cancel();
+    await _audioRecorderService.stopRecording();
   }
 }
 
