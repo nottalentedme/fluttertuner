@@ -30,6 +30,7 @@ class MetronomePlayer {
   }
 
   Future<void> play() async {
+    _isLoaded = true;
     if (_isLoaded) {
       _soloud.play(_clickSound);
     }
