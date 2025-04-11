@@ -23,28 +23,22 @@ class AudioRecorderServiceImpl implements AudioRecorderService {
 
   @override
   Future<Stream<Uint8List>> startRecording() async {
-    if (await hasPermission()) {
-      try {
-        final recordStream = await _record.startStream(const RecordConfig(
-          encoder: AudioEncoder.pcm16bits,
-          numChannels: 1,
-          bitRate: 128000,
-          sampleRate: PitchDetector.DEFAULT_SAMPLE_RATE,
-        ));
-        return recordStream;
-      } catch (e) {
-        print('Ошибка аудиостриминга: $e');
-        throw Exception('Не удалось начать аудиозапись');
-      }
-    } else {
-      throw ('Нет разрешения');
+    try {
+      final recordStream = await _record.startStream(const RecordConfig(
+        encoder: AudioEncoder.pcm16bits,
+        numChannels: 1,
+        bitRate: 128000,
+        sampleRate: PitchDetector.DEFAULT_SAMPLE_RATE,
+      ));
+      return recordStream;
+    } catch (e) {
+      print('Ошибка аудиостриминга: $e');
+      throw Exception('Не удалось начать аудиозапись');
     }
   }
 
   @override
   Future<void> stopRecording() async {
     await _record.stop();
-    // ... or cancel it (and implicitly remove file/blob).
-    //await _record.cancel();
   }
 }

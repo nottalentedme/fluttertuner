@@ -1,13 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_cubit.dart';
 import 'package:fluttertuner/feature/tuner/cubit/pitch_cubit.dart';
+import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_impl.dart';
 import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_interface.dart';
+import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_impl_service.dart';
 import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_interface_service.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_handler.dart';
-import 'package:record/record.dart';
 
 import '../../feature/metronome/presentation/page/metronome_page.dart';
 import '../../feature/navigation_bar/navigation_bar.dart';
@@ -49,11 +50,14 @@ abstract class AppRouter {
                 builder: (context, state) {
                   return MultiRepositoryProvider(
                     providers: [
-                      RepositoryProvider<AudioRecorder>(
-                        create: (context) => AudioRecorder(),
+                      RepositoryProvider<AudioRecorderService>(
+                        create: (context) => AudioRecorderServiceImpl(),
                       ),
                       RepositoryProvider<PitchDetector>(
                         create: (context) => PitchDetector(),
+                      ),
+                      RepositoryProvider<BufferService>(
+                        create: (context) => BufferServiceImpl(),
                       ),
                       RepositoryProvider<PitchHandler>(
                         create: (context) =>
@@ -64,10 +68,10 @@ abstract class AppRouter {
                       providers: [
                         BlocProvider<PitchCubit>(
                           create: (context) => PitchCubit(
-                            context.read<AudioRecorderService>(),
-                            context.read<PitchDetector>(),
-                            context.read<BufferService>(),
-                          ),
+                              context.read<AudioRecorderService>(),
+                              context.read<PitchDetector>(),
+                              context.read<BufferService>(),
+                              context.read<PitchHandler>()),
                         ),
                       ],
                       child: const TunerPage(),

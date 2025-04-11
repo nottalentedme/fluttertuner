@@ -8,6 +8,7 @@ import 'package:fluttertuner/feature/tuner/presentation/widgets/string_button_wi
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_scale_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_text_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_mode_switch_widget.dart';
+import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_impl_service.dart';
 
 class TunerPage extends StatefulWidget {
   const TunerPage({super.key});
@@ -20,11 +21,39 @@ class TunerPage extends StatefulWidget {
 
 class _TunerPageState extends State<TunerPage> {
   GuitarString guitarString = GuitarString.sixthE;
+  final recorder = AudioRecorderServiceImpl();
 
   void setActiveString(GuitarString value) {
     setState(() {
       guitarString = value;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print('Stream started');
+    startStream();
+  }
+
+  Future<void> startStream() async {
+    print('StreamStart');
+    BlocProvider.of<PitchCubit>(context).startTuning();
+  }
+
+  // @override
+  // void dispose() {
+  //   print('Stream ended');
+  //   BlocProvider.of<PitchCubit>(context).stopStream();
+  //   recorder.stopRecording();
+  //   recorder.dispose();
+  //   super.dispose();
+  // }
+
+  Future<void> stopStream() async {
+    print('Streamstop');
+    BlocProvider.of<PitchCubit>(context).stopStream();
+    await recorder.dispose();
   }
 
   @override
@@ -58,7 +87,20 @@ class _TunerPageState extends State<TunerPage> {
                   children: [
                     TunerScaleWidget(value: 0),
                     const SizedBox(height: 20),
+                    Text(pitchCubitState.note),
                     TunerTextWidget(pitchCubitState: pitchCubitState),
+                    ElevatedButton(
+                      onPressed: () {
+                        startStream();
+                      },
+                      child: const Text('StartStream'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        stopStream();
+                      },
+                      child: const Text('StopStream'),
+                    ),
                   ],
                 ),
               ),
