@@ -1,20 +1,24 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_state.dart';
 import 'package:fluttertuner/feature/metronome/services/metronome_player.dart';
+import 'package:fluttertuner/feature/metronome/services/metronome_ticker.dart';
 
 class MetronomeCubit extends Cubit<MetronomeState> {
   final MetronomePlayer _metronomePlayer = MetronomePlayer();
-  Timer? _timer;
+  MetronomeTicker? _ticker;
   final List<DateTime> _tapTimes = [];
 
-  MetronomeCubit() : super(MetronomeState.initial());
+  MetronomeCubit() : super(MetronomeState.initial()) {
+    print('MetronomeCubit created');
+  }
 
   void setTempo(int tempo) {
     if (state.tempo == tempo) return;
     emit(state.copyWith(tempo: tempo));
     if (state.isRunning) {
-      _restartTimer();
+      _restartTicker();
     }
   }
 
@@ -22,31 +26,30 @@ class MetronomeCubit extends Cubit<MetronomeState> {
     final isRunning = !state.isRunning;
     emit(state.copyWith(isRunning: isRunning));
     if (isRunning) {
-      _startTimer();
+      _startTicker();
     } else {
-      _stopTimer();
+      _stopTicker();
     }
   }
 
-  void _startTimer() {
-    _stopTimer();
-    _timer = Timer.periodic(
-      Duration(milliseconds: (60000 / state.tempo).round()),
-      (timer) {
-        _metronomePlayer.play();
-      },
-    );
+  void _startTicker() {
+    _stopTicker();
+    _ticker = MetronomeTicker(
+      tempo: state.tempo,
+      onTick: () => _metronomePlayer.play(),
+    )..start();
   }
 
-  void _stopTimer() {
-    _timer?.cancel();
-    _timer = null;
+  void _stopTicker() {
+    _ticker?.stop();
+    _ticker?.dispose();
+    _ticker = null;
   }
 
-  void _restartTimer() {
+  void _restartTicker() {
     if (state.isRunning) {
-      _stopTimer();
-      _startTimer();
+      _stopTicker();
+      _startTicker();
     }
   }
 
@@ -68,14 +71,16 @@ class MetronomeCubit extends Cubit<MetronomeState> {
           .map((e) => e.value.difference(_tapTimes[e.key - 1]).inMilliseconds);
       final avgInterval = intervals.reduce((a, b) => a + b) / intervals.length;
       final bpm = (60000 / avgInterval).round();
-      emit(state.copyWith(tempo: bpm));
+      final cappedBpm = min(bpm, 200);
+      emit(state.copyWith(tempo: cappedBpm));
     }
   }
 
   @override
   Future<void> close() {
-    _stopTimer();
+    _stopTicker();
     _metronomePlayer.dispose();
+    print('MetronomeCubit destroyed');
     return super.close();
   }
 }

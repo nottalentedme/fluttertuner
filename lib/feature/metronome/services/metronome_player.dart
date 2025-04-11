@@ -1,9 +1,12 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_soloud/flutter_soloud.dart';
 
 class MetronomePlayer {
-  final AudioPlayer _audioPlayer = AudioPlayer()
-    ..setReleaseMode(ReleaseMode.stop);
-  static const String _soundPath = 'sounds/metronome_click.mp3';
+  final SoLoud _soloud = SoLoud.instance;
+  late final AudioSource _clickSound;
   bool _isLoaded = false;
 
   MetronomePlayer() {
@@ -11,16 +14,28 @@ class MetronomePlayer {
   }
 
   Future<void> _preload() async {
-    await _audioPlayer.setSource(AssetSource(_soundPath));
-    _isLoaded = true;
+    await _soloud.init();
+    if (kIsWeb) {
+      final ByteData data =
+          await rootBundle.load('assets/sounds/metronome_click.wav');
+      final Uint8List buffer = data.buffer.asUint8List();
+      _clickSound = await _soloud.loadMem(
+          'assets/sounds/metronome_click.wav', buffer,
+          mode: LoadMode.disk);
+      _isLoaded = true;
+    } else if (Platform.isAndroid) {
+      _clickSound =
+          await _soloud.loadAsset('assets/sounds/metronome_click.wav');
+    }
   }
 
   Future<void> play() async {
-    if (!_isLoaded) await _preload();
-    _audioPlayer.resume();
+    if (_isLoaded) {
+      _soloud.play(_clickSound);
+    }
   }
 
   void dispose() {
-    _audioPlayer.dispose();
+    _soloud.deinit();
   }
 }
