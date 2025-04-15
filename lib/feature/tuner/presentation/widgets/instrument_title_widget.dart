@@ -17,23 +17,6 @@ class InstrumentTitleWidget extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Row(
         children: [
-          DropdownButton<String>(
-            value: 'Гитара',
-            items: const [
-              DropdownMenuItem(
-                value: 'Гитара',
-                child: Text(
-                  'Гитара',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-            onChanged: (value) {},
-          ),
-          const SizedBox(width: 20),
           // Выпадающий список для выбора строя
           DropdownButton<GuitarTuning>(
             value: currentTuning,

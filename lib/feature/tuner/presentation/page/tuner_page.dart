@@ -70,7 +70,6 @@ class _TunerPageState extends State<TunerPage> {
                   children: [
                     TunerScaleWidget(value: 0),
                     const SizedBox(height: 20),
-                    Text(pitchCubitState.note),
                     TunerTextWidget(pitchCubitState: pitchCubitState),
                   ],
                 ),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
@@ -23,8 +24,11 @@ class PitchCubit extends Cubit<TuningState> {
     this._pitchHandler,
   ) : super(TuningState(
           note: "N/A",
-          diffFrequency: 0.0,
           frequency: 0.0,
+          diffFrequency: 0.0,
+          centsDiff: 0,
+          targetNote: "E2",
+          targetFrequency: 82.41,
           currentTuning: GuitarTuning.standard(),
           currentStringIndex: 0,
         )) {
@@ -35,22 +39,37 @@ class PitchCubit extends Cubit<TuningState> {
     final recordStream = await _audioRecorderService.startRecording();
     var audioSampleBufferedStream = _bufferService.toBuffer(recordStream);
 
-    _audioStreamSubscription = audioSampleBufferedStream.listen((audioSample) {
+    _audioStreamSubscription =
+        audioSampleBufferedStream.listen((audioSample) async {
       final intBuffer = Uint8List.fromList(audioSample);
 
-      _pitchDetector
-          .getPitchFromIntBuffer(intBuffer)
-          .then((detectedPitch) async {
-        if (detectedPitch.pitched) {
-          _pitchHandler.handlePitch(detectedPitch.pitch).then((pitchResult) => {
-                emit(state.copyWith(
-                  note: pitchResult.note,
-                  frequency: detectedPitch.pitch,
-                  diffFrequency: detectedPitch.pitch,
-                ))
-              });
+      final detectedPitch =
+          await _pitchDetector.getPitchFromIntBuffer(intBuffer);
+      if (detectedPitch.pitched) {
+        final currentFreq = detectedPitch.pitch;
+        final pitchResult = await _pitchHandler.handlePitch(currentFreq);
+
+        // Автоопределение ближайшей струны
+        final closestIndex =
+            findClosestStringIndex(state.currentTuning, currentFreq);
+        final expectedNote = state.currentTuning.strings[closestIndex];
+        final expectedFrequency = noteFrequencies[expectedNote];
+
+        if (expectedFrequency != null) {
+          final diff = currentFreq - expectedFrequency;
+          final cents = getCentsDifference(currentFreq, expectedFrequency);
+
+          emit(state.copyWith(
+            note: pitchResult.note,
+            frequency: currentFreq,
+            diffFrequency: diff,
+            centsDiff: cents,
+            targetNote: expectedNote,
+            targetFrequency: expectedFrequency,
+            currentStringIndex: closestIndex,
+          ));
         }
-      });
+      }
     });
   }
 
@@ -84,6 +103,10 @@ class PitchCubit extends Cubit<TuningState> {
 
   String getCurrentTargetNote() {
     return state.currentTuning.strings[state.currentStringIndex];
+  }
+
+  int getCentsDifference(double detectedFreq, double targetFreq) {
+    return (1200 * (log(detectedFreq / targetFreq) / ln2)).round();
   }
 }
 
