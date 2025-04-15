@@ -73,6 +73,8 @@ flutter:
     - assets/icons/metronome.svg
     - assets/icons/tuner.svg
     - assets/icons/settings.svg
+    - assets/tuner/strelka.png
+    - assets/tuner/shtrix.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

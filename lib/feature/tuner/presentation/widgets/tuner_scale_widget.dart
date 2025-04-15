@@ -9,8 +9,8 @@ class TunerScaleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      size: Size(300, 150),
-      painter: TunerPainter(value: value),
+      size: const Size(300, 150),
+      painter: TunerPainter(),
     );
   }
 }
