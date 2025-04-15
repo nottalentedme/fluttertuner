@@ -17,11 +17,12 @@ class TunerTextWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
+          const SizedBox(height: 8),
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                pitchCubitState.note,
+                pitchCubitState.targetNote,
                 style: const TextStyle(
                   color: AppColorScheme.primary,
                   fontSize: 65.0,
@@ -30,10 +31,10 @@ class TunerTextWidget extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text(
-                '${pitchCubitState.diffFrequency.toStringAsFixed(1)} Гц',
+                '${pitchCubitState.targetFrequency.toStringAsFixed(1)} Гц',
                 style: const TextStyle(
                   color: AppColorScheme.primary,
-                  fontSize: 24.0,
+                  fontSize: 20.0,
                 ),
               ),
             ],
