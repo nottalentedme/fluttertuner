@@ -7,6 +7,7 @@ import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_interfac
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/pitch_handler.dart';
 import 'package:pitchupdart/tuning_status.dart';
+import '../domain/models/guitar_tuning_model.dart';
 
 class PitchCubit extends Cubit<TuningState> {
   final AudioRecorderService _audioRecorderService;
@@ -23,6 +24,9 @@ class PitchCubit extends Cubit<TuningState> {
   ) : super(TuningState(
           note: "N/A",
           diffFrequency: 0.0,
+          frequency: 0.0,
+          currentTuning: GuitarTuning.standard(),
+          currentStringIndex: 0,
         )) {
     print('PitchCubit created');
   }
@@ -39,8 +43,9 @@ class PitchCubit extends Cubit<TuningState> {
           .then((detectedPitch) async {
         if (detectedPitch.pitched) {
           _pitchHandler.handlePitch(detectedPitch.pitch).then((pitchResult) => {
-                emit(TuningState(
+                emit(state.copyWith(
                   note: pitchResult.note,
+                  frequency: detectedPitch.pitch,
                   diffFrequency: detectedPitch.pitch,
                 ))
               });
@@ -52,6 +57,33 @@ class PitchCubit extends Cubit<TuningState> {
   Future<void> stopTuning() async {
     await _audioStreamSubscription?.cancel();
     await _audioRecorderService.stopRecording();
+  }
+
+  void changeTuning(GuitarTuning newTuning) {
+    emit(state.copyWith(
+      currentTuning: newTuning,
+      currentStringIndex: 0,
+    ));
+  }
+
+  void nextString() {
+    if (state.currentStringIndex < state.currentTuning.strings.length - 1) {
+      emit(state.copyWith(
+        currentStringIndex: state.currentStringIndex + 1,
+      ));
+    }
+  }
+
+  void previousString() {
+    if (state.currentStringIndex > 0) {
+      emit(state.copyWith(
+        currentStringIndex: state.currentStringIndex - 1,
+      ));
+    }
+  }
+
+  String getCurrentTargetNote() {
+    return state.currentTuning.strings[state.currentStringIndex];
   }
 }
 
