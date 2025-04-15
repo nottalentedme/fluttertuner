@@ -1,9 +1,5 @@
-import 'package:fluttertuner/feature/tuner/domain/entity/tuning/tuning_entity.dart';
-
-class GuitarTuningModel implements TuningEntity {
-  @override
+class GuitarTuningModel {
   final List<String> notes; //используем список нот и символов
-  @override
   final List<double> frequencies;
   GuitarTuningModel({
     required this.notes,
@@ -67,4 +63,4 @@ class _DropCTuning extends GuitarTuning {
           strings: const ['C2', 'G2', 'C3', 'F3', 'A3', 'D4'],
           description: 'Строй с пониженными на тон струнами (C G C F A D)',
         );
-} 
+}
