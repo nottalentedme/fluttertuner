@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/tuner/cubit/pitch_cubit.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/instrument_title_widget.dart';
+import 'package:fluttertuner/feature/tuner/presentation/widgets/pos.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_scale_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_text_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_mode_switch_widget.dart';
@@ -68,7 +69,8 @@ class _TunerPageState extends State<TunerPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TunerScaleWidget(value: 0),
+                    TunerScaleWidgets(value: 0),
+                    //TunerScaleWidget(value: 0),
                     const SizedBox(height: 20),
                     Text(pitchCubitState.note),
                     TunerTextWidget(pitchCubitState: pitchCubitState),
