@@ -11,7 +11,7 @@ class InstrumentTitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentState = context.watch<PitchCubit>().state;
-    final currentTuning = currentState.currentTuning;
+    // final currentTuning = currentState.currentTuning;
 
     return Container(
       padding: const EdgeInsets.all(10),
@@ -19,7 +19,7 @@ class InstrumentTitleWidget extends StatelessWidget {
         children: [
           // Выпадающий список для выбора строя
           DropdownButton<GuitarTuning>(
-            value: currentTuning,
+            // value: currentTuning,
             items: [
               GuitarTuning.standard(),
               GuitarTuning.dropD(),
@@ -38,7 +38,7 @@ class InstrumentTitleWidget extends StatelessWidget {
             }).toList(),
             onChanged: (tuning) {
               if (tuning != null) {
-                context.read<PitchCubit>().changeTuning(tuning);
+                // context.read<PitchCubit>().changeTuning(tuning);
               }
             },
           ),

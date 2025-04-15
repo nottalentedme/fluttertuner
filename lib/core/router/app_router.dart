@@ -10,19 +10,19 @@ import '../../feature/tuner/presentation/page/tuner_page.dart';
 
 abstract class AppRouter {
   static final GoRouter router = GoRouter(
-    redirect: (context, state) {
-      print(state.fullPath);
-      //Костыль костылёк чтобы аудио стрим прекращался
-      final isTunerPage = state.fullPath == TunerPage.path;
-      if (!isTunerPage) {
-        // Останавливаем поток, если не на странице TunerPage
-        BlocProvider.of<PitchCubit>(context).stopTuning();
-      } else {
-        // Запускаем поток на TunerPage
-        BlocProvider.of<PitchCubit>(context).startTuning();
-      }
-      return null;
-    },
+    // redirect: (context, state) {
+    //   print(state.fullPath);
+    //   //Костыль костылёк чтобы аудио стрим прекращался
+    //   final isTunerPage = state.fullPath == TunerPage.path;
+    //   if (!isTunerPage) {
+    //     // Останавливаем поток, если не на странице TunerPage
+    //     BlocProvider.of<PitchCubit>(context).stopTuning();
+    //   } else {
+    //     // Запускаем поток на TunerPage
+    //     BlocProvider.of<PitchCubit>(context).startTuning();
+    //   }
+    //   return null;
+    // },
     initialLocation: TunerPage.path,
     routes: [
       StatefulShellRoute.indexedStack(

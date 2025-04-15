@@ -15,22 +15,17 @@ class MetronomePlayer {
 
   Future<void> _preload() async {
     await _soloud.init();
-    if (kIsWeb) {
-      final ByteData data =
-          await rootBundle.load('assets/sounds/metronome_click.wav');
-      final Uint8List buffer = data.buffer.asUint8List();
-      _clickSound = await _soloud.loadMem(
-          'assets/sounds/metronome_click.wav', buffer,
-          mode: LoadMode.disk);
-      _isLoaded = true;
-    } else if (Platform.isAndroid) {
-      _clickSound =
-          await _soloud.loadAsset('assets/sounds/metronome_click.wav');
-    }
+
+    final ByteData data =
+        await rootBundle.load('assets/sounds/metronome_click.wav');
+    final Uint8List buffer = data.buffer.asUint8List();
+    _clickSound = await _soloud.loadMem(
+        'assets/sounds/metronome_click.wav', buffer,
+        mode: LoadMode.disk);
+    _isLoaded = true;
   }
 
   Future<void> play() async {
-    _isLoaded = true;
     if (_isLoaded) {
       _soloud.play(_clickSound);
     }
