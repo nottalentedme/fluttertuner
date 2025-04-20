@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuning_repository.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/pitch_handler.dart';
 import 'package:pitchupdart/tuning_status.dart';
