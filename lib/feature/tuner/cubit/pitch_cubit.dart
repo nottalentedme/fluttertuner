@@ -1,37 +1,22 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
-import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pitch_detector_dart/pitch_detector.dart';
-import 'package:pitchupdart/pitch_handler.dart';
+import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuning_repository.dart';
 import 'package:pitchupdart/tuning_status.dart';
 
 import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
-import 'package:fluttertuner/feature/tuner/domain/repository/tuning_repository_impl.dart';
-import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_interface.dart';
-import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_interface_service.dart';
-
-import '../domain/models/guitar_tuning_model.dart';
 
 class PitchCubit extends Cubit<TuningState> {
-  // final AudioRecorderService _audioRecorderService;
-  // final PitchDetector _pitchDetector;
-  // final BufferService _bufferService;
-  // final PitchHandler _pitchHandler;
   StreamSubscription? _tuningResultSubscription;
   final TuningRepository _tuningRepository;
 
   PitchCubit(
-    // this._audioRecorderService,
-    // this._pitchDetector,
-    // this._bufferService,
-    // this._pitchHandler,
     this._tuningRepository,
   ) : super(TuningState.initial()) {
     print('PitchCubit created');
   }
+
   @override
   Future<void> close() async {
     await stopTuning();
@@ -62,9 +47,6 @@ class PitchCubit extends Cubit<TuningState> {
     //   final diff = currentFreq - expectedFrequency;
     //   final cents = getCentsDifference(currentFreq, expectedFrequency);
   }
-  // }
-  // });
-//  }
 
   Future<void> stopTuning() async {
     _tuningResultSubscription?.cancel();
@@ -97,10 +79,10 @@ class PitchCubit extends Cubit<TuningState> {
 //   String getCurrentTargetNote() {
 //     return state.currentTuning.strings[state.currentStringIndex];
 //   }
-//   //
-//   // int getCentsDifference(double detectedFreq, double targetFreq) {
-//   //   return (1200 * (log(detectedFreq / targetFreq) / ln2)).round();
-//   // }
+  //
+  // int getCentsDifference(double detectedFreq, double targetFreq) {
+  //   return (1200 * (log(detectedFreq / targetFreq) / ln2)).round();
+  // }
 }
 
 extension Description on TuningStatus {

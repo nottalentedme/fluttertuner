@@ -4,16 +4,11 @@ import 'dart:typed_data';
 
 import 'package:fluttertuner/feature/tuner/data/models/note_model.dart';
 import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
+import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuning_repository.dart';
 import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_interface.dart';
 import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_interface_service.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/pitch_handler.dart';
-
-abstract interface class TuningRepository {
-  Future<void> startAudio();
-  Future<void> stopAudio();
-  Stream<WrongNoteEntity> get noteStream;
-}
 
 class TuningRepositoryImpl implements TuningRepository {
   final AudioRecorderService _audioRecorderService;
@@ -58,7 +53,6 @@ class TuningRepositoryImpl implements TuningRepository {
 
   @override
   Future<void> stopAudio() async {
-    // await _audioStreamSubscription?.cancel();
     _noteStreamController.close();
     await sub.cancel();
     await _audioRecorderService.stopRecording();

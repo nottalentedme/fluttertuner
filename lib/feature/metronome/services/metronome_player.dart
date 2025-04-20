@@ -4,7 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_soloud/flutter_soloud.dart';
 
-class MetronomePlayer {
+import '../../config/dependency.dart';
+
+class MetronomePlayer extends Service {
   final SoLoud _soloud = SoLoud.instance;
   late final AudioSource _clickSound;
   bool _isLoaded = false;
