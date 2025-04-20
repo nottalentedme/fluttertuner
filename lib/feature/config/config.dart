@@ -1,4 +1,4 @@
-import 'package:fluttertuner/core/di/di_container.dart';
+import 'package:fluttertuner/feature/config/di_container.dart';
 import 'package:fluttertuner/feature/metronome/services/metronome_player.dart';
 import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuning_repository.dart';
 import 'package:fluttertuner/feature/tuner/domain/repository/tuning_repository_impl.dart';
@@ -34,5 +34,6 @@ void configureDependencies() {
   );
 
   //? Repository registration
+
   di.register<TuningRepository>(tuningRepository);
 }

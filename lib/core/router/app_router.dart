@@ -1,6 +1,10 @@
+import 'package:flutter/src/widgets/basic.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertuner/core/extension/build_context_extension.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_cubit.dart';
+import 'package:fluttertuner/feature/metronome/services/metronome_player.dart';
 import 'package:fluttertuner/feature/tuner/cubit/pitch_cubit.dart';
+import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuning_repository.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../feature/metronome/presentation/page/metronome_page.dart';
@@ -28,7 +32,8 @@ abstract class AppRouter {
                 path: MetronomePage.path,
                 builder: (context, state) {
                   return BlocProvider<MetronomeCubit>(
-                    create: (context) => MetronomeCubit(),
+                    create: (context) =>
+                        MetronomeCubit(context.dep<MetronomePlayer>()),
                     child: const MetronomePage(),
                   );
                 },
@@ -41,7 +46,11 @@ abstract class AppRouter {
               GoRoute(
                 path: TunerPage.path,
                 builder: (context, state) {
-                  return const TunerPage();
+                  return BlocProvider(
+                    create: (context) =>
+                        PitchCubit(context.dep<TuningRepository>()),
+                    child: const TunerPage(),
+                  );
                 },
               ),
             ],

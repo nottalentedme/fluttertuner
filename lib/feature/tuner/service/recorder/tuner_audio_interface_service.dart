@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:fluttertuner/core/di/dependency.dart';
+import '../../../config/dependency.dart';
 
 abstract class AudioRecorderService extends Service {
   Future<Stream<Uint8List>> startRecording();

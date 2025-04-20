@@ -10,7 +10,7 @@ class InstrumentTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentState = context.watch<PitchCubit>().state;
+    // final currentState = context.watch<PitchCubit>().state;
     // final currentTuning = currentState.currentTuning;
 
     return Container(

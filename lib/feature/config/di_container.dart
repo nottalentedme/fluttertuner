@@ -1,5 +1,5 @@
-import 'package:fluttertuner/core/di/dependency.dart';
-import 'package:fluttertuner/core/di/di_container_interface.dart';
+import 'package:fluttertuner/feature/config/dependency.dart';
+import 'package:fluttertuner/feature/config/di_container_interface.dart';
 
 class DIContainerImpl implements DIContainer {
   final Map<Type, Dependency> _deps = {};
