@@ -7,6 +7,7 @@ import 'package:fluttertuner/feature/tuner/presentation/widgets/pos.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_scale_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_text_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_mode_switch_widget.dart';
+import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_selection_widget.dart';
 import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_impl_service.dart';
 
 class TunerPage extends StatefulWidget {

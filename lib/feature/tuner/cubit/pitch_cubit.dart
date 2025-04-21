@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/pitch_handler.dart';
 import 'package:pitchupdart/tuning_status.dart';
@@ -40,10 +41,17 @@ class PitchCubit extends Cubit<TuningState> {
 
   Future<void> startTuning() async {
     await _tuningRepository.startAudio();
+    final currentTuning = _tuningRepository.currentTuning;
+    emit(state.copyWith(
+      tuning: currentTuning,
+      currentStringIndex: 0,
+    ));
+
     _tuningResultSubscription = _tuningRepository.noteStream.listen(
       (event) {
         emit(state.copyWith(
           note: event,
+          targetNote: _tuningRepository.findNearestNote(state.note.frequency),
         ));
       },
     );
@@ -71,12 +79,45 @@ class PitchCubit extends Cubit<TuningState> {
     await _tuningRepository.stopAudio();
   }
 
-  // void changeTuning(GuitarTuning newTuning) {
-  //   emit(state.copyWith(
-  //     currentTuning: newTuning,
-  //     currentStringIndex: 0,
-  //   ));
-  // }
+  Future<void> selectTuning(TuningModel tuning) async {
+    await _tuningRepository.selectTuning(tuning);
+
+    emit(state.copyWith(
+      tuning: tuning,
+      currentStringIndex: 0,
+      targetNote: tuning.notes.isNotEmpty ? tuning.notes[0] : state.targetNote,
+    ));
+  }
+
+  void changeString(int newIndex) {
+    emit(state.copyWith(
+      currentStringIndex: newIndex,
+      targetNote: state.tuning.notes[newIndex],
+    ));
+  }
+
+  Future<void> loadTunings() async {
+    final tunings = await _tuningRepository.loadCustomTunings();
+    emit(state.copyWith(availableTunings: tunings));
+  }
+
+  Future<void> saveTuning(TuningModel tuning) async {
+    await _tuningRepository.saveCustomTuning(tuning);
+    final updatedTunings = await _tuningRepository.loadCustomTunings();
+    emit(state.copyWith(availableTunings: updatedTunings));
+  }
+
+  Future<void> switchMode(TuningMode mode) async {
+    await _tuningRepository.switchMode(mode);
+    emit(state.copyWith(mode: mode));
+    await _resetTuning();
+  }
+
+  Future<void> _resetTuning() async {
+    await stopTuning();
+    await startTuning();
+  }
+}
 
 //   void nextString() {
 //     if (state.currentStringIndex < state.currentTuning.strings.length - 1) {
@@ -101,7 +142,6 @@ class PitchCubit extends Cubit<TuningState> {
 //   // int getCentsDifference(double detectedFreq, double targetFreq) {
 //   //   return (1200 * (log(detectedFreq / targetFreq) / ln2)).round();
 //   // }
-}
 
 extension Description on TuningStatus {
   String getDescription() => switch (this) {
