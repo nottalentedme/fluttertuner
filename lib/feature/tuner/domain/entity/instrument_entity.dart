@@ -1,4 +1,6 @@
-abstract interface class InstrumentEntity {
-  String get name;
-  int get strings;
+class InstrumentEntity {
+  final String name;
+  final int strings;
+
+  const InstrumentEntity({required this.name, required this.strings});
 }

@@ -25,6 +25,7 @@ abstract interface class TuningRepository {
   Future<void> selectTuning(TuningModel tuning);
   TuningModel get currentTuning;
   Future<void> switchMode(TuningMode mode);
+  NoteModel findNearestNote(double frequency);
 }
 
 class TuningRepositoryImpl implements TuningRepository {
@@ -53,6 +54,7 @@ class TuningRepositoryImpl implements TuningRepository {
   @override
   TuningModel get currentTuning => _currentTuning;
 
+  @override
   NoteModel findNearestNote(double frequency) {
     return _currentTuning.notes.cast<NoteModel>().reduce((a, b) =>
         (frequency - a.frequency).abs() < (frequency - b.frequency).abs()

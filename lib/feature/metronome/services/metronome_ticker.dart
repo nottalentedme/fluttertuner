@@ -2,7 +2,6 @@ import 'package:flutter/scheduler.dart';
 
 class MetronomeTicker {
   final Ticker _ticker;
-  final Stopwatch _stopwatch = Stopwatch();
   final int tempo;
   final void Function() onTick;
 
@@ -25,14 +24,12 @@ class MetronomeTicker {
   }
 
   void start() {
-    _stopwatch.start();
     _lastTick = Duration.zero;
     _ticker.start();
     _instance = this;
   }
 
   void stop() {
-    _stopwatch.stop();
     _ticker.stop();
   }
 
