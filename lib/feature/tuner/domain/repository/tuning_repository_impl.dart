@@ -8,10 +8,8 @@ import 'package:fluttertuner/feature/tuner/data/constants/tuning_presets.dart';
 import 'package:fluttertuner/feature/tuner/data/models/note_model.dart';
 import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
 import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
-import 'package:fluttertuner/feature/tuner/domain/entity/tuning_entity.dart';
 import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_interface.dart';
 import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_interface_service.dart';
-import 'package:fluttertuner/feature/tuner/service/tuning_storage/tuning_storage.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/pitch_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,6 +24,7 @@ abstract interface class TuningRepository {
   TuningModel get currentTuning;
   Future<void> switchMode(TuningMode mode);
   NoteModel findNearestNote(double frequency);
+  TuningMode get currentMode;
 }
 
 class TuningRepositoryImpl implements TuningRepository {

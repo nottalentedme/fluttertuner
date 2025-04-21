@@ -42,16 +42,17 @@ class PitchCubit extends Cubit<TuningState> {
   Future<void> startTuning() async {
     await _tuningRepository.startAudio();
     final currentTuning = _tuningRepository.currentTuning;
+    final mode = _tuningRepository.currentMode;
     emit(state.copyWith(
       tuning: currentTuning,
       currentStringIndex: 0,
+      mode: mode,
     ));
 
     _tuningResultSubscription = _tuningRepository.noteStream.listen(
       (event) {
         emit(state.copyWith(
           note: event,
-          targetNote: _tuningRepository.findNearestNote(state.note.frequency),
         ));
       },
     );
@@ -107,10 +108,13 @@ class PitchCubit extends Cubit<TuningState> {
     emit(state.copyWith(availableTunings: updatedTunings));
   }
 
-  Future<void> switchMode(TuningMode mode) async {
-    await _tuningRepository.switchMode(mode);
-    emit(state.copyWith(mode: mode));
-    await _resetTuning();
+  void toggleTuningMode() {
+    final newMode = state.mode == TuningMode.scale
+        ? TuningMode.chromatic
+        : TuningMode.scale;
+
+    _tuningRepository.switchMode(newMode);
+    emit(state.copyWith(mode: newMode));
   }
 
   Future<void> _resetTuning() async {

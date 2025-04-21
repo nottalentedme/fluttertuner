@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/tuner/cubit/pitch_cubit.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
+import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/instrument_title_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/pos.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_scale_widget.dart';
@@ -75,31 +76,58 @@ class _TunerPageState extends State<TunerPage> {
                   //TunerScaleWidget(value: 0),
                   const SizedBox(height: 20),
                   BlocBuilder<PitchCubit, TuningState>(
-                      builder: (context, state) {
-                    return TunerTextWidget(note: state.note);
-                  }),
+                    builder: (context, state) {
+                      return Column(
+                        children: [
+                          TunerTextWidget(note: state.note),
+                          const SizedBox(height: 20),
+                          if (state.mode == TuningMode.scale)
+                            Wrap(
+                              spacing: 8,
+                              alignment: WrapAlignment.center,
+                              children: List.generate(
+                                state.tuning.notes.length,
+                                (index) => ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        index == state.currentStringIndex
+                                            ? Colors.blueAccent
+                                            : Colors.grey[700],
+                                  ),
+                                  onPressed: () {
+                                    context
+                                        .read<PitchCubit>()
+                                        .changeString(index);
+                                  },
+                                  child: Text(
+                                    state.tuning.notes[index].name,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          const SizedBox(height: 20),
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              context.read<PitchCubit>().toggleTuningMode();
+                            },
+                            icon: const Icon(Icons.swap_horiz),
+                            label: Text(
+                              state.mode == TuningMode.scale
+                                  ? 'Switch to Chromatic'
+                                  : 'Switch to Scale',
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
-            //!!! оставлю смену струн до лучших времен
-            // Padding(
-            //   padding: const EdgeInsets.only(bottom: 20),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: GuitarString.values
-            //         .map(
-            //           (e) => Padding(
-            //             padding: const EdgeInsets.symmetric(horizontal: 4),
-            //             child: StringButtonWidget(
-            //               text: e.noteName,
-            //               onTap: () => setActiveString(e),
-            //               isActive: e == guitarString,
-            //             ),
-            //           ),
-            //         )
-            //         .toList(),
-            //   ),
-            // ),
           ],
         ),
       ),
