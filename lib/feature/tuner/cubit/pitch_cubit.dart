@@ -125,11 +125,10 @@ class PitchCubit extends Cubit<TuningState> {
 //   String getCurrentTargetNote() {
 //     return state.currentTuning.strings[state.currentStringIndex];
 //   }
-  //
-  // int getCentsDifference(double detectedFreq, double targetFreq) {
-  //   return (1200 * (log(detectedFreq / targetFreq) / ln2)).round();
-  // }
-}
+//
+// int getCentsDifference(double detectedFreq, double targetFreq) {
+//   return (1200 * (log(detectedFreq / targetFreq) / ln2)).round();
+// }
 
 extension Description on TuningStatus {
   String getDescription() => switch (this) {
