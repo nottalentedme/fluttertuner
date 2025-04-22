@@ -5,7 +5,6 @@ import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
 import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/instrument_title_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/pos.dart';
-import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_scale_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_text_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_mode_switch_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_selection_widget.dart';
@@ -30,17 +29,6 @@ class _TunerPageState extends State<TunerPage> {
   //     guitarString = value;
   //   });
   // }
-
-  @override
-  void initState() {
-    super.initState();
-    print('Stream started on page');
-    startStream();
-  }
-
-  Future<void> startStream() async {
-    BlocProvider.of<PitchCubit>(context).startTuning();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +61,6 @@ class _TunerPageState extends State<TunerPage> {
                       builder: (context, diffState) {
                         return TunerScaleWidgets(value: diffState);
                       }),
-                  //TunerScaleWidget(value: 0),
                   const SizedBox(height: 20),
                   BlocBuilder<PitchCubit, TuningState>(
                     builder: (context, state) {

@@ -8,6 +8,7 @@ import 'package:fluttertuner/feature/tuner/data/constants/tuning_presets.dart';
 import 'package:fluttertuner/feature/tuner/data/models/note_model.dart';
 import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
 import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
+import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuning_repository.dart';
 import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_interface.dart';
 import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_interface_service.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
@@ -67,19 +68,14 @@ class TuningRepositoryImpl implements TuningRepository {
 
   @override
   Future<void> startAudio() async {
-    _noteStreamController = StreamController.broadcast();
+    _noteStreamController = StreamController();
     print('stream started');
     final recordStream = await _audioRecorderService.startRecording();
     var audioSampleBufferedStream = _bufferService.toBuffer(recordStream);
-
     sub = audioSampleBufferedStream.listen((audioSample) async {
       final intBuffer = Uint8List.fromList(audioSample);
       final detectedPitch =
           await _pitchDetector.getPitchFromIntBuffer(intBuffer);
-
-      print('detected pitched');
-      print(detectedPitch.pitch);
-
       if (detectedPitch.pitched) {
         final currentFreq = detectedPitch.pitch;
 
@@ -96,16 +92,11 @@ class TuningRepositoryImpl implements TuningRepository {
             ),
           );
         } else {
-          final nearest = findNearestNote(currentFreq);
-          final diffCents =
-              _calculateCentsDifference(currentFreq, nearest.frequency);
+          final pitchResult =
+              await _pitchHandler.handlePitch(detectedPitch.pitch);
 
           _noteStreamController.sink.add(
-            WrongNoteModel(
-              name: nearest.name,
-              frequency: nearest.frequency,
-              diffCents: diffCents,
-            ),
+            WrongNoteModel.fromPitchResult(pitchResult),
           );
         }
       }

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../cubit/pitch_cubit.dart';
 import '../../domain/models/guitar_tuning_model.dart';
 
 class InstrumentTitleWidget extends StatelessWidget {
@@ -10,7 +8,7 @@ class InstrumentTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentState = context.watch<PitchCubit>().state;
+    // final currentState = context.watch<PitchCubit>().state;
     // final currentTuning = currentState.currentTuning;
 
     return Container(

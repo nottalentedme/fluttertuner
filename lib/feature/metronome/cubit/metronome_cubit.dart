@@ -2,15 +2,16 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_state.dart';
+import 'package:fluttertuner/feature/metronome/domain/repository/interface/metronome_ticker_interface.dart';
 import 'package:fluttertuner/feature/metronome/services/metronome_player.dart';
-import 'package:fluttertuner/feature/metronome/services/metronome_ticker.dart';
+import 'package:fluttertuner/feature/metronome/domain/repository/metronome_ticker.dart';
 
 class MetronomeCubit extends Cubit<MetronomeState> {
-  final MetronomePlayer _metronomePlayer = MetronomePlayer();
-  MetronomeTicker? _ticker;
+  final MetronomePlayer metronomePlayer;
+  MetronomeTickerRepository? _ticker;
   final List<DateTime> _tapTimes = [];
 
-  MetronomeCubit() : super(MetronomeState.initial()) {
+  MetronomeCubit(this.metronomePlayer) : super(MetronomeState.initial()) {
     print('MetronomeCubit created');
   }
 
@@ -34,9 +35,9 @@ class MetronomeCubit extends Cubit<MetronomeState> {
 
   void _startTicker() {
     _stopTicker();
-    _ticker = MetronomeTicker(
+    _ticker = MetronomeTickerImpl(
       tempo: state.tempo,
-      onTick: () => _metronomePlayer.play(),
+      onTick: () => metronomePlayer.play(),
     )..start();
   }
 
@@ -79,7 +80,7 @@ class MetronomeCubit extends Cubit<MetronomeState> {
   @override
   Future<void> close() {
     _stopTicker();
-    _metronomePlayer.dispose();
+    metronomePlayer.dispose();
     print('MetronomeCubit destroyed');
     return super.close();
   }
