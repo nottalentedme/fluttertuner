@@ -4,7 +4,6 @@ import 'package:fluttertuner/feature/tuner/data/models/note_model.dart';
 import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
 import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
 import 'package:fluttertuner/feature/tuner/domain/entity/tuning_entity.dart';
-import 'package:fluttertuner/feature/tuner/domain/models/guitar_tuning_model.dart';
 
 class TuningState {
   final WrongNoteEntity note; // текущая определённая нота
@@ -21,10 +20,10 @@ class TuningState {
 
   factory TuningState.initial() {
     return const TuningState(
-      note: WrongNoteModel(frequency: 123123, name: 'E', diffCents: 3333),
+      note: WrongNoteModel(frequency: 0, name: 'Play!', diffCents: 0.0),
       tuning: TuningModel(
-        description: "description",
-        instrument: InstrumentModel(name: '232', strings: 4),
+        description: "",
+        instrument: InstrumentModel(name: 'guitar', strings: 6),
         notes: [],
       ),
       targetNote: NoteModel(frequency: 33333, name: 'C'),
