@@ -29,21 +29,18 @@ class TuningRepositoryImpl implements TuningRepository {
 
   @override
   Future<void> startAudio() async {
-    _noteStreamController = StreamController.broadcast();
+    _noteStreamController = StreamController();
     print('stream started');
     final recordStream = await _audioRecorderService.startRecording();
     var audioSampleBufferedStream = _bufferService.toBuffer(recordStream);
-    final sub = audioSampleBufferedStream.listen((audioSample) async {
+    sub = audioSampleBufferedStream.listen((audioSample) async {
       final intBuffer = Uint8List.fromList(audioSample);
 
       final detectedPitch =
           await _pitchDetector.getPitchFromIntBuffer(intBuffer);
-      print('detected pitched');
-      print(detectedPitch.pitch);
       if (detectedPitch.pitched) {
         final currentFreq = detectedPitch.pitch;
         final pitchResult = await _pitchHandler.handlePitch(currentFreq);
-        print(pitchResult.note);
         _noteStreamController.sink.add(
           WrongNoteModel.fromPitchResult(pitchResult),
         );

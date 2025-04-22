@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertuner/core/theme/color_scheme.dart';
-import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
 import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
 
 class TunerTextWidget extends StatelessWidget {
@@ -32,9 +31,9 @@ class TunerTextWidget extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text(
-                '${note.diffCents.toStringAsFixed(1)} Гц',
-                style: const TextStyle(
-                  color: AppColorScheme.primary,
+                '${note.diffCents.toStringAsFixed(1)} cents',
+                style: TextStyle(
+                  color: AppColorScheme.primary.withAlpha(100),
                   fontSize: 20.0,
                 ),
               ),

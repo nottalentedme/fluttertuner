@@ -15,6 +15,7 @@ class PitchCubit extends Cubit<TuningState> {
     this._tuningRepository,
   ) : super(TuningState.initial()) {
     print('PitchCubit created');
+    startTuning();
   }
 
   @override
