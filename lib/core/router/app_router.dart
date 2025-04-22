@@ -1,3 +1,5 @@
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/core/extension/build_context_extension.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_cubit.dart';
@@ -41,30 +43,61 @@ abstract class AppRouter {
         routes: [
           // Metronome branch
           GoRoute(
-            path: MetronomePage.path,
-            builder: (context, state) {
-              return BlocProvider<MetronomeCubit>(
-                create: (context) =>
-                    MetronomeCubit(context.dep<MetronomePlayer>()),
-                child: const MetronomePage(),
-              );
-            },
-          ),
+              path: MetronomePage.path,
+              pageBuilder: (context, state) {
+                return CustomTransitionPage(
+                    child: BlocProvider<MetronomeCubit>(
+                      create: (context) =>
+                          MetronomeCubit(context.dep<MetronomePlayer>()),
+                      child: const MetronomePage(),
+                    ),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return FadeTransition(
+                        opacity: CurveTween(curve: Curves.easeInCirc)
+                            .animate(animation),
+                        child: child,
+                      );
+                    });
+              }),
+
           // Tuner branch
           GoRoute(
             path: TunerPage.path,
-            builder: (context, state) {
-              return BlocProvider(
-                create: (context) =>
-                    PitchCubit(context.dep<TuningRepository>()),
-                child: const TunerPage(),
+            pageBuilder: (context, state) {
+              return CustomTransitionPage(
+                child: BlocProvider(
+                  create: (context) =>
+                      PitchCubit(context.dep<TuningRepository>()),
+                  child: const TunerPage(),
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(
+                    opacity:
+                        CurveTween(curve: Curves.easeInCirc).animate(animation),
+                    child: child,
+                  );
+                },
               );
             },
           ),
           // Settings branch
           GoRoute(
             path: SettingsPage.path,
-            builder: (context, state) => const SettingsPage(),
+            pageBuilder: (context, state) {
+              return CustomTransitionPage(
+                child: const SettingsPage(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(
+                    opacity:
+                        CurveTween(curve: Curves.easeInCirc).animate(animation),
+                    child: child,
+                  );
+                },
+              );
+            },
           ),
         ],
       ),
