@@ -3,12 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tuning_cubit.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
 import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
-import 'package:fluttertuner/feature/tuner/presentation/widgets/instrument_title_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/pos.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_text_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_mode_switch_widget.dart';
-import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_selection_widget.dart';
-import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_impl_service.dart';
 
 class TunerPage extends StatelessWidget {
   const TunerPage({super.key});
@@ -67,7 +64,7 @@ class TunerPage extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     context
-                                        .read<PitchCubit>()
+                                        .read<TuningCubit>()
                                         .changeString(index);
                                   },
                                   child: Text(
@@ -83,7 +80,7 @@ class TunerPage extends StatelessWidget {
                           const SizedBox(height: 20),
                           ElevatedButton.icon(
                             onPressed: () {
-                              context.read<PitchCubit>().toggleTuningMode();
+                              context.read<TuningCubit>().toggleTuningMode();
                             },
                             icon: const Icon(Icons.swap_horiz),
                             label: Text(

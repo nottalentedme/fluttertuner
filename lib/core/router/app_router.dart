@@ -88,7 +88,7 @@ abstract class AppRouter {
               return CustomTransitionPage(
                 child: BlocProvider(
                   create: (context) =>
-                      PitchCubit(context.dep<TuningRepository>()),
+                      TuningCubit(context.dep<TuningRepository>()),
                   child: const SettingsPage(),
                 ),
                 transitionsBuilder:
