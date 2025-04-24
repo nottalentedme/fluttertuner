@@ -3,10 +3,23 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_painter.dart';
 
-class TunerScaleWidgets extends StatelessWidget {
+class TunerScaleWidgets extends StatefulWidget {
   final double value;
 
   const TunerScaleWidgets({super.key, required this.value});
+
+  @override
+  State<TunerScaleWidgets> createState() => _TunerScaleWidgetsState();
+}
+
+class _TunerScaleWidgetsState extends State<TunerScaleWidgets> {
+  double _previousValue = 0;
+
+  @override
+  void didUpdateWidget(covariant TunerScaleWidgets oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _previousValue = oldWidget.value; // сохраняем "откуда" анимировать
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,21 +29,26 @@ class TunerScaleWidgets extends StatelessWidget {
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          // Шкала (без стрелки)
           CustomPaint(
             size: const Size(300, 150),
             painter: TunerPainter(),
           ),
-
-          // Стрелка (с возможностью регулировать угол и позицию)
           Transform.translate(
-            offset: const Offset(0, -10), // Регулируй расстояние по Y
-            child: Transform.rotate(
-              angle: (value / 60) * pi, // Угол поворота
-              alignment: Alignment.bottomCenter,
+            offset: const Offset(0, -10),
+            child: TweenAnimationBuilder<double>(
+              tween: Tween<double>(begin: _previousValue, end: widget.value),
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeOut,
+              builder: (context, animatedValue, child) {
+                return Transform.rotate(
+                  angle: (animatedValue / 120) * pi,
+                  alignment: Alignment.bottomCenter,
+                  child: child,
+                );
+              },
               child: Image.asset(
                 'assets/tuner/strelka.png',
-                height: 90, // Настрой размеры под своё изображение
+                height: 90,
               ),
             ),
           ),

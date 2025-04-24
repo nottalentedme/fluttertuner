@@ -1,32 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertuner/feature/tuner/cubit/pitch_cubit.dart';
+import 'package:fluttertuner/feature/tuner/cubit/tuning_cubit.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
-import 'package:fluttertuner/feature/tuner/presentation/widgets/instrument_title_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/pos.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_text_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_mode_switch_widget.dart';
-import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_impl_service.dart';
 
-class TunerPage extends StatefulWidget {
+class TunerPage extends StatelessWidget {
   const TunerPage({super.key});
 
   static const path = '/tuner';
-
-  @override
-  State<TunerPage> createState() => _TunerPageState();
-}
-
-class _TunerPageState extends State<TunerPage> {
-  final recorder = AudioRecorderServiceImpl();
-  //!!! оставлено до лучших времен
-  // GuitarString guitarString = GuitarString.sixthE;
-
-  // void setActiveString(GuitarString value) {
-  //   setState(() {
-  //     guitarString = value;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +29,6 @@ class _TunerPageState extends State<TunerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                InstrumentTitleWidget(),
                 TuningModeSwitchWidget(),
               ],
             ),
@@ -54,38 +36,19 @@ class _TunerPageState extends State<TunerPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  BlocSelector<PitchCubit, TuningState, double>(
+                  BlocSelector<TuningCubit, TuningState, double>(
                       selector: (state) => state.note.diffCents,
                       builder: (context, diffState) {
                         return TunerScaleWidgets(value: diffState);
                       }),
                   const SizedBox(height: 20),
-                  BlocBuilder<PitchCubit, TuningState>(
+                  BlocBuilder<TuningCubit, TuningState>(
                       builder: (context, state) {
                     return TunerTextWidget(note: state.note);
                   }),
                 ],
               ),
             ),
-            //!!! оставлю смену струн до лучших времен
-            // Padding(
-            //   padding: const EdgeInsets.only(bottom: 20),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: GuitarString.values
-            //         .map(
-            //           (e) => Padding(
-            //             padding: const EdgeInsets.symmetric(horizontal: 4),
-            //             child: StringButtonWidget(
-            //               text: e.noteName,
-            //               onTap: () => setActiveString(e),
-            //               isActive: e == guitarString,
-            //             ),
-            //           ),
-            //         )
-            //         .toList(),
-            //   ),
-            // ),
           ],
         ),
       ),
