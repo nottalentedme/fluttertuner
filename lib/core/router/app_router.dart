@@ -1,10 +1,9 @@
-import 'package:flutter/src/widgets/basic.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/core/extension/build_context_extension.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_cubit.dart';
 import 'package:fluttertuner/feature/metronome/services/metronome_player.dart';
-import 'package:fluttertuner/feature/tuner/cubit/pitch_cubit.dart';
+import 'package:fluttertuner/feature/tuner/cubit/tuning_cubit.dart';
 import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuning_repository.dart';
 import 'package:go_router/go_router.dart';
 
@@ -68,7 +67,7 @@ abstract class AppRouter {
               return CustomTransitionPage(
                 child: BlocProvider(
                   create: (context) =>
-                      PitchCubit(context.dep<TuningRepository>()),
+                      TuningCubit(context.dep<TuningRepository>()),
                   child: const TunerPage(),
                 ),
                 transitionsBuilder:

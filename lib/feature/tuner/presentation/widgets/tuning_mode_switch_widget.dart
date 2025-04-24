@@ -23,7 +23,6 @@ class _TuningModeSwitchWidgetState extends State<TuningModeSwitchWidget> {
         isActive = false;
       });
     }
-    ;
   }
 
   @override
