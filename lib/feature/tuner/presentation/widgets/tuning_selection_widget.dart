@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertuner/feature/tuner/cubit/pitch_cubit.dart';
+import 'package:fluttertuner/feature/tuner/cubit/tuning_cubit.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
-import 'package:fluttertuner/feature/tuner/data/models/note_model.dart';
 import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_add_form.dart';
 
@@ -18,12 +16,12 @@ class _TuningSelectorState extends State<TuningSelector> {
   @override
   void initState() {
     super.initState();
-    context.read<PitchCubit>().loadTunings();
+    context.read<TuningCubit>().loadTunings();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PitchCubit, TuningState>(
+    return BlocBuilder<TuningCubit, TuningState>(
       builder: (context, state) {
         final tunings = state.availableTunings;
 
@@ -42,7 +40,7 @@ class _TuningSelectorState extends State<TuningSelector> {
                 title: Text(tuning.name),
                 trailing: isSelected ? const Icon(Icons.check) : null,
                 onTap: () {
-                  context.read<PitchCubit>().selectTuning(tuning);
+                  context.read<TuningCubit>().selectTuning(tuning);
                 },
               );
             } else {
@@ -58,8 +56,8 @@ class _TuningSelectorState extends State<TuningSelector> {
 
                   if (!context.mounted || newTuning == null) return;
 
-                  context.read<PitchCubit>().saveTuning(newTuning);
-                  await context.read<PitchCubit>().loadTunings();
+                  context.read<TuningCubit>().saveTuning(newTuning);
+                  await context.read<TuningCubit>().loadTunings();
                 },
               );
             }

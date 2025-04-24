@@ -1,5 +1,4 @@
 import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
-import 'package:fluttertuner/feature/tuner/domain/models/guitar_tuning_model.dart';
 import 'package:pitchupdart/pitch_result.dart';
 
 class NoteModel implements NoteEntity {
@@ -13,19 +12,6 @@ class NoteModel implements NoteEntity {
       frequency: pitchResult.expectedFrequency,
       name: pitchResult.note,
     );
-  }
-
-  factory NoteModel.fromName(String name) {
-    final matching = noteFrequencies.entries
-        .where((entry) => entry.key.startsWith(name))
-        .toList();
-
-    if (matching.isNotEmpty) {
-      final match = matching.first;
-      return NoteModel(name: match.key, frequency: match.value);
-    }
-
-    return NoteModel(name: name, frequency: 0.0);
   }
 
   @override

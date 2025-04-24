@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_add_form.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_selection_widget.dart';
 
 class SettingsPage extends StatelessWidget {

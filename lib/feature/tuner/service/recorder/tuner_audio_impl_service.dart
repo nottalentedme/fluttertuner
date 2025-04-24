@@ -32,7 +32,6 @@ class AudioRecorderServiceImpl implements AudioRecorderService {
       ));
       return recordStream;
     } catch (e) {
-      print('Ошибка аудиостриминга: $e');
       throw Exception('Не удалось начать аудиозапись');
     }
   }

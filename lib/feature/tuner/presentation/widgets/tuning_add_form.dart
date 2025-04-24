@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertuner/feature/tuner/cubit/pitch_cubit.dart';
-import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
 import 'package:fluttertuner/feature/tuner/data/models/note_model.dart';
 import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
-import 'package:fluttertuner/feature/tuner/domain/models/guitar_tuning_model.dart';
+import 'package:fluttertuner/feature/tuner/data/constants/note_data.dart';
 
 class AddTuningDialog extends StatefulWidget {
   const AddTuningDialog({super.key});
