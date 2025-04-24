@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertuner/core/theme/color_scheme.dart';
-import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
+import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
 
 class TunerTextWidget extends StatelessWidget {
   const TunerTextWidget({
     super.key,
-    required this.pitchCubitState,
+    required this.note,
   });
 
-  final TuningState pitchCubitState;
+  final WrongNoteEntity note;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class TunerTextWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                pitchCubitState.targetNote,
+                note.name,
                 style: const TextStyle(
                   color: AppColorScheme.primary,
                   fontSize: 65.0,
@@ -31,9 +31,9 @@ class TunerTextWidget extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text(
-                '${pitchCubitState.targetFrequency.toStringAsFixed(1)} Гц',
-                style: const TextStyle(
-                  color: AppColorScheme.primary,
+                '${note.diffCents.toStringAsFixed(1)} cents',
+                style: TextStyle(
+                  color: AppColorScheme.primary.withAlpha(100),
                   fontSize: 20.0,
                 ),
               ),
