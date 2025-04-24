@@ -6,6 +6,7 @@ import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_impl.da
 import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_interface.dart';
 import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_impl_service.dart';
 import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_interface_service.dart';
+import 'package:fluttertuner/feature/tuner/service/tuning_storage/tuning_storage.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_handler.dart';
@@ -19,6 +20,7 @@ void configureDependencies() {
   final PitchDetector pitchDetector = PitchDetector();
   final PitchHandler pitchHandler = PitchHandler(InstrumentType.guitar);
   final MetronomePlayer metronomePlayer = MetronomePlayer();
+  final TuningStorage tuningStorage = TuningStorage();
 
   //? Service registration
   di.register<AudioRecorderService>(audioRecorderService);
@@ -31,6 +33,7 @@ void configureDependencies() {
     bufferService,
     pitchDetector,
     pitchHandler,
+    tuningStorage,
   );
 
   //? Repository registration

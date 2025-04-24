@@ -86,7 +86,11 @@ abstract class AppRouter {
             path: SettingsPage.path,
             pageBuilder: (context, state) {
               return CustomTransitionPage(
-                child: const SettingsPage(),
+                child: BlocProvider(
+                  create: (context) =>
+                      PitchCubit(context.dep<TuningRepository>()),
+                  child: const SettingsPage(),
+                ),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   return FadeTransition(

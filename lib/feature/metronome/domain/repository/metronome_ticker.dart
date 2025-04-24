@@ -3,7 +3,6 @@ import 'package:fluttertuner/feature/metronome/domain/repository/interface/metro
 
 class MetronomeTickerImpl implements MetronomeTickerRepository {
   final Ticker _ticker;
-  final Stopwatch _stopwatch = Stopwatch();
   final int tempo;
   final void Function() onTick;
 
@@ -27,7 +26,6 @@ class MetronomeTickerImpl implements MetronomeTickerRepository {
 
   @override
   void start() {
-    _stopwatch.start();
     _lastTick = Duration.zero;
     _ticker.start();
     _instance = this;
@@ -35,7 +33,6 @@ class MetronomeTickerImpl implements MetronomeTickerRepository {
 
   @override
   void stop() {
-    _stopwatch.stop();
     _ticker.stop();
   }
 
