@@ -17,17 +17,14 @@ class NoteModel implements NoteEntity {
 
   factory NoteModel.fromName(String name) {
     final matching = noteFrequencies.entries
-        .where(
-            (entry) => entry.key.startsWith(name)) // Matches E -> E2, E3, etc.
+        .where((entry) => entry.key.startsWith(name))
         .toList();
 
-    // Pick one – here we pick the lowest, but you can tweak
     if (matching.isNotEmpty) {
       final match = matching.first;
       return NoteModel(name: match.key, frequency: match.value);
     }
 
-    // Fallback
     return NoteModel(name: name, frequency: 0.0);
   }
 

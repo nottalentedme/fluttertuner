@@ -36,7 +36,7 @@ class _TuningSelectorState extends State<TuningSelector> {
           itemBuilder: (context, index) {
             if (index < tunings.length) {
               final tuning = tunings[index];
-              final isSelected = tuning.name == state.tuning?.name;
+              final isSelected = tuning.name == state.tuning!.name;
 
               return ListTile(
                 title: Text(tuning.name),

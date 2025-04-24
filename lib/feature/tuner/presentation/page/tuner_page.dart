@@ -73,7 +73,7 @@ class _TunerPageState extends State<TunerPage> {
                               spacing: 8,
                               alignment: WrapAlignment.center,
                               children: List.generate(
-                                state.tuning.notes.length,
+                                state.tuning!.notes.length,
                                 (index) => ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor:
@@ -87,7 +87,7 @@ class _TunerPageState extends State<TunerPage> {
                                         .changeString(index);
                                   },
                                   child: Text(
-                                    state.tuning.notes[index].name,
+                                    state.tuning!.notes[index].name,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       color: Colors.white,

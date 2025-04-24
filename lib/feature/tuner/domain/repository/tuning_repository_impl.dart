@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 
@@ -11,35 +10,22 @@ import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
 import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuning_repository.dart';
 import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_interface.dart';
 import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_interface_service.dart';
+import 'package:fluttertuner/feature/tuner/service/tuning_storage/tuning_storage.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/pitch_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-abstract interface class TuningRepository {
-  Future<void> startAudio();
-  Future<void> stopAudio();
-  Stream<WrongNoteEntity> get noteStream;
-  Future<void> saveCustomTuning(TuningModel tuning);
-  Future<List<TuningModel>> loadCustomTunings();
-  Future<void> selectTuning(TuningModel tuning);
-  TuningModel get currentTuning;
-  Future<void> switchMode(TuningMode mode);
-  NoteModel findNearestNote(double frequency);
-  TuningMode get currentMode;
-}
 
 class TuningRepositoryImpl implements TuningRepository {
   final AudioRecorderService _audioRecorderService;
   final BufferService _bufferService;
   final PitchDetector _pitchDetector;
   final PitchHandler _pitchHandler;
+  final TuningStorage _tuningStorage;
 
   late StreamController<WrongNoteEntity> _noteStreamController;
   late StreamSubscription sub;
-  late TuningModel _currentTuning;
+  TuningModel _currentTuning = TuningPresets.standardTuning;
 
   TuningMode _currentMode = TuningMode.scale;
-  static const _prefsKey = 'custom_tunings';
 
   @override
   Stream<WrongNoteEntity> get noteStream => _noteStreamController.stream;
@@ -49,17 +35,17 @@ class TuningRepositoryImpl implements TuningRepository {
     this._bufferService,
     this._pitchDetector,
     this._pitchHandler,
+    this._tuningStorage,
   );
 
   @override
   TuningModel get currentTuning => _currentTuning;
 
+  int _currentStringIndex = 0;
+
   @override
-  NoteModel findNearestNote(double frequency) {
-    return _currentTuning.notes.cast<NoteModel>().reduce((a, b) =>
-        (frequency - a.frequency).abs() < (frequency - b.frequency).abs()
-            ? a
-            : b);
+  void setStringIndex(int index) {
+    _currentStringIndex = index;
   }
 
   double _calculateCentsDifference(double actualFreq, double targetFreq) {
@@ -69,21 +55,22 @@ class TuningRepositoryImpl implements TuningRepository {
   @override
   Future<void> startAudio() async {
     _noteStreamController = StreamController();
-    print('stream started');
     final recordStream = await _audioRecorderService.startRecording();
     var audioSampleBufferedStream = _bufferService.toBuffer(recordStream);
+
     sub = audioSampleBufferedStream.listen((audioSample) async {
       final intBuffer = Uint8List.fromList(audioSample);
       final detectedPitch =
           await _pitchDetector.getPitchFromIntBuffer(intBuffer);
+
       if (detectedPitch.pitched) {
         final currentFreq = detectedPitch.pitch;
 
-        if (_currentTuning.mode == TuningMode.scale) {
-          final nearest = findNearestNote(currentFreq);
+        if (_currentMode == TuningMode.scale) {
+          final nearest = currentTuning.notes[_currentStringIndex];
           final diffCents =
               _calculateCentsDifference(currentFreq, nearest.frequency);
-
+          print('${nearest.frequency},  ${nearest.name}');
           _noteStreamController.sink.add(
             WrongNoteModel(
               name: nearest.name,
@@ -91,9 +78,8 @@ class TuningRepositoryImpl implements TuningRepository {
               diffCents: diffCents,
             ),
           );
-        } else {
-          final pitchResult =
-              await _pitchHandler.handlePitch(detectedPitch.pitch);
+        } else if (_currentMode == TuningMode.chromatic) {
+          final pitchResult = await _pitchHandler.handlePitch(currentFreq);
 
           _noteStreamController.sink.add(
             WrongNoteModel.fromPitchResult(pitchResult),
@@ -112,24 +98,16 @@ class TuningRepositoryImpl implements TuningRepository {
 
   @override
   Future<void> saveCustomTuning(TuningModel tuning) async {
-    final prefs = await SharedPreferences.getInstance();
-    final existing = prefs.getStringList(_prefsKey) ?? [];
-    existing.add(jsonEncode(tuning.toJson()));
-    await prefs.setStringList(_prefsKey, existing);
+    _tuningStorage.saveCustomTuning(tuning);
   }
 
   @override
   Future<List<TuningModel>> loadCustomTunings() async {
-    final prefs = await SharedPreferences.getInstance();
-    final customTuningsJson = prefs.getStringList(_prefsKey) ?? [];
-
-    final customTunings = customTuningsJson
-        .map((json) => TuningModel.fromJson(jsonDecode(json)))
-        .toList();
+    final customTunings = await _tuningStorage.loadCustomTunings();
 
     return [
-      ...TuningPresets.defaultTunings, // Стандартные строи
-      ...customTunings, // Пользовательские строи
+      ...TuningPresets.defaultTunings,
+      ...customTunings,
     ];
   }
 

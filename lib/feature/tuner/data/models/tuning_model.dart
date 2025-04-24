@@ -1,5 +1,4 @@
 import 'package:fluttertuner/feature/tuner/data/models/note_model.dart';
-import 'package:fluttertuner/feature/tuner/domain/entity/instrument_entity.dart';
 import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
 import 'package:fluttertuner/feature/tuner/domain/entity/tuning_entity.dart';
 
@@ -12,7 +11,7 @@ class TuningModel implements TuningEntity {
   const TuningModel({
     required this.name,
     required this.notes,
-    this.mode = TuningMode.scale,
+    this.mode = TuningMode.chromatic,
   });
 
   @override

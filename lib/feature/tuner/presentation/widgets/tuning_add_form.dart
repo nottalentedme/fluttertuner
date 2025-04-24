@@ -15,22 +15,9 @@ class AddTuningDialog extends StatefulWidget {
 
 class _AddTuningDialogState extends State<AddTuningDialog> {
   final _nameController = TextEditingController();
-  final List<String> _noteOptions = [
-    'C',
-    'C#',
-    'D',
-    'D#',
-    'E',
-    'F',
-    'F#',
-    'G',
-    'G#',
-    'A',
-    'A#',
-    'B',
-  ];
+  final List<String> _noteOptions = noteFrequencies.keys.toList();
 
-  final List<String> _selectedNotes = ['E', 'A', 'D', 'G', 'B', 'E'];
+  final List<String> _selectedNotes = ['E4', 'A4', 'D4', 'G4', 'B4', 'E4'];
 
   void _addString() {
     setState(() {
