@@ -4,9 +4,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
 import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuner_repository.dart';
-
 import 'package:fluttertuner/feature/tuner/cubit/tuner_state.dart';
-import 'package:fluttertuner/feature/tunings/domain/entity/tuning_entity.dart';
 import 'package:fluttertuner/feature/tunings/domain/repository/interface/tuning_repository.dart';
 
 class TunerCubit extends Cubit<TunerState> {
@@ -50,16 +48,6 @@ class TunerCubit extends Cubit<TunerState> {
     _tuningResultSubscription?.cancel();
     await _tunerRepository.stopAudio();
   }
-//!!! вынести в tuning cubit
-  // Future<void> selectTuning(TuningEntity tuning) async {
-  //   await _tuningRepository.selectTuning(tuning);
-
-  //   emit(state.copyWith(
-  //     tuning: tuning,
-  //     currentStringIndex: 0,
-  //     targetNote: tuning.notes.isNotEmpty ? tuning.notes[0] : state.targetNote,
-  //   ));
-  // }
 
   void changeString(int newIndex) {
     _tunerRepository.setStringIndex(newIndex);
@@ -68,17 +56,6 @@ class TunerCubit extends Cubit<TunerState> {
       targetNote: state.tuning?.notes[newIndex],
     ));
   }
-//!!! вынести в tuning cubit
-  // Future<void> loadTunings() async {
-  //   final tunings = await _tuningRepository.loadCustomTunings();
-  //   emit(state.copyWith(availableTunings: tunings));
-  // }
-//!!! вынести в tuning cubit
-  // Future<void> saveTuning(TuningModel tuning) async {
-  //   await _tuningRepository.saveCustomTuning(tuning);
-  //   final updatedTunings = await _tuningRepository.loadCustomTunings();
-  //   emit(state.copyWith(availableTunings: updatedTunings));
-  // }
 
   void toggleTuningMode() async {
     final newMode = state.mode == TuningMode.scale

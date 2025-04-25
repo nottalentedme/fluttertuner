@@ -1,4 +1,3 @@
-import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
 import 'package:fluttertuner/feature/tunings/domain/entity/tuning_entity.dart';
 
 class TuningState {
