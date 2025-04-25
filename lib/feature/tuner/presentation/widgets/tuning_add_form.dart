@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertuner/feature/tuner/data/models/note_model.dart';
-import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
-import 'package:fluttertuner/feature/tuner/data/constants/note_data.dart';
+import 'package:fluttertuner/feature/tunings/data/models/note_model.dart';
+import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
+import 'package:fluttertuner/feature/tunings/data/constants/note_data.dart';
 
 class AddTuningDialog extends StatefulWidget {
   const AddTuningDialog({super.key});

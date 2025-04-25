@@ -4,7 +4,8 @@ import 'package:fluttertuner/core/extension/build_context_extension.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_cubit.dart';
 import 'package:fluttertuner/feature/metronome/services/metronome_player.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tuning_cubit.dart';
-import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuning_repository.dart';
+import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuner_repository.dart';
+import 'package:fluttertuner/feature/tunings/domain/repository/interface/tuning_repository.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../feature/metronome/presentation/page/metronome_page.dart';
@@ -66,8 +67,10 @@ abstract class AppRouter {
             pageBuilder: (context, state) {
               return CustomTransitionPage(
                 child: BlocProvider(
-                  create: (context) =>
-                      TuningCubit(context.dep<TuningRepository>()),
+                  create: (context) => TuningCubit(
+                    context.dep<TunerRepository>(),
+                    context.dep<TuningRepository>(),
+                  ),
                   child: const TunerPage(),
                 ),
                 transitionsBuilder:
@@ -87,8 +90,10 @@ abstract class AppRouter {
             pageBuilder: (context, state) {
               return CustomTransitionPage(
                 child: BlocProvider(
-                  create: (context) =>
-                      TuningCubit(context.dep<TuningRepository>()),
+                  create: (context) => TuningCubit(
+                    context.dep<TunerRepository>(),
+                    context.dep<TuningRepository>(),
+                  ),
                   child: const SettingsPage(),
                 ),
                 transitionsBuilder:

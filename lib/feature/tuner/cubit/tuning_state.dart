@@ -1,12 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:fluttertuner/feature/tuner/data/models/note_model.dart';
-import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
-import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
+import 'package:fluttertuner/feature/tunings/data/models/note_model.dart';
+import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
+import 'package:fluttertuner/feature/tunings/domain/entity/note_entity.dart';
+import 'package:fluttertuner/feature/tunings/domain/entity/tuning_entity.dart';
 
 class TuningState {
   final WrongNoteEntity note; // текущая определённая нота
   final NoteEntity? targetNote; // ближайшая нота из выбранного строя
-  final TuningModel? tuning; // строй
+  final TuningEntity? tuning; // строй
   final int? currentStringIndex;
   final List<TuningModel> availableTunings;
   final TuningMode mode;
@@ -34,7 +35,7 @@ class TuningState {
   TuningState copyWith({
     WrongNoteEntity? note,
     NoteEntity? targetNote,
-    TuningModel? tuning,
+    TuningEntity? tuning,
     int? currentStringIndex,
     List<TuningModel>? availableTunings,
     TuningMode? mode,

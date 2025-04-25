@@ -1,6 +1,6 @@
-import 'package:fluttertuner/feature/tuner/data/models/note_model.dart';
-import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
-import 'package:fluttertuner/feature/tuner/domain/entity/tuning_entity.dart';
+import 'package:fluttertuner/feature/tunings/data/models/note_model.dart';
+import 'package:fluttertuner/feature/tunings/domain/entity/note_entity.dart';
+import 'package:fluttertuner/feature/tunings/domain/entity/tuning_entity.dart';
 
 enum TuningMode {
   chromatic,

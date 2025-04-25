@@ -2,16 +2,19 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
-import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuning_repository.dart';
+import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
+import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuner_repository.dart';
 
 import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
+import 'package:fluttertuner/feature/tunings/domain/repository/interface/tuning_repository.dart';
 
 class TuningCubit extends Cubit<TuningState> {
   StreamSubscription? _tuningResultSubscription;
+  final TunerRepository _tunerRepository;
   final TuningRepository _tuningRepository;
 
   TuningCubit(
+    this._tunerRepository,
     this._tuningRepository,
   ) : super(TuningState.initial()) {
     startTuning();
@@ -24,16 +27,16 @@ class TuningCubit extends Cubit<TuningState> {
   }
 
   Future<void> startTuning() async {
-    await _tuningRepository.startAudio();
+    await _tunerRepository.startAudio();
     final currentTuning = _tuningRepository.currentTuning;
-    final mode = _tuningRepository.currentMode;
+    final mode = _tunerRepository.currentMode;
     emit(state.copyWith(
       tuning: currentTuning,
       currentStringIndex: 0,
       mode: mode,
     ));
 
-    _tuningResultSubscription = _tuningRepository.noteStream.listen(
+    _tuningResultSubscription = _tunerRepository.noteStream.listen(
       (event) {
         emit(state.copyWith(
           note: event,
@@ -44,7 +47,7 @@ class TuningCubit extends Cubit<TuningState> {
 
   Future<void> stopTuning() async {
     _tuningResultSubscription?.cancel();
-    await _tuningRepository.stopAudio();
+    await _tunerRepository.stopAudio();
   }
 
   Future<void> selectTuning(TuningModel tuning) async {
@@ -58,7 +61,7 @@ class TuningCubit extends Cubit<TuningState> {
   }
 
   void changeString(int newIndex) {
-    _tuningRepository.setStringIndex(newIndex);
+    _tunerRepository.setStringIndex(newIndex);
     emit(state.copyWith(
       currentStringIndex: newIndex,
       targetNote: state.tuning?.notes[newIndex],
@@ -81,7 +84,7 @@ class TuningCubit extends Cubit<TuningState> {
         ? TuningMode.chromatic
         : TuningMode.scale;
 
-    _tuningRepository.switchMode(newMode);
+    _tunerRepository.switchMode(newMode);
     emit(state.copyWith(mode: newMode));
   }
 }

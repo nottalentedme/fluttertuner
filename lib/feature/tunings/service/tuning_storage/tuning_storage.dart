@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
+import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TuningStorage {

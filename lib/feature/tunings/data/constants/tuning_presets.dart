@@ -1,5 +1,5 @@
-import 'package:fluttertuner/feature/tuner/data/models/note_model.dart';
-import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
+import 'package:fluttertuner/feature/tunings/data/models/note_model.dart';
+import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
 
 class TuningPresets {
   static const standardTuning = TuningModel(
