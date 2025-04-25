@@ -17,7 +17,7 @@ abstract interface class TuningRepository extends Repository {
   ///
   ///Метод выбора строя [tuning] - строй
   ///
-  Future<void> selectTuning(TuningModel tuning);
+  Future<void> selectTuning(TuningEntity tuning);
 
   ///
   ///Получает ближайшую ноту из строя по индексу струны

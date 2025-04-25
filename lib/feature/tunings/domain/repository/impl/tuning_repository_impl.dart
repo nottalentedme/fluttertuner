@@ -30,7 +30,7 @@ class TuningRepositoryImpl implements TuningRepository {
   }
 
   @override
-  Future<void> selectTuning(TuningModel tuning) async {
+  Future<void> selectTuning(TuningEntity tuning) async {
     _currentTuning = tuning;
   }
 

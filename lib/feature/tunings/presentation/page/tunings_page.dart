@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertuner/feature/tunings/presentation/widgets/tuning_selection_widget.dart';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
+class TuningsPage extends StatelessWidget {
+  const TuningsPage({super.key});
 
-  static const path = '/settings';
+  static const path = '/tunings';
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: TuningSelectionWidget()),
+      body: Center(
+        child: TuningSelectionWidget(),
+      ),
     );
   }
 }

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertuner/feature/tuner/cubit/tuning_cubit.dart';
-import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
-import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
-import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_add_form.dart';
+import 'package:fluttertuner/feature/tunings/cubit/tuning_cubit.dart';
+import 'package:fluttertuner/feature/tunings/cubit/tuning_state.dart';
+import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
+import 'package:fluttertuner/feature/tunings/presentation/widgets/tuning_add_form.dart';
 
-class TuningSelector extends StatefulWidget {
-  const TuningSelector({super.key});
+class TuningSelectionWidget extends StatefulWidget {
+  const TuningSelectionWidget({super.key});
 
   @override
-  State<TuningSelector> createState() => _TuningSelectorState();
+  State<TuningSelectionWidget> createState() => _TuningSelectionWidgetState();
 }
 
-class _TuningSelectorState extends State<TuningSelector> {
+class _TuningSelectionWidgetState extends State<TuningSelectionWidget> {
   @override
   void initState() {
     super.initState();
@@ -34,7 +34,7 @@ class _TuningSelectorState extends State<TuningSelector> {
           itemBuilder: (context, index) {
             if (index < tunings.length) {
               final tuning = tunings[index];
-              final isSelected = tuning.name == state.tuning!.name;
+              final isSelected = tuning.name == state.tuning?.name;
 
               return ListTile(
                 title: Text(tuning.name),
