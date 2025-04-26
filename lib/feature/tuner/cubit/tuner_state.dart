@@ -1,17 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:fluttertuner/feature/tuner/data/models/note_model.dart';
-import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
-import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
+import 'package:fluttertuner/feature/tunings/data/models/note_model.dart';
+import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
+import 'package:fluttertuner/feature/tunings/domain/entity/note_entity.dart';
+import 'package:fluttertuner/feature/tunings/domain/entity/tuning_entity.dart';
 
-class TuningState {
-  final WrongNoteEntity note; // текущая определённая нота
-  final NoteEntity? targetNote; // ближайшая нота из выбранного строя
-  final TuningModel? tuning; // строй
-  final int? currentStringIndex;
-  final List<TuningModel> availableTunings;
-  final TuningMode mode;
-
-  const TuningState({
+class TunerState {
+  const TunerState({
     required this.note,
     required this.tuning,
     required this.targetNote,
@@ -20,8 +14,15 @@ class TuningState {
     required this.mode,
   });
 
-  factory TuningState.initial() {
-    return const TuningState(
+  final WrongNoteEntity note; // текущая определённая нота
+  final NoteEntity? targetNote; // ближайшая нота из выбранного строя
+  final TuningEntity? tuning; // строй
+  final int? currentStringIndex;
+  final List<TuningEntity> availableTunings;
+  final TuningMode mode;
+
+  factory TunerState.initial() {
+    return const TunerState(
       tuning: null,
       note: WrongNoteModel(frequency: 0, name: 'Play!', diffCents: 0.0),
       targetNote: null,
@@ -31,15 +32,15 @@ class TuningState {
     );
   }
 
-  TuningState copyWith({
+  TunerState copyWith({
     WrongNoteEntity? note,
     NoteEntity? targetNote,
-    TuningModel? tuning,
+    TuningEntity? tuning,
     int? currentStringIndex,
-    List<TuningModel>? availableTunings,
+    List<TuningEntity>? availableTunings,
     TuningMode? mode,
   }) {
-    return TuningState(
+    return TunerState(
       note: note ?? this.note,
       targetNote: targetNote ?? this.targetNote,
       tuning: tuning ?? this.tuning,

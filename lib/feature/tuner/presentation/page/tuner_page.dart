@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertuner/feature/tuner/cubit/tuning_cubit.dart';
-import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
-import 'package:fluttertuner/feature/tuner/data/models/tuning_model.dart';
-import 'package:fluttertuner/feature/tuner/presentation/widgets/pos.dart';
+import 'package:fluttertuner/feature/tuner/cubit/tuner_cubit.dart';
+import 'package:fluttertuner/feature/tuner/cubit/tuner_state.dart';
+import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
+import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_scale_widgets.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_text_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_mode_switch_widget.dart';
 
@@ -37,13 +37,13 @@ class TunerPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  BlocSelector<TuningCubit, TuningState, double>(
+                  BlocSelector<TunerCubit, TunerState, double>(
                       selector: (state) => state.note.diffCents,
                       builder: (context, diffState) {
                         return TunerScaleWidgets(value: diffState);
                       }),
                   const SizedBox(height: 20),
-                  BlocBuilder<TuningCubit, TuningState>(
+                  BlocBuilder<TunerCubit, TunerState>(
                     builder: (context, state) {
                       return Column(
                         children: [
@@ -64,7 +64,7 @@ class TunerPage extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     context
-                                        .read<TuningCubit>()
+                                        .read<TunerCubit>()
                                         .changeString(index);
                                   },
                                   child: Text(
@@ -80,7 +80,7 @@ class TunerPage extends StatelessWidget {
                           const SizedBox(height: 20),
                           ElevatedButton.icon(
                             onPressed: () {
-                              context.read<TuningCubit>().toggleTuningMode();
+                              context.read<TunerCubit>().toggleTuningMode();
                             },
                             icon: const Icon(Icons.swap_horiz),
                             label: Text(

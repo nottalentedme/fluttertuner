@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertuner/core/theme/color_scheme.dart';
-import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
+import 'package:fluttertuner/feature/tunings/domain/entity/note_entity.dart';
 
 class TunerTextWidget extends StatelessWidget {
   const TunerTextWidget({

@@ -1,4 +1,4 @@
-import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
+import 'package:fluttertuner/feature/tunings/domain/entity/note_entity.dart';
 import 'package:pitchupdart/pitch_result.dart';
 
 class NoteModel implements NoteEntity {

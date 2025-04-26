@@ -1,4 +1,4 @@
-import 'package:fluttertuner/feature/tuner/domain/entity/note_entity.dart';
+import 'package:fluttertuner/feature/tunings/domain/entity/note_entity.dart';
 
 abstract interface class TuningEntity {
   String get name;
