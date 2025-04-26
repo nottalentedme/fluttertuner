@@ -1,3 +1,5 @@
+import 'package:fluttertuner/core/service/permissions/mic_permission_impl.dart';
+import 'package:fluttertuner/core/service/permissions/mic_permission_interface.dart';
 import 'package:fluttertuner/feature/config/di_container.dart';
 import 'package:fluttertuner/feature/metronome/services/metronome_player.dart';
 import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuner_repository.dart';
@@ -17,7 +19,9 @@ final di = DIContainerImpl();
 
 void configureDependencies() {
   //? Service
-  final AudioRecorderService audioRecorderService = AudioRecorderServiceImpl();
+  final MicPermissionService micPermissionService = MicPermissionServiceImpl();
+  final AudioRecorderService audioRecorderService =
+      AudioRecorderServiceImpl(micPermissionService);
   final BufferService bufferService = BufferServiceImpl();
   final PitchDetector pitchDetector = PitchDetector();
   final PitchHandler pitchHandler = PitchHandler(InstrumentType.guitar);
@@ -25,6 +29,7 @@ void configureDependencies() {
   final TuningStorage tuningStorage = TuningStorage();
 
   //? Service registration
+  di.register<MicPermissionService>(micPermissionService);
   di.register<AudioRecorderService>(audioRecorderService);
   di.register<BufferService>(bufferService);
   di.register<MetronomePlayer>(metronomePlayer);
