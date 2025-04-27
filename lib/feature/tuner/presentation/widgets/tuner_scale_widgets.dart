@@ -15,6 +15,15 @@ class TunerScaleWidgets extends StatefulWidget {
 class _TunerScaleWidgetsState extends State<TunerScaleWidgets> {
   double _previousValue = 0;
 
+  double checkValue(double value) {
+    if (value >= 60) {
+      value = 60;
+    } else if (value <= -60) {
+      value = -60;
+    }
+    return value;
+  }
+
   @override
   void didUpdateWidget(covariant TunerScaleWidgets oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -36,7 +45,8 @@ class _TunerScaleWidgetsState extends State<TunerScaleWidgets> {
           Transform.translate(
             offset: const Offset(0, -10),
             child: TweenAnimationBuilder<double>(
-              tween: Tween<double>(begin: _previousValue, end: widget.value),
+              tween: Tween<double>(
+                  begin: _previousValue, end: checkValue(widget.value)),
               duration: const Duration(milliseconds: 500),
               curve: Curves.easeOut,
               builder: (context, animatedValue, child) {
