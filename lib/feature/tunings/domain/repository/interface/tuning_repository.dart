@@ -12,12 +12,14 @@ abstract interface class TuningRepository extends Repository {
   ///
   ///Загружает все строи(дефолтные и пользовательские)
   ///
-  Future<List<TuningModel>> loadCustomTunings();
+  Future<List<TuningEntity>> loadCustomTunings();
 
   ///
   ///Метод выбора строя [tuning] - строй
   ///
   Future<void> selectTuning(TuningEntity tuning);
+
+  Future<void> deleteTuning(TuningEntity tuning);
 
   ///
   ///Получает ближайшую ноту из строя по индексу струны

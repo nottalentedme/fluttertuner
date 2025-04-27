@@ -22,6 +22,12 @@ class TuningCubit extends Cubit<TuningState> {
     emit(state.copyWith(availableTunings: tunings));
   }
 
+  Future<void> deleteTuning(TuningEntity tuning) async {
+    await _tuningRepository.deleteTuning(tuning);
+    final updatedTunings = await _tuningRepository.loadCustomTunings();
+    emit(state.copyWith(availableTunings: updatedTunings));
+  }
+
   Future<void> saveTuning(TuningModel tuning) async {
     await _tuningRepository.saveCustomTuning(tuning);
     final updatedTunings = await _tuningRepository.loadCustomTunings();
