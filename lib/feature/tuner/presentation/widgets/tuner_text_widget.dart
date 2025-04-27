@@ -10,6 +10,8 @@ class TunerTextWidget extends StatelessWidget {
 
   final WrongNoteEntity note;
 
+  bool get _isTuned => note.diffCents.abs() <= 5.0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,8 +25,8 @@ class TunerTextWidget extends StatelessWidget {
             children: [
               Text(
                 note.name,
-                style: const TextStyle(
-                  color: AppColorScheme.primary,
+                style: TextStyle(
+                  color: _isTuned ? Colors.green : AppColorScheme.primary,
                   fontSize: 65.0,
                   fontWeight: FontWeight.bold,
                 ),
