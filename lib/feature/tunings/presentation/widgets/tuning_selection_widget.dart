@@ -38,7 +38,16 @@ class _TuningSelectionWidgetState extends State<TuningSelectionWidget> {
 
               return ListTile(
                 title: Text(tuning.name),
-                trailing: isSelected ? const Icon(Icons.check) : null,
+                leading: isSelected ? const Icon(Icons.check) : null,
+                trailing:
+                    index >= 2 // 👈 no trailing button for first two items
+                        ? IconButton(
+                            onPressed: () {
+                              context.read<TuningCubit>().deleteTuning(tuning);
+                            },
+                            icon: const Icon(Icons.delete),
+                          )
+                        : null,
                 onTap: () {
                   context.read<TuningCubit>().selectTuning(tuning);
                 },

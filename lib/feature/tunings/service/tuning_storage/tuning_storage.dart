@@ -12,6 +12,18 @@ class TuningStorage {
     await prefs.setStringList(_key, tuningsJson);
   }
 
+  Future<void> deleteCustomTuning(String tuningName) async {
+    final prefs = await SharedPreferences.getInstance();
+    final tuningsJson = prefs.getStringList(_key) ?? [];
+
+    final updatedTunings = tuningsJson.where((tuningString) {
+      final tuningMap = jsonDecode(tuningString) as Map<String, dynamic>;
+      return tuningMap['name'] != tuningName;
+    }).toList();
+
+    await prefs.setStringList(_key, updatedTunings);
+  }
+
   Future<List<TuningModel>> loadCustomTunings() async {
     final prefs = await SharedPreferences.getInstance();
     final tuningsJson = prefs.getStringList(_key) ?? [];

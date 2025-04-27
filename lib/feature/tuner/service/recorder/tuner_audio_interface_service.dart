@@ -7,7 +7,6 @@ abstract class AudioRecorderService extends Service {
   ///Начинает стрим(поток)
   ///возвращает [Stream<Uint8List>]
   Future<Stream<Uint8List>> startRecording();
-  Future<bool> hasPermission();
 
   ///
   ///Останавливает стрим

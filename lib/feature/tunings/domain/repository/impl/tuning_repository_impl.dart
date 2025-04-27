@@ -15,7 +15,7 @@ class TuningRepositoryImpl implements TuningRepository {
   TuningEntity get currentTuning => _currentTuning;
 
   @override
-  Future<List<TuningModel>> loadCustomTunings() async {
+  Future<List<TuningEntity>> loadCustomTunings() async {
     final customTunings = await _tuningStorage.loadCustomTunings();
 
     return [
@@ -26,7 +26,12 @@ class TuningRepositoryImpl implements TuningRepository {
 
   @override
   Future<void> saveCustomTuning(TuningModel tuning) async {
-    _tuningStorage.saveCustomTuning(tuning);
+    await _tuningStorage.saveCustomTuning(tuning);
+  }
+
+  @override
+  Future<void> deleteTuning(TuningEntity tuning) async {
+    await _tuningStorage.deleteCustomTuning(tuning.name);
   }
 
   @override
