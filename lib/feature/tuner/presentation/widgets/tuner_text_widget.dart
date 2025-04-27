@@ -9,6 +9,8 @@ class TunerTextWidget extends StatelessWidget {
   });
 
   final WrongNoteEntity note;
+  
+  bool get _isTuned => note.diffCents.abs() <= 5.0;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,8 @@ class TunerTextWidget extends StatelessWidget {
             children: [
               Text(
                 note.name,
-                style: const TextStyle(
-                  color: AppColorScheme.primary,
+                style: TextStyle(
+                  color: _isTuned ? Colors.green : AppColorScheme.primary,
                   fontSize: 65.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -33,7 +35,9 @@ class TunerTextWidget extends StatelessWidget {
               Text(
                 '${note.diffCents.toStringAsFixed(1)} cents',
                 style: TextStyle(
-                  color: AppColorScheme.primary.withAlpha(100),
+                  color: _isTuned 
+                      ? Colors.green.withAlpha(100) 
+                      : AppColorScheme.primary.withAlpha(100),
                   fontSize: 20.0,
                 ),
               ),
