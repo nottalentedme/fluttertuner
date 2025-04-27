@@ -9,7 +9,7 @@ class TunerTextWidget extends StatelessWidget {
   });
 
   final WrongNoteEntity note;
-  
+
   bool get _isTuned => note.diffCents.abs() <= 5.0;
 
   @override
@@ -35,9 +35,7 @@ class TunerTextWidget extends StatelessWidget {
               Text(
                 '${note.diffCents.toStringAsFixed(1)} cents',
                 style: TextStyle(
-                  color: _isTuned 
-                      ? Colors.green.withAlpha(100) 
-                      : AppColorScheme.primary.withAlpha(100),
+                  color: AppColorScheme.primary.withAlpha(100),
                   fontSize: 20.0,
                 ),
               ),
