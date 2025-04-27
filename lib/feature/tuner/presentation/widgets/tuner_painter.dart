@@ -2,7 +2,6 @@ import 'dart:ui' as ui;
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertuner/core/theme/color_scheme.dart';
 
 class TunerPainter extends CustomPainter {
   static ui.Image? _shtrixImage;
@@ -15,7 +14,7 @@ class TunerPainter extends CustomPainter {
   void _loadImage() async {
     if (_shtrixImage != null || _loading) return;
     _loading = true;
-    final byteData = await rootBundle.load('assets/tuner/shtrix.png');
+    final byteData = await rootBundle.load('assets/tuner/scale.png');
     final codec = await ui.instantiateImageCodec(byteData.buffer.asUint8List());
     final frame = await codec.getNextFrame();
     _shtrixImage = frame.image;
@@ -58,8 +57,8 @@ class TunerPainter extends CustomPainter {
 
       textPainter.text = TextSpan(
         text: '$i',
-        style: const TextStyle(
-          color: AppColorScheme.primary,
+        style: TextStyle(
+          color: Colors.black,
           fontSize: 14,
           fontWeight: FontWeight.bold,
         ),

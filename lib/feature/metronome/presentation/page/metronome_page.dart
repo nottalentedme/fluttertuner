@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertuner/core/theme/color_scheme.dart';
-import 'package:fluttertuner/core/theme/text_theme.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_cubit.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_state.dart';
 import 'package:fluttertuner/feature/metronome/presentation/widgets/change_bpm_widget.dart';
@@ -14,6 +12,7 @@ class MetronomePage extends StatelessWidget {
   static const path = '/metronome';
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return BlocBuilder<MetronomeCubit, MetronomeState>(
       builder: (context, state) {
         return Column(
@@ -26,18 +25,23 @@ class MetronomePage extends StatelessWidget {
               children: [
                 Text(
                   '${state.tempo}',
-                  style: AppTextTheme
-                      .textTheme.displayLarge, //Прописан только Large
+                  style: TextStyle(
+                    color: theme.primary,
+                    fontSize: 42,
+                  ), //Прописан только Large
                 ),
                 Text(
                   'BPM',
-                  style: AppTextTheme.textTheme.bodySmall,
+                  style: TextStyle(
+                    color: theme.primary.withAlpha(100),
+                    fontSize: 14,
+                  ),
                 ),
               ],
             ),
             Slider(
               value: state.tempo.toDouble(),
-              activeColor: AppColorScheme.primary,
+              activeColor: theme.primary,
               min: 40,
               max: 200,
               onChanged: (value) {
@@ -55,9 +59,9 @@ class MetronomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ChangeBPMWidget(
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.add_rounded,
-                        color: AppColorScheme.textwhile,
+                        color: theme.surface,
                       ),
                       onTap: () {
                         context
@@ -66,9 +70,9 @@ class MetronomePage extends StatelessWidget {
                       },
                     ),
                     ChangeBPMWidget(
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.remove_rounded,
-                        color: AppColorScheme.textwhile,
+                        color: theme.surface,
                       ),
                       onTap: () {
                         context
