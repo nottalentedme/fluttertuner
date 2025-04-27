@@ -45,4 +45,10 @@ class AudioRecorderServiceImpl implements AudioRecorderService {
   Future<void> stopRecording() async {
     await _record.stop();
   }
+
+  // @override
+  // Future<bool> hasPermission() {
+  //   // TODO: implement hasPermission
+  //   throw UnimplementedError();
+  // }
 }
