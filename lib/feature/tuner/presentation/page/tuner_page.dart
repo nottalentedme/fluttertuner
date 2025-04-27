@@ -78,17 +78,6 @@ class TunerPage extends StatelessWidget {
                               ),
                             ),
                           const SizedBox(height: 20),
-                          ElevatedButton.icon(
-                            onPressed: () {
-                              context.read<TunerCubit>().toggleTuningMode();
-                            },
-                            icon: const Icon(Icons.swap_horiz),
-                            label: Text(
-                              state.mode == TuningMode.scale
-                                  ? 'Switch to Chromatic'
-                                  : 'Switch to Scale',
-                            ),
-                          ),
                         ],
                       );
                     },
