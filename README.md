@@ -2,6 +2,7 @@
 
 A Tuner on Flutter
 
-## Getting Started
+## Download Link
+https://github.com/nottalentedme/fluttertuner/releases/download/v1.0/app-release.apk
 
 
