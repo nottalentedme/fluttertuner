@@ -5,6 +5,7 @@ import 'package:fluttertuner/feature/metronome/cubit/metronome_state.dart';
 import 'package:fluttertuner/feature/metronome/presentation/widgets/change_bpm_widget.dart';
 import 'package:fluttertuner/feature/metronome/presentation/widgets/play_button_widget.dart';
 import 'package:fluttertuner/feature/metronome/presentation/widgets/tap_tempo_button_widget.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class MetronomePage extends StatelessWidget {
   const MetronomePage({super.key});
@@ -18,42 +19,74 @@ class MetronomePage extends StatelessWidget {
         return Column(
           children: [
             const SizedBox(
-              height: 400,
+              height: 300,
             ),
-            Column(
-              spacing: 8,
-              children: [
-                Text(
-                  '${state.tempo}',
-                  style: TextStyle(
-                    color: theme.primary,
-                    fontSize: 42,
-                  ), //Прописан только Large
-                ),
-                Text(
-                  'BPM',
-                  style: TextStyle(
-                    color: theme.primary.withAlpha(100),
-                    fontSize: 14,
+            // Column(
+            //   spacing: 8,
+            //   children: [
+            //     Text(
+            //       '${state.tempo}',
+            //       style: TextStyle(
+            //         color: theme.primary,
+            //         fontSize: 42,
+            //       ), //Прописан только Large
+            //     ),
+            //     Text(
+            //       'BPM',
+            //       style: TextStyle(
+            //         color: theme.primary.withAlpha(100),
+            //         fontSize: 14,
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            SleekCircularSlider(
+              appearance: CircularSliderAppearance(
+                  animationEnabled: false,
+                  size: 300,
+                  customWidths: CustomSliderWidths(
+                    trackWidth: 5,
+                    progressBarWidth: 10,
+                    handlerSize: 10,
                   ),
-                ),
-              ],
-            ),
-            Slider(
-              value: state.tempo.toDouble(),
-              activeColor: theme.primary,
+                  customColors: CustomSliderColors(
+                    trackColor: theme.primary.withAlpha(100),
+                    progressBarColor: theme.primary,
+                    dotColor: theme.primary,
+                  )),
+              initialValue: state.tempo.toDouble(),
+              // activeColor: theme.primary,
+              innerWidget: (percentage) => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 8,
+                children: [
+                  Text(
+                    '${state.tempo}',
+                    style: TextStyle(
+                      color: theme.primary,
+                      fontSize: 60,
+                    ), //Прописан только Large
+                  ),
+                  Text(
+                    'BPM',
+                    style: TextStyle(
+                      color: theme.primary.withAlpha(100),
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              ),
               min: 40,
               max: 200,
-              onChanged: (value) {
+              onChange: (value) {
                 context.read<MetronomeCubit>().setTempo(value.toInt());
               },
             ),
-            Row(
-              spacing: 8,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Transform.scale(
+                scale: 1.2,
+                child: Row(
                   spacing: 8,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -80,18 +113,11 @@ class MetronomePage extends StatelessWidget {
                             .setTempo(state.tempo - 1);
                       },
                     ),
+                    const PlayButtonWidget(),
+                    const TapTempoButtonWidget()
                   ],
                 ),
-                const Column(
-                  spacing: 8,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PlayButtonWidget(),
-                    TapTempoButtonWidget(),
-                  ],
-                )
-              ],
+              ),
             ),
           ],
         );
