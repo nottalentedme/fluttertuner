@@ -2,9 +2,9 @@ import 'package:fluttertuner/core/service/permissions/mic_permission_impl.dart';
 import 'package:fluttertuner/core/service/permissions/mic_permission_interface.dart';
 import 'package:fluttertuner/feature/config/di_container.dart';
 import 'package:fluttertuner/feature/metronome/services/metronome_player.dart';
-import 'package:fluttertuner/feature/settings/storage/theme_storage.dart';
 import 'package:fluttertuner/feature/theme/repository/theme_repository.dart';
 import 'package:fluttertuner/feature/theme/repository/theme_repository_interface.dart';
+import 'package:fluttertuner/feature/theme/storage/theme_storage.dart';
 
 import 'package:fluttertuner/feature/tuner/data/repository/tuner_repository_impl.dart';
 import 'package:fluttertuner/feature/tuner/domain/repository/tuner_repository.dart';

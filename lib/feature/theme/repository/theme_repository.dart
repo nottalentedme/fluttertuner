@@ -1,5 +1,5 @@
-import 'package:fluttertuner/feature/settings/storage/theme_storage.dart';
 import 'package:fluttertuner/feature/theme/repository/theme_repository_interface.dart';
+import 'package:fluttertuner/feature/theme/storage/theme_storage.dart';
 
 class ThemeRepositoryImp implements ThemeRepository {
   ThemeRepositoryImp(this.themeStorage);
