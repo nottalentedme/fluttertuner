@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertuner/core/theme/color_scheme.dart';
+import 'package:fluttertuner/feature/theme/color_scheme.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 abstract final class AppTheme {
