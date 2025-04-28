@@ -4,9 +4,9 @@ import 'package:fluttertuner/core/extension/build_context_extension.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_cubit.dart';
 import 'package:fluttertuner/feature/metronome/services/metronome_player.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tuner_cubit.dart';
-import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuner_repository.dart';
+import 'package:fluttertuner/feature/tuner/domain/repository/tuner_repository.dart';
 import 'package:fluttertuner/feature/tunings/cubit/tuning_cubit.dart';
-import 'package:fluttertuner/feature/tunings/domain/repository/interface/tuning_repository.dart';
+import 'package:fluttertuner/feature/tunings/domain/repository/tuning_repository.dart';
 import 'package:fluttertuner/feature/tunings/presentation/page/tunings_page.dart';
 import 'package:go_router/go_router.dart';
 
@@ -94,12 +94,18 @@ abstract class AppRouter {
                 path: TuningsPage.path,
                 pageBuilder: (context, state) {
                   return CustomTransitionPage(
-                    child: const TuningsPage(),
+                    child: BlocProvider(
+                      create: (context) => TuningCubit(
+                        context.dep<TuningRepository>(),
+                      ),
+                      child: const TuningsPage(),
+                    ),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       return FadeTransition(
                         opacity: CurveTween(curve: Curves.easeInCirc)
                             .animate(animation),
+                        child: child,
                       );
                     },
                   );
@@ -131,13 +137,14 @@ abstract class AppRouter {
   );
 
   static int _getIndexFromPath(String path) {
+    if (path.startsWith(SettingsPage.path)) {
+      return 2;
+    }
     switch (path) {
       case MetronomePage.path:
         return 0;
       case TunerPage.path:
         return 1;
-      case SettingsPage.path:
-        return 2;
       default:
         return 1;
     }

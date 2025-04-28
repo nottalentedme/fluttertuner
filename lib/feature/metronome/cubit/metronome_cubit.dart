@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/metronome/cubit/metronome_state.dart';
-import 'package:fluttertuner/feature/metronome/domain/repository/interface/metronome_ticker_interface.dart';
+import 'package:fluttertuner/feature/metronome/domain/repository/metronome_ticker_interface.dart';
+
 import 'package:fluttertuner/feature/metronome/services/metronome_player.dart';
 import 'package:fluttertuner/feature/metronome/data/repository/metronome_ticker.dart';
 

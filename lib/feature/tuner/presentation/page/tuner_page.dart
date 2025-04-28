@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tuner_cubit.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tuner_state.dart';
+import 'package:fluttertuner/feature/tuner/presentation/widgets/string_button_widget.dart';
 import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_scale_widgets.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_text_widget.dart';
@@ -17,7 +18,7 @@ class TunerPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'FlutterTune',
+          'Tonely',
           style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
         ),
       ),
@@ -50,28 +51,30 @@ class TunerPage extends StatelessWidget {
                           TunerTextWidget(note: state.note),
                           const SizedBox(height: 20),
                           if (state.mode == TuningMode.scale)
-                            Wrap(
-                              spacing: 8,
-                              alignment: WrapAlignment.center,
-                              children: List.generate(
-                                state.tuning!.notes.length,
-                                (index) => ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        index == state.currentStringIndex
-                                            ? Colors.blueAccent
-                                            : Colors.grey[700],
-                                  ),
-                                  onPressed: () {
-                                    context
-                                        .read<TunerCubit>()
-                                        .changeString(index);
-                                  },
-                                  child: Text(
-                                    state.tuning!.notes[index].name,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: GridView.count(
+                                crossAxisCount: state.tuning!.notes.length <= 3
+                                    ? state.tuning!.notes.length
+                                    : 3,
+                                shrinkWrap: true,
+                                crossAxisSpacing: 8,
+                                mainAxisSpacing: 8,
+                                childAspectRatio: 2.2,
+                                physics: const NeverScrollableScrollPhysics(),
+                                children: List.generate(
+                                  state.tuning!.notes.length,
+                                  (index) => Container(
+                                    alignment: Alignment.center,
+                                    child: StringButtonWidget(
+                                      isActive:
+                                          index == state.currentStringIndex,
+                                      onTap: () {
+                                        context
+                                            .read<TunerCubit>()
+                                            .changeString(index);
+                                      },
+                                      text: state.tuning!.notes[index].name,
                                     ),
                                   ),
                                 ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/core/theme/app_theme.dart';
+import 'package:fluttertuner/core/theme/cubit/theme_cubit.dart';
 import 'package:fluttertuner/feature/config/config.dart';
 import 'core/router/app_router.dart';
 
@@ -14,9 +16,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: AppRouter.router,
-      theme: AppTheme.theme,
+    return BlocProvider(
+      create: (_) => ThemeCubit(),
+      child: BlocBuilder<ThemeCubit, ThemeData>(
+        builder: (context, state) {
+          return MaterialApp.router(
+            routerConfig: AppRouter.router,
+            theme: state,
+          );
+        },
+      ),
     );
   }
 }

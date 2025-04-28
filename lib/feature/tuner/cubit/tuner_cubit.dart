@@ -2,10 +2,10 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertuner/feature/tuner/domain/repository/tuner_repository.dart';
 import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
-import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuner_repository.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tuner_state.dart';
-import 'package:fluttertuner/feature/tunings/domain/repository/interface/tuning_repository.dart';
+import 'package:fluttertuner/feature/tunings/domain/repository/tuning_repository.dart';
 
 class TunerCubit extends Cubit<TunerState> {
   StreamSubscription? _tuningResultSubscription;

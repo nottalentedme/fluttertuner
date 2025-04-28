@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertuner/core/theme/color_scheme.dart';
 
 class StringButtonWidget extends StatelessWidget {
   const StringButtonWidget({
@@ -15,19 +14,29 @@ class StringButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return InkWell(
-      customBorder: const CircleBorder(),
+      customBorder: const RoundedRectangleBorder(),
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(width: 2),
-            color: isActive ? AppColorScheme.textwhile : AppColorScheme.primary),
-        padding: const EdgeInsets.all(16),
-        child: Text(
-          text,
-          style: TextStyle(
-              fontSize: 30, color: isActive ? AppColorScheme.primary : AppColorScheme.textwhile),
+          shape: BoxShape.rectangle,
+          border: Border.all(width: 2),
+          color: isActive ? theme.surface : theme.primary,
+          borderRadius: BorderRadius.circular(
+              16), // Добавьте эту строку для скругления углов
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 20,
+                color: isActive ? theme.primary : theme.surface,
+              ),
+            ),
+          ),
         ),
       ),
     );

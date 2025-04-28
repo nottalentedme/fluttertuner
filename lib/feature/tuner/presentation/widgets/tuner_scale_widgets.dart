@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_painter.dart';
 
 class TunerScaleWidgets extends StatefulWidget {
   final double value;
@@ -32,33 +31,40 @@ class _TunerScaleWidgetsState extends State<TunerScaleWidgets> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return SizedBox(
       width: 300,
       height: 150,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          CustomPaint(
-            size: const Size(300, 150),
-            painter: TunerPainter(),
+          Transform.scale(
+            scale: 1.3,
+            child: Image.asset(
+              'assets/tuner/scale.png',
+              color: theme.primary,
+            ),
           ),
-          Transform.translate(
-            offset: const Offset(0, -10),
-            child: TweenAnimationBuilder<double>(
-              tween: Tween<double>(
-                  begin: _previousValue, end: checkValue(widget.value)),
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeOut,
-              builder: (context, animatedValue, child) {
-                return Transform.rotate(
-                  angle: (animatedValue / 120) * pi,
-                  alignment: Alignment.bottomCenter,
-                  child: child,
-                );
-              },
-              child: Image.asset(
-                'assets/tuner/strelka.png',
-                height: 90,
+          Transform.scale(
+            scale: 1.3,
+            child: Transform.translate(
+              offset: const Offset(2, -5),
+              child: TweenAnimationBuilder<double>(
+                tween: Tween<double>(
+                    begin: _previousValue, end: checkValue(widget.value)),
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeOut,
+                builder: (context, animatedValue, child) {
+                  return Transform.rotate(
+                    angle: (animatedValue / 120) * pi,
+                    alignment: Alignment.bottomCenter,
+                    child: child,
+                  );
+                },
+                child: Image.asset(
+                  'assets/tuner/strelka.png',
+                  height: 90,
+                ),
               ),
             ),
           ),

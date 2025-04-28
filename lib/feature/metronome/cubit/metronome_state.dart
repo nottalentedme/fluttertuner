@@ -5,7 +5,7 @@ class MetronomeState {
   MetronomeState({required this.isRunning, required this.tempo});
 
   factory MetronomeState.initial() {
-    return MetronomeState(isRunning: false, tempo: 60);
+    return MetronomeState(isRunning: false, tempo: 120);
   }
 
   MetronomeState copyWith({bool? isRunning, int? tempo}) {

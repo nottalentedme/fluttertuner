@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/tunings/cubit/tuning_state.dart';
 import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
 import 'package:fluttertuner/feature/tunings/domain/entity/tuning_entity.dart';
-import 'package:fluttertuner/feature/tunings/domain/repository/interface/tuning_repository.dart';
+import 'package:fluttertuner/feature/tunings/domain/repository/tuning_repository.dart';
 
 class TuningCubit extends Cubit<TuningState> {
   TuningCubit(this._tuningRepository) : super(TuningState.initial());

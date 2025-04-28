@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertuner/core/theme/color_scheme.dart';
 import 'package:fluttertuner/feature/tunings/domain/entity/note_entity.dart';
 
 class TunerTextWidget extends StatelessWidget {
@@ -14,6 +13,7 @@ class TunerTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(10),
       child: Column(
@@ -26,7 +26,9 @@ class TunerTextWidget extends StatelessWidget {
               Text(
                 note.name,
                 style: TextStyle(
-                  color: _isTuned ? Colors.green : AppColorScheme.primary,
+                  color: _isTuned
+                      ? const Color.fromARGB(255, 0, 255, 8)
+                      : theme.primary,
                   fontSize: 65.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -35,7 +37,7 @@ class TunerTextWidget extends StatelessWidget {
               Text(
                 '${note.diffCents.toStringAsFixed(1)} cents',
                 style: TextStyle(
-                  color: AppColorScheme.primary.withAlpha(100),
+                  color: theme.primary.withAlpha(100),
                   fontSize: 20.0,
                 ),
               ),

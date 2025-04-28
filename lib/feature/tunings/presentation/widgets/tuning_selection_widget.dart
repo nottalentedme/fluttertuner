@@ -21,6 +21,7 @@ class _TuningSelectionWidgetState extends State<TuningSelectionWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return BlocBuilder<TuningCubit, TuningState>(
       builder: (context, state) {
         final tunings = state.availableTunings;
@@ -29,48 +30,76 @@ class _TuningSelectionWidgetState extends State<TuningSelectionWidget> {
           return const Center(child: Text('No tunings found'));
         }
 
-        return ListView.builder(
-          itemCount: tunings.length + 1, // One extra for the "Add" button
-          itemBuilder: (context, index) {
-            if (index < tunings.length) {
-              final tuning = tunings[index];
-              final isSelected = tuning.name == state.tuning?.name;
-
-              return ListTile(
-                title: Text(tuning.name),
-                leading: isSelected ? const Icon(Icons.check) : null,
-                trailing:
-                    index >= 2 // 👈 no trailing button for first two items
-                        ? IconButton(
-                            onPressed: () {
-                              context.read<TuningCubit>().deleteTuning(tuning);
-                            },
-                            icon: const Icon(Icons.delete),
-                          )
-                        : null,
-                onTap: () {
-                  context.read<TuningCubit>().selectTuning(tuning);
-                },
+        return Scaffold(
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: theme.surface,
+            child: Icon(
+              Icons.add,
+              color: theme.primary,
+            ),
+            onPressed: () async {
+              final newTuning = await showDialog<TuningModel>(
+                context: context,
+                builder: (context) => const AddTuningDialog(),
               );
-            } else {
-              // Add Custom Tuning option
-              return ListTile(
-                leading: const Icon(Icons.add),
-                title: const Text('Add Custom Tuning'),
-                onTap: () async {
-                  final newTuning = await showDialog<TuningModel>(
-                    context: context,
-                    builder: (context) => const AddTuningDialog(),
-                  );
 
-                  if (!context.mounted || newTuning == null) return;
+              if (!context.mounted || newTuning == null) return;
 
-                  context.read<TuningCubit>().saveTuning(newTuning);
-                  await context.read<TuningCubit>().loadTunings();
-                },
-              );
-            }
-          },
+              context.read<TuningCubit>().saveTuning(newTuning);
+              await context.read<TuningCubit>().loadTunings();
+            },
+          ),
+          body: ListView.builder(
+            itemCount: tunings.length + 1, // One extra for the "Add" button
+            itemBuilder: (context, index) {
+              if (index < tunings.length) {
+                final tuning = tunings[index];
+                final isSelected = tuning.name == state.tuning?.name;
+
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    elevation: 2,
+                    child: ListTile(
+                      title: Text(tuning.name),
+                      leading: isSelected ? const Icon(Icons.check) : null,
+                      trailing: index >=
+                              2 // 👈 no trailing button for first two items
+                          ? IconButton(
+                              onPressed: () {
+                                context
+                                    .read<TuningCubit>()
+                                    .deleteTuning(tuning);
+                              },
+                              icon: const Icon(Icons.delete),
+                            )
+                          : null,
+                      onTap: () {
+                        context.read<TuningCubit>().selectTuning(tuning);
+                      },
+                    ),
+                  ),
+                );
+              } else {
+                // Add Custom Tuning option
+                // return ListTile(
+                //   leading: const Icon(Icons.add),
+                //   title: const Text('Add Custom Tuning'),
+                //   onTap: () async {
+                //     final newTuning = await showDialog<TuningModel>(
+                //       context: context,
+                //       builder: (context) => const AddTuningDialog(),
+                //     );
+
+                //     if (!context.mounted || newTuning == null) return;
+
+                //     context.read<TuningCubit>().saveTuning(newTuning);
+                //     await context.read<TuningCubit>().loadTunings();
+                //   },
+                // );
+              }
+            },
+          ),
         );
       },
     );

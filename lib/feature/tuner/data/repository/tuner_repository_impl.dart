@@ -3,13 +3,13 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:fluttertuner/feature/tuner/domain/repository/tuner_repository.dart';
 import 'package:fluttertuner/feature/tunings/data/models/note_model.dart';
 import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
 import 'package:fluttertuner/feature/tunings/domain/entity/note_entity.dart';
-import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuner_repository.dart';
 import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_interface.dart';
 import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_interface_service.dart';
-import 'package:fluttertuner/feature/tunings/domain/repository/interface/tuning_repository.dart';
+import 'package:fluttertuner/feature/tunings/domain/repository/tuning_repository.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/pitch_handler.dart';
 

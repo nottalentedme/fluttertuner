@@ -4,12 +4,13 @@ import 'package:fluttertuner/feature/tunings/presentation/widgets/tuning_selecti
 class TuningsPage extends StatelessWidget {
   const TuningsPage({super.key});
 
-  static const path = '/tunings';
+  static const path = 'tunings';
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
+    return Scaffold(
+      appBar: AppBar(title: const Text('Строи'), actions: []),
+      body: const Center(
         child: TuningSelectionWidget(),
       ),
     );

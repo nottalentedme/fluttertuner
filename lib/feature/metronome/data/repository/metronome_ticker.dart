@@ -1,5 +1,5 @@
 import 'package:flutter/scheduler.dart';
-import 'package:fluttertuner/feature/metronome/domain/repository/interface/metronome_ticker_interface.dart';
+import 'package:fluttertuner/feature/metronome/domain/repository/metronome_ticker_interface.dart';
 
 class MetronomeTickerImpl implements MetronomeTickerRepository {
   final Ticker _ticker;
