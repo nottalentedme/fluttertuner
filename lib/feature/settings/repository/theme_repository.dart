@@ -1,21 +1,18 @@
 import 'package:fluttertuner/feature/settings/repository/theme_repository_interface.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertuner/feature/settings/storage/theme_storage.dart';
 
-class ThemeRepositoryImp implements ThemeRepository{
+class ThemeRepositoryImp implements ThemeRepository {
   ThemeRepositoryImp({required this.pref});
 
-  final SharedPreferences pref;
-
-  static const _isDarkThemeSelectedKey = 'theme_selected';
+  final ThemeStorage pref;
 
   @override
-  bool isDarkTheme(){
-    final selected = pref.getBool(_isDarkThemeSelectedKey);//Если нет ключа
-    return selected ?? false;
+  Future<bool> isDarkTheme() async {
+    return await pref.isDarkTheme();
   }
 
   @override
-  Future<void> selectedDarkorLightThemePonomorovmethod(bool selected) async {
-    await pref.setBool(_isDarkThemeSelectedKey, selected);
+  Future<void> selectedDarkorLight(bool selected) async {
+    return await pref.selectedDarkorLight(selected);
   }
 }

@@ -19,15 +19,15 @@ class ThemeCubit extends Cubit<ThemeState> {
 
   Future<void> setThemeCubit(Brightness brightness) async {
     emit(ThemeState(brightness));
-    await _themeRepository.selectedDarkorLightThemePonomorovmethod(
+    await _themeRepository.selectedDarkorLight(
       brightness == Brightness.dark,
     );
   }
 
-  void _checkSelectedTheme() {
+  Future<void> _checkSelectedTheme() async{
     try {
       final brightness =
-          _themeRepository.isDarkTheme() ? Brightness.dark : Brightness.light;
+          await _themeRepository.isDarkTheme() ? Brightness.dark : Brightness.light;
       emit(ThemeState(brightness));
     } catch (e) {
       log(e.toString());

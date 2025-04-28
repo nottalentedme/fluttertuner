@@ -4,6 +4,7 @@ import 'package:fluttertuner/feature/config/di_container.dart';
 import 'package:fluttertuner/feature/metronome/services/metronome_player.dart';
 import 'package:fluttertuner/feature/settings/repository/theme_repository.dart';
 import 'package:fluttertuner/feature/settings/repository/theme_repository_interface.dart';
+import 'package:fluttertuner/feature/settings/storage/theme_storage.dart';
 import 'package:fluttertuner/feature/tuner/data/repository/tuner_repository_impl.dart';
 import 'package:fluttertuner/feature/tuner/domain/repository/tuner_repository.dart';
 import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_impl.dart';
@@ -20,7 +21,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final di = DIContainerImpl();
 
-Future<void> configureDependencies() async {
+void configureDependencies() {
   //? Service
   final MicPermissionService micPermissionService = MicPermissionServiceImpl();
   final AudioRecorderService audioRecorderService =
@@ -31,8 +32,7 @@ Future<void> configureDependencies() async {
   final MetronomePlayer metronomePlayer = MetronomePlayer();
   final TuningStorage tuningStorage = TuningStorage();
 
-  //создать отдельный класс асинхронная штука
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final ThemeStorage themeStorage = ThemeStorage();
 
   //? Service registration
   di.register<MicPermissionService>(micPermissionService);
@@ -50,7 +50,7 @@ Future<void> configureDependencies() async {
     tuningRepository,
   );
   //Репозиторий темы
-  final ThemeRepository themeRepository = ThemeRepositoryImp(pref: prefs);
+  final ThemeRepository themeRepository = ThemeRepositoryImp(pref: themeStorage);
 
   //? Repository registration
   di.register<TuningRepository>(tuningRepository);

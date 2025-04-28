@@ -9,8 +9,7 @@ import 'package:fluttertuner/feature/settings/repository/theme_repository.dart';
 import 'package:fluttertuner/feature/settings/repository/theme_repository_interface.dart';
 import 'core/router/app_router.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+void main(){
   configureDependencies();
   runApp(const MyApp());
 }
