@@ -16,110 +16,118 @@ class MetronomePage extends StatelessWidget {
     final theme = Theme.of(context).colorScheme;
     return BlocBuilder<MetronomeCubit, MetronomeState>(
       builder: (context, state) {
-        return Column(
-          children: [
-            const SizedBox(
-              height: 300,
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'Tonely',
+              style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
             ),
-            // Column(
-            //   spacing: 8,
-            //   children: [
-            //     Text(
-            //       '${state.tempo}',
-            //       style: TextStyle(
-            //         color: theme.primary,
-            //         fontSize: 42,
-            //       ), //Прописан только Large
-            //     ),
-            //     Text(
-            //       'BPM',
-            //       style: TextStyle(
-            //         color: theme.primary.withAlpha(100),
-            //         fontSize: 14,
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            SleekCircularSlider(
-              appearance: CircularSliderAppearance(
-                  animationEnabled: false,
-                  size: 300,
-                  customWidths: CustomSliderWidths(
-                    trackWidth: 5,
-                    progressBarWidth: 10,
-                    handlerSize: 10,
-                  ),
-                  customColors: CustomSliderColors(
-                    trackColor: theme.primary.withAlpha(100),
-                    progressBarColor: theme.primary,
-                    dotColor: theme.primary,
-                  )),
-              initialValue: state.tempo.toDouble(),
-              // activeColor: theme.primary,
-              innerWidget: (percentage) => Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 8,
-                children: [
-                  Text(
-                    '${state.tempo}',
-                    style: TextStyle(
-                      color: theme.primary,
-                      fontSize: 60,
-                    ), //Прописан только Large
-                  ),
-                  Text(
-                    'BPM',
-                    style: TextStyle(
-                      color: theme.primary.withAlpha(100),
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
+          ),
+          body: Column(
+            children: [
+              const SizedBox(
+                height: 200,
               ),
-              min: 40,
-              max: 200,
-              onChange: (value) {
-                context.read<MetronomeCubit>().setTempo(value.toInt());
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Transform.scale(
-                scale: 1.2,
-                child: Row(
-                  spacing: 8,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+              // Column(
+              //   spacing: 8,
+              //   children: [
+              //     Text(
+              //       '${state.tempo}',
+              //       style: TextStyle(
+              //         color: theme.primary,
+              //         fontSize: 42,
+              //       ), //Прописан только Large
+              //     ),
+              //     Text(
+              //       'BPM',
+              //       style: TextStyle(
+              //         color: theme.primary.withAlpha(100),
+              //         fontSize: 14,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              SleekCircularSlider(
+                appearance: CircularSliderAppearance(
+                    animationEnabled: false,
+                    size: 300,
+                    customWidths: CustomSliderWidths(
+                      trackWidth: 5,
+                      progressBarWidth: 10,
+                      handlerSize: 10,
+                    ),
+                    customColors: CustomSliderColors(
+                      trackColor: theme.primary.withAlpha(100),
+                      progressBarColor: theme.primary,
+                      dotColor: theme.primary,
+                    )),
+                initialValue: state.tempo.toDouble(),
+                // activeColor: theme.primary,
+                innerWidget: (percentage) => Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 8,
                   children: [
-                    ChangeBPMWidget(
-                      icon: Icon(
-                        Icons.add_rounded,
-                        color: theme.surface,
-                      ),
-                      onTap: () {
-                        context
-                            .read<MetronomeCubit>()
-                            .setTempo(state.tempo + 1);
-                      },
+                    Text(
+                      '${state.tempo}',
+                      style: TextStyle(
+                        color: theme.primary,
+                        fontSize: 60,
+                      ), //Прописан только Large
                     ),
-                    ChangeBPMWidget(
-                      icon: Icon(
-                        Icons.remove_rounded,
-                        color: theme.surface,
+                    Text(
+                      'BPM',
+                      style: TextStyle(
+                        color: theme.primary.withAlpha(100),
+                        fontSize: 20,
                       ),
-                      onTap: () {
-                        context
-                            .read<MetronomeCubit>()
-                            .setTempo(state.tempo - 1);
-                      },
                     ),
-                    const PlayButtonWidget(),
-                    const TapTempoButtonWidget()
                   ],
                 ),
+                min: 40,
+                max: 200,
+                onChange: (value) {
+                  context.read<MetronomeCubit>().setTempo(value.toInt());
+                },
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Transform.scale(
+                  scale: 1.2,
+                  child: Row(
+                    spacing: 8,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ChangeBPMWidget(
+                        icon: Icon(
+                          Icons.add_rounded,
+                          color: theme.surface,
+                        ),
+                        onTap: () {
+                          context
+                              .read<MetronomeCubit>()
+                              .setTempo(state.tempo + 1);
+                        },
+                      ),
+                      ChangeBPMWidget(
+                        icon: Icon(
+                          Icons.remove_rounded,
+                          color: theme.surface,
+                        ),
+                        onTap: () {
+                          context
+                              .read<MetronomeCubit>()
+                              .setTempo(state.tempo - 1);
+                        },
+                      ),
+                      const PlayButtonWidget(),
+                      const TapTempoButtonWidget()
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
