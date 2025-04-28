@@ -11,6 +11,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
+    final isDarkTheme = context.watch<ThemeCubit>().state.isDark;
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(8.0),
@@ -19,11 +20,10 @@ class SettingsPage extends StatelessWidget {
             child: ListTile(
               title: Text('Тёмная тема'),
               trailing: Switch(
-                  activeColor: theme.onPrimary,
-                  value: Theme.of(context).brightness == Brightness.dark,
-                  onChanged: (_) {
-                    context.read<ThemeCubit>().toggleTheme();
-                  }),
+                activeColor: theme.onPrimary,
+                value: isDarkTheme, //логика темы
+                onChanged: (value) => _setThemeBrightness(context, value),
+              ),
             ),
           ),
           Card(
@@ -38,5 +38,11 @@ class SettingsPage extends StatelessWidget {
         ]),
       ),
     );
+  }
+
+  void _setThemeBrightness(BuildContext context, bool value) {
+    context
+        .read<ThemeCubit>()
+        .setThemeCubit(value ? Brightness.dark : Brightness.light);
   }
 }
