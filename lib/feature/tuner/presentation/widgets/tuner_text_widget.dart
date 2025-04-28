@@ -26,9 +26,7 @@ class TunerTextWidget extends StatelessWidget {
               Text(
                 note.name,
                 style: TextStyle(
-                  color: _isTuned
-                      ? const Color.fromARGB(255, 0, 255, 8)
-                      : theme.primary,
+                  color: _isTuned ? theme.secondary : theme.onPrimary,
                   fontSize: 65.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -37,7 +35,7 @@ class TunerTextWidget extends StatelessWidget {
               Text(
                 '${note.diffCents.toStringAsFixed(1)} cents',
                 style: TextStyle(
-                  color: theme.primary.withAlpha(100),
+                  color: theme.onPrimary.withAlpha(100),
                   fontSize: 20.0,
                 ),
               ),

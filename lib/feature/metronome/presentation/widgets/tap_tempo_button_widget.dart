@@ -16,17 +16,17 @@ class TapTempoButtonWidget extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: theme.primary,
+          color: theme.outlineVariant,
           border: Border.all(
             width: 2,
-            color: theme.primary,
+            color: theme.outline,
           ),
         ),
         padding: const EdgeInsets.all(16.0),
         child: Text(
           'Tap',
           style: TextStyle(
-            color: theme.surface,
+            color: theme.onTertiary,
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),

@@ -5,7 +5,6 @@ import 'package:fluttertuner/core/theme/app_theme.dart';
 import 'package:fluttertuner/core/theme/cubit/theme_cubit.dart';
 import 'package:fluttertuner/core/theme/cubit/theme_state.dart';
 import 'package:fluttertuner/feature/config/config.dart';
-import 'package:fluttertuner/feature/settings/repository/theme_repository.dart';
 import 'package:fluttertuner/feature/settings/repository/theme_repository_interface.dart';
 import 'core/router/app_router.dart';
 
@@ -22,9 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          // TODO: тут ошибка хз
-          ThemeCubit(
-              themeRepository: context.dep<ThemeRepository>()), //В DI ?????
+          ThemeCubit(themeRepository: context.dep<ThemeRepository>()),
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
           return MaterialApp.router(

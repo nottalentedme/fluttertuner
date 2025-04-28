@@ -32,10 +32,10 @@ class _TuningSelectionWidgetState extends State<TuningSelectionWidget> {
 
         return Scaffold(
           floatingActionButton: FloatingActionButton(
-            backgroundColor: theme.surface,
+            backgroundColor: theme.primary,
             child: Icon(
               Icons.add,
-              color: theme.primary,
+              color: theme.secondary,
             ),
             onPressed: () async {
               final newTuning = await showDialog<TuningModel>(
@@ -61,7 +61,10 @@ class _TuningSelectionWidgetState extends State<TuningSelectionWidget> {
                   child: Card(
                     elevation: 2,
                     child: ListTile(
-                      title: Text(tuning.name),
+                      title: Text(
+                        tuning.name,
+                        style: const TextStyle(fontSize: 24),
+                      ),
                       leading: isSelected ? const Icon(Icons.check) : null,
                       trailing: index >=
                               2 // 👈 no trailing button for first two items
@@ -71,7 +74,10 @@ class _TuningSelectionWidgetState extends State<TuningSelectionWidget> {
                                     .read<TuningCubit>()
                                     .deleteTuning(tuning);
                               },
-                              icon: const Icon(Icons.delete),
+                              icon: Icon(
+                                Icons.delete,
+                                color: theme.secondary,
+                              ),
                             )
                           : null,
                       onTap: () {

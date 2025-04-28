@@ -42,7 +42,7 @@ class _TunerScaleWidgetsState extends State<TunerScaleWidgets> {
             scale: 1.3,
             child: Image.asset(
               'assets/tuner/scale.png',
-              color: theme.primary,
+              color: theme.secondary,
             ),
           ),
           Transform.scale(
@@ -64,6 +64,7 @@ class _TunerScaleWidgetsState extends State<TunerScaleWidgets> {
                 child: Image.asset(
                   'assets/tuner/strelka.png',
                   height: 90,
+                  color: theme.tertiary,
                 ),
               ),
             ),

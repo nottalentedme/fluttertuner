@@ -8,8 +8,18 @@ class TuningsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(title: const Text('Строи'), actions: []),
+      appBar: AppBar(
+        title: const Text(
+          'Строи',
+          style: TextStyle(
+            fontSize: 34,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: theme.primary,
+      ),
       body: const Center(
         child: TuningSelectionWidget(),
       ),

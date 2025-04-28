@@ -18,6 +18,7 @@ class MetronomePage extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            backgroundColor: theme.primary,
             title: const Text(
               'Tonely',
               style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
@@ -57,9 +58,9 @@ class MetronomePage extends StatelessWidget {
                       handlerSize: 10,
                     ),
                     customColors: CustomSliderColors(
-                      trackColor: theme.primary.withAlpha(100),
-                      progressBarColor: theme.primary,
-                      dotColor: theme.primary,
+                      trackColor: theme.onPrimaryFixed.withAlpha(200),
+                      progressBarColor: theme.secondary,
+                      dotColor: theme.onPrimary,
                     )),
                 initialValue: state.tempo.toDouble(),
                 // activeColor: theme.primary,
@@ -70,14 +71,14 @@ class MetronomePage extends StatelessWidget {
                     Text(
                       '${state.tempo}',
                       style: TextStyle(
-                        color: theme.primary,
+                        color: theme.onPrimary,
                         fontSize: 60,
                       ), //Прописан только Large
                     ),
                     Text(
                       'BPM',
                       style: TextStyle(
-                        color: theme.primary.withAlpha(100),
+                        color: theme.onPrimary.withAlpha(100),
                         fontSize: 20,
                       ),
                     ),
@@ -101,7 +102,7 @@ class MetronomePage extends StatelessWidget {
                       ChangeBPMWidget(
                         icon: Icon(
                           Icons.add_rounded,
-                          color: theme.surface,
+                          color: theme.onTertiary,
                         ),
                         onTap: () {
                           context
@@ -112,7 +113,7 @@ class MetronomePage extends StatelessWidget {
                       ChangeBPMWidget(
                         icon: Icon(
                           Icons.remove_rounded,
-                          color: theme.surface,
+                          color: theme.onTertiary,
                         ),
                         onTap: () {
                           context

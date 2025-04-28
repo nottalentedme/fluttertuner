@@ -79,7 +79,6 @@ class MetronomeCubit extends Cubit<MetronomeState> {
   @override
   Future<void> close() {
     _stopTicker();
-    metronomePlayer.dispose();
     return super.close();
   }
 }

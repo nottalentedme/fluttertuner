@@ -21,35 +21,38 @@ class NavigationBottomBar extends StatelessWidget {
     return Scaffold(
       body: child,
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: theme.onPrimary,
+        backgroundColor: theme.tertiary,
         type: BottomNavigationBarType.shifting,
         enableFeedback: false,
-        selectedItemColor: theme.primary,
+        selectedItemColor: theme.onPrimary,
         items: [
           BottomNavigationBarItem(
+            backgroundColor: theme.primary,
             icon: SvgPicture.asset(
               'assets/icons/metronome.svg',
-              color: theme.primary,
+              color: theme.secondary,
             ),
-            label: 'Метроном',
+            label: 'Metronome',
           ),
           BottomNavigationBarItem(
+            backgroundColor: theme.primary,
             icon: SizedBox(
               width: 24,
               height: 24,
               child: SvgPicture.asset(
                 'assets/icons/tuner.svg',
-                color: theme.primary,
+                color: theme.secondary,
               ),
             ),
-            label: 'Тюнер',
+            label: 'Tuner',
           ),
           BottomNavigationBarItem(
+            backgroundColor: theme.primary,
             icon: SvgPicture.asset(
               'assets/icons/settings.svg',
-              color: theme.primary,
+              color: theme.secondary,
             ),
-            label: 'Настройки',
+            label: 'Settings',
           ),
         ],
         currentIndex: currentIndex,

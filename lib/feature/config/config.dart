@@ -17,7 +17,6 @@ import 'package:fluttertuner/feature/tunings/service/tuning_storage/tuning_stora
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final di = DIContainerImpl();
 
