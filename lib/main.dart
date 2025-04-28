@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/core/extension/build_context_extension.dart';
-import 'package:fluttertuner/core/theme/app_theme.dart';
-import 'package:fluttertuner/core/theme/cubit/theme_cubit.dart';
-import 'package:fluttertuner/core/theme/cubit/theme_state.dart';
+import 'package:fluttertuner/feature/theme/app_theme.dart';
+import 'package:fluttertuner/feature/theme/cubit/theme_cubit.dart';
+import 'package:fluttertuner/feature/theme/cubit/theme_state.dart';
 import 'package:fluttertuner/feature/config/config.dart';
-import 'package:fluttertuner/feature/settings/repository/theme_repository_interface.dart';
+import 'package:fluttertuner/feature/theme/repository/theme_repository_interface.dart';
 import 'core/router/app_router.dart';
 
 void main() {
