@@ -5,13 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:fluttertuner/core/theme/cubit/theme_state.dart';
-import 'package:fluttertuner/feature/settings/repository/theme_repository.dart';
 import 'package:fluttertuner/feature/settings/repository/theme_repository_interface.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
   ThemeCubit({required ThemeRepository themeRepository})
       : _themeRepository = themeRepository,
-        super(ThemeState(Brightness.light)) {
+        super(const ThemeState(Brightness.light)) {
     _checkSelectedTheme();
   }
 

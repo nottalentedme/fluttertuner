@@ -17,10 +17,10 @@ class ChangeBPMWidget extends StatelessWidget {
         child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: theme.primary,
+              color: theme.outlineVariant,
               border: Border.all(
                 width: 2,
-                color: theme.primary,
+                color: theme.outline,
               ),
             ),
             padding: const EdgeInsets.all(16.0),

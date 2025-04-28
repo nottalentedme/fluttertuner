@@ -33,7 +33,7 @@ class StringButtonWidget extends StatelessWidget {
               text,
               style: TextStyle(
                 fontSize: 20,
-                color: isActive ? theme.onPrimary : theme.secondary,
+                color: isActive ? theme.inversePrimary : theme.secondary,
               ),
             ),
           ),

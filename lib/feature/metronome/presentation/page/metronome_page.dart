@@ -58,7 +58,7 @@ class MetronomePage extends StatelessWidget {
                       handlerSize: 10,
                     ),
                     customColors: CustomSliderColors(
-                      trackColor: theme.primary.withAlpha(200),
+                      trackColor: theme.onPrimaryFixed.withAlpha(200),
                       progressBarColor: theme.secondary,
                       dotColor: theme.onPrimary,
                     )),
@@ -102,7 +102,7 @@ class MetronomePage extends StatelessWidget {
                       ChangeBPMWidget(
                         icon: Icon(
                           Icons.add_rounded,
-                          color: theme.secondary,
+                          color: theme.onTertiary,
                         ),
                         onTap: () {
                           context
@@ -113,7 +113,7 @@ class MetronomePage extends StatelessWidget {
                       ChangeBPMWidget(
                         icon: Icon(
                           Icons.remove_rounded,
-                          color: theme.secondary,
+                          color: theme.onTertiary,
                         ),
                         onTap: () {
                           context

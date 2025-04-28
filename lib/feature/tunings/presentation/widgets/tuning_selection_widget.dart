@@ -63,7 +63,7 @@ class _TuningSelectionWidgetState extends State<TuningSelectionWidget> {
                     child: ListTile(
                       title: Text(
                         tuning.name,
-                        style: TextStyle(fontSize: 24),
+                        style: const TextStyle(fontSize: 24),
                       ),
                       leading: isSelected ? const Icon(Icons.check) : null,
                       trailing: index >=

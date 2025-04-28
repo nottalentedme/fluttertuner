@@ -22,14 +22,14 @@ class PlayButtonWidget extends StatelessWidget {
           },
           child: Container(
             decoration: BoxDecoration(
-              color: theme.primary,
+              color: theme.outlineVariant,
               shape: BoxShape.circle,
-              border: Border.all(width: 2, color: theme.primary),
+              border: Border.all(width: 2, color: theme.outline),
             ),
             padding: const EdgeInsets.all(16.0),
             child: Icon(
               state.isRunning ? Icons.pause_rounded : Icons.play_arrow_rounded,
-              color: theme.secondary,
+              color: theme.onTertiary,
             ),
           ),
         );

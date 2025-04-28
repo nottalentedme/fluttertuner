@@ -64,7 +64,7 @@ class _TunerScaleWidgetsState extends State<TunerScaleWidgets> {
                 child: Image.asset(
                   'assets/tuner/strelka.png',
                   height: 90,
-                  color: theme.secondary,
+                  color: theme.tertiary,
                 ),
               ),
             ),
