@@ -29,7 +29,7 @@ class PlayButtonWidget extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Icon(
               state.isRunning ? Icons.pause_rounded : Icons.play_arrow_rounded,
-              color: theme.surface,
+              color: theme.secondary,
             ),
           ),
         );

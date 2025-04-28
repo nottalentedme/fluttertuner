@@ -13,14 +13,25 @@ class SettingsPage extends StatelessWidget {
     final theme = Theme.of(context).colorScheme;
     final isDarkTheme = context.watch<ThemeCubit>().state.isDark;
     return Scaffold(
+      appBar: AppBar(
+          backgroundColor: theme.primary,
+          title: const Text('Tonely',
+              style: TextStyle(
+                fontSize: 34,
+                fontWeight: FontWeight.bold,
+              ))),
       body: Padding(
         padding: EdgeInsets.all(8.0),
         child: ListView(children: [
           Card(
             child: ListTile(
-              title: Text('Тёмная тема'),
+              title: const Text(
+                'Dark Mode',
+                style: TextStyle(fontSize: 20),
+              ),
               trailing: Switch(
-                activeColor: theme.onPrimary,
+                activeColor: theme.secondary,
+                activeTrackColor: theme.primary,
                 value: isDarkTheme, //логика темы
                 onChanged: (value) => _setThemeBrightness(context, value),
               ),
@@ -28,8 +39,14 @@ class SettingsPage extends StatelessWidget {
           ),
           Card(
             child: ListTile(
-              trailing: const Icon(Icons.arrow_forward),
-              title: Text('Строи'),
+              trailing: const Icon(
+                Icons.arrow_forward,
+                size: 30,
+              ),
+              title: Text(
+                'Tunings',
+                style: TextStyle(fontSize: 20),
+              ),
               onTap: () => context.go('/settings/${TuningsPage.path}'),
             ),
           ),

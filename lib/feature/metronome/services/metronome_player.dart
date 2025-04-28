@@ -14,23 +14,18 @@ class MetronomePlayer extends Service {
 
   Future<void> _preload() async {
     await _soloud.init();
-
     final ByteData data =
         await rootBundle.load('assets/sounds/metronome_click.wav');
     final Uint8List buffer = data.buffer.asUint8List();
     _clickSound = await _soloud.loadMem(
         'assets/sounds/metronome_click.wav', buffer,
         mode: LoadMode.disk);
-    _isLoaded = true;
+    _isLoaded = _soloud.isInitialized;
   }
 
   Future<void> play() async {
     if (_isLoaded) {
       _soloud.play(_clickSound);
     }
-  }
-
-  void dispose() {
-    _soloud.deinit();
   }
 }

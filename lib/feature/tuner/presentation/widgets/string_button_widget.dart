@@ -22,7 +22,7 @@ class StringButtonWidget extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
           border: Border.all(width: 2),
-          color: isActive ? theme.surface : theme.primary,
+          color: isActive ? theme.tertiary : theme.primary,
           borderRadius: BorderRadius.circular(
               16), // Добавьте эту строку для скругления углов
         ),
@@ -33,7 +33,7 @@ class StringButtonWidget extends StatelessWidget {
               text,
               style: TextStyle(
                 fontSize: 20,
-                color: isActive ? theme.primary : theme.surface,
+                color: isActive ? theme.onPrimary : theme.secondary,
               ),
             ),
           ),

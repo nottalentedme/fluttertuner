@@ -26,7 +26,7 @@ class TapTempoButtonWidget extends StatelessWidget {
         child: Text(
           'Tap',
           style: TextStyle(
-            color: theme.surface,
+            color: theme.secondary,
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),

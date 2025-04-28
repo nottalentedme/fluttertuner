@@ -30,8 +30,12 @@ class _AddTuningDialogState extends State<AddTuningDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return AlertDialog(
-      title: const Text('Add Custom Tuning'),
+      title: Text(
+        'Add Custom Tuning',
+        style: TextStyle(color: theme.onPrimary),
+      ),
       content: SizedBox(
         width: double.maxFinite,
         child: SingleChildScrollView(
@@ -59,7 +63,11 @@ class _AddTuningDialogState extends State<AddTuningDialog> {
                             items: _noteOptions.map((note) {
                               return DropdownMenuItem<String>(
                                 value: note,
-                                child: Text(note),
+                                child: Text(
+                                  note,
+                                  style: TextStyle(
+                                      color: theme.onPrimary, fontSize: 24),
+                                ),
                               );
                             }).toList(),
                             onChanged: (newValue) {
@@ -70,7 +78,10 @@ class _AddTuningDialogState extends State<AddTuningDialog> {
                           ),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.remove_circle_outline),
+                          icon: Icon(
+                            Icons.remove_circle_outline,
+                            color: theme.secondary,
+                          ),
                           onPressed: () => _removeString(index),
                         ),
                       ],
@@ -80,8 +91,14 @@ class _AddTuningDialogState extends State<AddTuningDialog> {
               ),
               TextButton.icon(
                 onPressed: _addString,
-                icon: const Icon(Icons.add),
-                label: const Text('Add String'),
+                icon: Icon(
+                  Icons.add,
+                  color: theme.secondary,
+                ),
+                label: Text(
+                  'Add String',
+                  style: TextStyle(color: theme.onPrimary, fontSize: 20),
+                ),
               ),
             ],
           ),
@@ -90,9 +107,13 @@ class _AddTuningDialogState extends State<AddTuningDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: Text(
+            'Cancel',
+            style: TextStyle(color: theme.onPrimary, fontSize: 20),
+          ),
         ),
         ElevatedButton(
+          style: ElevatedButton.styleFrom(backgroundColor: theme.secondary),
           onPressed: () {
             if (_nameController.text.isNotEmpty && _selectedNotes.isNotEmpty) {
               final tuning = TuningModel(
@@ -107,7 +128,13 @@ class _AddTuningDialogState extends State<AddTuningDialog> {
               Navigator.pop(context, tuning);
             }
           },
-          child: const Text('Save'),
+          child: Text(
+            'Save',
+            style: TextStyle(
+                color: theme.primary,
+                fontSize: 20,
+                fontWeight: FontWeight.bold),
+          ),
         ),
       ],
     );

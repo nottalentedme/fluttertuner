@@ -21,12 +21,20 @@ class TuningModeSwitchWidget extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Row(
             children: [
+              // Text(
+              //   'Авто',
+              //   style: TextStyle(
+              //     fontSize: 30,
+              //     fontWeight: FontWeight.bold,
+              //     color: theme.primary,
+              //   ),
+              // ),
               Text(
-                'Авто',
+                isAutoMode ? 'Scale' : 'Chromatic',
                 style: TextStyle(
                   fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: theme.primary,
+                  fontWeight: FontWeight.w500,
+                  color: theme.onPrimary,
                 ),
               ),
               const SizedBox(width: 10),
@@ -42,14 +50,6 @@ class TuningModeSwitchWidget extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               // Добавляем текстовую подсказку о текущем режиме
-              Text(
-                isAutoMode ? 'Scale' : 'Chromatic',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: theme.primary,
-                ),
-              ),
             ],
           ),
         );
