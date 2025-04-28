@@ -50,7 +50,7 @@ void configureDependencies() {
     tuningRepository,
   );
   //Репозиторий темы
-  final ThemeRepository themeRepository = ThemeRepositoryImp(pref: themeStorage);
+  final ThemeRepository themeRepository = ThemeRepositoryImp(themeStorage);
 
   //? Repository registration
   di.register<TuningRepository>(tuningRepository);

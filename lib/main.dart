@@ -9,7 +9,7 @@ import 'package:fluttertuner/feature/settings/repository/theme_repository.dart';
 import 'package:fluttertuner/feature/settings/repository/theme_repository_interface.dart';
 import 'core/router/app_router.dart';
 
-void main(){
+void main() {
   configureDependencies();
   runApp(const MyApp());
 }
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       create: (context) =>
           // TODO: тут ошибка хз
           ThemeCubit(
-              themeRepository: context.dep<ThemeRepositoryImp>()), //В DI ?????
+              themeRepository: context.dep<ThemeRepository>()), //В DI ?????
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
           return MaterialApp.router(

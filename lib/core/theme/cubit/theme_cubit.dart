@@ -4,18 +4,18 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 import 'package:fluttertuner/core/theme/cubit/theme_state.dart';
 import 'package:fluttertuner/feature/settings/repository/theme_repository.dart';
+import 'package:fluttertuner/feature/settings/repository/theme_repository_interface.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit({required ThemeRepositoryImp themeRepository})
+  ThemeCubit({required ThemeRepository themeRepository})
       : _themeRepository = themeRepository,
         super(ThemeState(Brightness.light)) {
     _checkSelectedTheme();
   }
 
-  final ThemeRepositoryImp _themeRepository;
+  final ThemeRepository _themeRepository;
 
   Future<void> setThemeCubit(Brightness brightness) async {
     emit(ThemeState(brightness));
@@ -24,10 +24,11 @@ class ThemeCubit extends Cubit<ThemeState> {
     );
   }
 
-  Future<void> _checkSelectedTheme() async{
+  Future<void> _checkSelectedTheme() async {
     try {
-      final brightness =
-          await _themeRepository.isDarkTheme() ? Brightness.dark : Brightness.light;
+      final brightness = await _themeRepository.isDarkTheme()
+          ? Brightness.dark
+          : Brightness.light;
       emit(ThemeState(brightness));
     } catch (e) {
       log(e.toString());
