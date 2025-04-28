@@ -3,13 +3,13 @@ import 'package:fluttertuner/core/service/permissions/mic_permission_interface.d
 import 'package:fluttertuner/feature/config/di_container.dart';
 import 'package:fluttertuner/feature/metronome/services/metronome_player.dart';
 import 'package:fluttertuner/feature/tuner/domain/repository/interface/tuner_repository.dart';
-import 'package:fluttertuner/feature/tuner/domain/repository/impl/tuner_repository_impl.dart';
+import 'package:fluttertuner/feature/tuner/data/repository/tuner_repository_impl.dart';
 import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_impl.dart';
 import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_interface.dart';
 import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_impl_service.dart';
 import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_interface_service.dart';
-import 'package:fluttertuner/feature/tunings/service/tuning_storage/tuning_storage.dart';
 import 'package:fluttertuner/feature/tunings/domain/repository/impl/tuning_repository_impl.dart';
+import 'package:fluttertuner/feature/tunings/service/tuning_storage/tuning_storage.dart';
 import 'package:fluttertuner/feature/tunings/domain/repository/interface/tuning_repository.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/instrument_type.dart';
