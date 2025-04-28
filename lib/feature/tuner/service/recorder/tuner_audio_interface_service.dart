@@ -1,9 +1,19 @@
 import 'dart:typed_data';
 
-abstract class AudioRecorderService {
+import '../../../config/dependency.dart';
+
+abstract class AudioRecorderService extends Service {
+  ///
+  ///Начинает стрим(поток)
+  ///возвращает [Stream<Uint8List>]
   Future<Stream<Uint8List>> startRecording();
-  Future<bool> hasPermission();
-  Future<void> stopRecording(); //Тут незнаю насчет вопроса
+  
+  ///
+  ///Останавливает стрим
+  Future<void> stopRecording();
+
+  ///
+  ///Прекращает стрим
   Future<void> cancelRecording();
   Future<void> dispose();
 }

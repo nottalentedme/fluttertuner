@@ -17,28 +17,42 @@ class NavigationBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return Scaffold(
       body: child,
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: theme.tertiary,
         type: BottomNavigationBarType.shifting,
         enableFeedback: false,
-        selectedItemColor: Colors.black,
+        selectedItemColor: theme.onPrimary,
         items: [
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/metronome.svg'),
-            label: 'Метроном',
+            backgroundColor: theme.primary,
+            icon: SvgPicture.asset(
+              'assets/icons/metronome.svg',
+              color: theme.secondary,
+            ),
+            label: 'Metronome',
           ),
           BottomNavigationBarItem(
+            backgroundColor: theme.primary,
             icon: SizedBox(
               width: 24,
               height: 24,
-              child: SvgPicture.asset('assets/icons/tuner.svg'),
+              child: SvgPicture.asset(
+                'assets/icons/tuner.svg',
+                color: theme.secondary,
+              ),
             ),
-            label: 'Тюнер',
+            label: 'Tuner',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/settings.svg'),
-            label: 'Настройки',
+            backgroundColor: theme.primary,
+            icon: SvgPicture.asset(
+              'assets/icons/settings.svg',
+              color: theme.secondary,
+            ),
+            label: 'Settings',
           ),
         ],
         currentIndex: currentIndex,

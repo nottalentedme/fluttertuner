@@ -1,0 +1,47 @@
+import 'package:fluttertuner/feature/tunings/data/constants/tuning_presets.dart';
+import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
+import 'package:fluttertuner/feature/tunings/domain/entity/tuning_entity.dart';
+import 'package:fluttertuner/feature/tunings/domain/repository/tuning_repository.dart';
+import 'package:fluttertuner/feature/tunings/service/tuning_storage/tuning_storage.dart';
+import 'package:fluttertuner/feature/tunings/domain/entity/note_entity.dart';
+
+class TuningRepositoryImpl implements TuningRepository {
+  TuningRepositoryImpl(this._tuningStorage);
+
+  final TuningStorage _tuningStorage;
+  TuningEntity _currentTuning = TuningPresets.standardTuning;
+
+  @override
+  TuningEntity get currentTuning => _currentTuning;
+
+  @override
+  Future<List<TuningEntity>> loadCustomTunings() async {
+    final customTunings = await _tuningStorage.loadCustomTunings();
+
+    return [
+      ...TuningPresets.defaultTunings,
+      ...customTunings,
+    ];
+  }
+
+  @override
+  Future<void> saveCustomTuning(TuningModel tuning) async {
+    await _tuningStorage.saveCustomTuning(tuning);
+  }
+
+  @override
+  Future<void> deleteTuning(TuningEntity tuning) async {
+    await _tuningStorage.deleteCustomTuning(tuning.name);
+  }
+
+  @override
+  Future<void> selectTuning(TuningEntity tuning) async {
+    _currentTuning = tuning;
+  }
+
+  @override
+  NoteEntity getNearest(int currentStringIndex) {
+    final nearest = currentTuning.notes[currentStringIndex];
+    return nearest;
+  }
+}

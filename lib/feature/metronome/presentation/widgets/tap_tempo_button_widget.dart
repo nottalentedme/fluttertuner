@@ -9,23 +9,24 @@ class TapTempoButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return InkWell(
       customBorder: const CircleBorder(),
       onTap: () => context.read<MetronomeCubit>().registerTap(),
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.black,
+          color: theme.outlineVariant,
           border: Border.all(
             width: 2,
-            color: Colors.black,
+            color: theme.outline,
           ),
         ),
         padding: const EdgeInsets.all(16.0),
-        child: const Text(
+        child: Text(
           'Tap',
           style: TextStyle(
-            color: Colors.white,
+            color: theme.onTertiary,
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),

@@ -1,102 +1,116 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertuner/feature/tuner/cubit/pitch_cubit.dart';
-import 'package:fluttertuner/feature/tuner/cubit/tuning_state.dart';
-import 'package:fluttertuner/feature/tuner/presentation/widgets/instrument_title_widget.dart';
-import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_scale_widget.dart';
+import 'package:fluttertuner/feature/tuner/cubit/tuner_cubit.dart';
+import 'package:fluttertuner/feature/tuner/cubit/tuner_state.dart';
+import 'package:fluttertuner/feature/tuner/presentation/widgets/mode_switch_widget.dart';
+import 'package:fluttertuner/feature/tuner/presentation/widgets/string_button_widget.dart';
+import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
+import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_scale_widgets.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_text_widget.dart';
-import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_mode_switch_widget.dart';
-import 'package:fluttertuner/feature/tuner/service/recorder/tuner_audio_impl_service.dart';
 
-class TunerPage extends StatefulWidget {
+class TunerPage extends StatelessWidget {
   const TunerPage({super.key});
 
   static const path = '/tuner';
 
   @override
-  State<TunerPage> createState() => _TunerPageState();
-}
-
-class _TunerPageState extends State<TunerPage> {
-  final recorder = AudioRecorderServiceImpl();
-  //!!! оставлено до лучших времен
-  // GuitarString guitarString = GuitarString.sixthE;
-
-  // void setActiveString(GuitarString value) {
-  //   setState(() {
-  //     guitarString = value;
-  //   });
-  // }
-
-  @override
-  void initState() {
-    super.initState();
-    print('Stream started on page');
-    startStream();
-  }
-
-  Future<void> startStream() async {
-    BlocProvider.of<PitchCubit>(context).startTuning();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final pitchCubitState = context.watch<PitchCubit>().state;
-
-    return BlocBuilder<PitchCubit, TuningState>(builder: (context, state) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'FlutterTune',
-            style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
-          ),
-        ),
-        body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Row(
+    final theme = Theme.of(context).colorScheme;
+    return Scaffold(
+      appBar: AppBar(
+          backgroundColor: theme.primary,
+          title: const Text('Tonely',
+              style: TextStyle(
+                fontSize: 34,
+                fontWeight: FontWeight.bold,
+              ))),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(height: 50),
+            Center(
+                child: Column(
+              children: [
+                ModeSwitcher(mode: context.watch<TunerCubit>().state.mode),
+                const Text(
+                  'Swipe to change mode',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            )),
+            Expanded(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  InstrumentTitleWidget(),
-                  TuningModeSwitchWidget(),
+                  BlocSelector<TunerCubit, TunerState, double>(
+                      selector: (state) => state.note.diffCents,
+                      builder: (context, diffState) {
+                        return TunerScaleWidgets(value: diffState);
+                      }),
+                  const SizedBox(height: 20),
+                  BlocBuilder<TunerCubit, TunerState>(
+                    builder: (context, state) {
+                      return Column(
+                        children: [
+                          TunerTextWidget(note: state.note),
+                          const SizedBox(height: 20),
+                          AnimatedSize(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                            reverseDuration: const Duration(milliseconds: 300),
+                            child: state.mode == TuningMode.scale
+                                ? Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: GridView.count(
+                                      crossAxisCount:
+                                          state.tuning!.notes.length <= 3
+                                              ? state.tuning!.notes.length
+                                              : 3,
+                                      shrinkWrap: true,
+                                      crossAxisSpacing: 8,
+                                      mainAxisSpacing: 8,
+                                      childAspectRatio: 2.0,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      children: List.generate(
+                                        state.tuning!.notes.length,
+                                        (index) => Container(
+                                          alignment: Alignment.center,
+                                          child: StringButtonWidget(
+                                            isActive: index ==
+                                                state.currentStringIndex,
+                                            onTap: () {
+                                              context
+                                                  .read<TunerCubit>()
+                                                  .changeString(index);
+                                            },
+                                            text:
+                                                state.tuning!.notes[index].name,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox(
+                                    height:
+                                        120), // Пустое место, когда нет кнопок
+                          ),
+                          const SizedBox(height: 20),
+                        ],
+                      );
+                    },
+                  ),
                 ],
               ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TunerScaleWidget(value: 0),
-                    const SizedBox(height: 20),
-                    TunerTextWidget(pitchCubitState: pitchCubitState),
-                  ],
-                ),
-              ),
-              //!!! оставлю смену струн до лучших времен
-              // Padding(
-              //   padding: const EdgeInsets.only(bottom: 20),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: GuitarString.values
-              //         .map(
-              //           (e) => Padding(
-              //             padding: const EdgeInsets.symmetric(horizontal: 4),
-              //             child: StringButtonWidget(
-              //               text: e.noteName,
-              //               onTap: () => setActiveString(e),
-              //               isActive: e == guitarString,
-              //             ),
-              //           ),
-              //         )
-              //         .toList(),
-              //   ),
-              // ),
-            ],
-          ),
+            ),
+          ],
         ),
-      );
-    });
+      ),
+    );
   }
 }
