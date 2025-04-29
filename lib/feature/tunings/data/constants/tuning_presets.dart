@@ -2,7 +2,6 @@ import 'package:fluttertuner/feature/tunings/data/models/note_model.dart';
 import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
 
 class TuningPresets {
-  // Guitar tunings
   static const standardTuning = TuningModel(
     name: 'Стандарт (Гитара)',
     notes: [
@@ -58,7 +57,7 @@ class TuningPresets {
   );
 
   static const sevenStringGuitar = TuningModel(
-    name: 'Стандарт (7 струн))',
+    name: 'Стандарт (7 струн)',
     notes: [
       NoteModel(name: 'B1', frequency: 61.74),
       NoteModel(name: 'E2', frequency: 82.41),
