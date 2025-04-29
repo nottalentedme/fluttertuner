@@ -17,15 +17,19 @@ class _AddTuningDialogState extends State<AddTuningDialog> {
   final List<String> _selectedNotes = ['E4', 'A4', 'D4', 'G4', 'B4', 'E4'];
 
   void _addString() {
-    setState(() {
-      _selectedNotes.add(_noteOptions.first);
-    });
+    if (_selectedNotes.length < 9) {
+      setState(() {
+        _selectedNotes.add(_noteOptions.first);
+      });
+    }
   }
 
   void _removeString(int index) {
-    setState(() {
-      _selectedNotes.removeAt(index);
-    });
+    if (_selectedNotes.length > 3) {
+      setState(() {
+        _selectedNotes.removeAt(index);
+      });
+    }
   }
 
   @override
@@ -45,6 +49,7 @@ class _AddTuningDialogState extends State<AddTuningDialog> {
               TextField(
                 controller: _nameController,
                 decoration: const InputDecoration(labelText: 'Tuning Name'),
+                style: TextStyle(color: theme.onPrimary),
               ),
               const SizedBox(height: 10),
               ListView.builder(
@@ -80,7 +85,9 @@ class _AddTuningDialogState extends State<AddTuningDialog> {
                         IconButton(
                           icon: Icon(
                             Icons.remove_circle_outline,
-                            color: theme.secondary,
+                            color: _selectedNotes.length > 3
+                                ? theme.secondary
+                                : theme.onPrimary.withValues(alpha: 0.5),
                           ),
                           onPressed: () => _removeString(index),
                         ),
@@ -93,11 +100,18 @@ class _AddTuningDialogState extends State<AddTuningDialog> {
                 onPressed: _addString,
                 icon: Icon(
                   Icons.add,
-                  color: theme.secondary,
+                  color: _selectedNotes.length < 9
+                      ? theme.secondary
+                      : theme.onPrimary.withValues(alpha: 0.5),
                 ),
                 label: Text(
                   'Add String',
-                  style: TextStyle(color: theme.onPrimary, fontSize: 20),
+                  style: TextStyle(
+                    color: _selectedNotes.length < 9
+                        ? theme.onPrimary
+                        : theme.onPrimary.withValues(alpha: 0.5),
+                    fontSize: 20,
+                  ),
                 ),
               ),
             ],

@@ -29,7 +29,7 @@ class TunerPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const SizedBox(height: 50),
+            const SizedBox(height: 10),
             Center(
                 child: Column(
               children: [
@@ -58,7 +58,7 @@ class TunerPage extends StatelessWidget {
                       return Column(
                         children: [
                           TunerTextWidget(note: state.note),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 10),
                           AnimatedSize(
                             duration: const Duration(milliseconds: 300),
                             curve: Curves.easeInOut,
@@ -100,7 +100,7 @@ class TunerPage extends StatelessWidget {
                                     height:
                                         120), // Пустое место, когда нет кнопок
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 10),
                         ],
                       );
                     },
