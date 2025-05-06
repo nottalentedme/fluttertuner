@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tuner_cubit.dart';
 import 'package:fluttertuner/feature/tuner/cubit/tuner_state.dart';
-import 'package:fluttertuner/feature/tuner/presentation/widgets/mode_switch_widget.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/string_button_widget.dart';
+import 'package:fluttertuner/feature/tuner/presentation/widgets/tuning_mode_switch_widget.dart';
 import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_scale_widgets.dart';
 import 'package:fluttertuner/feature/tuner/presentation/widgets/tuner_text_widget.dart';
@@ -30,17 +30,19 @@ class TunerPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const SizedBox(height: 10),
-            Center(
+            const Center(
                 child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ModeSwitcher(mode: context.watch<TunerCubit>().state.mode),
-                const Text(
-                  'Swipe to change mode',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
-                ),
+                TuningModeSwitchWidget(),
+                // ModeSwitcher(mode: context.watch<TunerCubit>().state.mode),
+                // Text(
+                //   'Swipe to change mode',
+                //   style: TextStyle(
+                //     fontSize: 12,
+                //     color: Colors.grey,
+                //   ),
+                // ),
               ],
             )),
             Expanded(
