@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertuner/core/theme/cubit/theme_cubit.dart';
+import 'package:fluttertuner/feature/theme/cubit/theme_cubit.dart';
 import 'package:fluttertuner/feature/tunings/presentation/page/tunings_page.dart';
 import 'package:go_router/go_router.dart';
 

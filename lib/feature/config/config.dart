@@ -2,9 +2,10 @@ import 'package:fluttertuner/core/service/permissions/mic_permission_impl.dart';
 import 'package:fluttertuner/core/service/permissions/mic_permission_interface.dart';
 import 'package:fluttertuner/feature/config/di_container.dart';
 import 'package:fluttertuner/feature/metronome/services/metronome_player.dart';
-import 'package:fluttertuner/feature/settings/repository/theme_repository.dart';
-import 'package:fluttertuner/feature/settings/repository/theme_repository_interface.dart';
-import 'package:fluttertuner/feature/settings/storage/theme_storage.dart';
+import 'package:fluttertuner/feature/theme/repository/theme_repository.dart';
+import 'package:fluttertuner/feature/theme/repository/theme_repository_interface.dart';
+import 'package:fluttertuner/feature/theme/storage/theme_storage.dart';
+
 import 'package:fluttertuner/feature/tuner/data/repository/tuner_repository_impl.dart';
 import 'package:fluttertuner/feature/tuner/domain/repository/tuner_repository.dart';
 import 'package:fluttertuner/feature/tuner/service/buffer/buffer_service_impl.dart';
@@ -30,7 +31,6 @@ void configureDependencies() {
   final PitchHandler pitchHandler = PitchHandler(InstrumentType.guitar);
   final MetronomePlayer metronomePlayer = MetronomePlayer();
   final TuningStorage tuningStorage = TuningStorage();
-
   final ThemeStorage themeStorage = ThemeStorage();
 
   //? Service registration
@@ -54,7 +54,5 @@ void configureDependencies() {
   //? Repository registration
   di.register<TuningRepository>(tuningRepository);
   di.register<TunerRepository>(tunerRepository);
-
-  //регистрация
   di.register<ThemeRepository>(themeRepository);
 }

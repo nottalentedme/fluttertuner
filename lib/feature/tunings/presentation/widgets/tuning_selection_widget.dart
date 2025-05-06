@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertuner/feature/tunings/cubit/tuning_cubit.dart';
 import 'package:fluttertuner/feature/tunings/cubit/tuning_state.dart';
+import 'package:fluttertuner/feature/tunings/data/constants/tuning_presets.dart';
 import 'package:fluttertuner/feature/tunings/data/models/tuning_model.dart';
 import 'package:fluttertuner/feature/tunings/presentation/widgets/tuning_add_form.dart';
 
@@ -50,6 +51,7 @@ class _TuningSelectionWidgetState extends State<TuningSelectionWidget> {
             },
           ),
           body: ListView.builder(
+            padding: const EdgeInsets.only(bottom: 96),
             itemCount: tunings.length + 1, // One extra for the "Add" button
             itemBuilder: (context, index) {
               if (index < tunings.length) {
@@ -66,8 +68,7 @@ class _TuningSelectionWidgetState extends State<TuningSelectionWidget> {
                         style: const TextStyle(fontSize: 24),
                       ),
                       leading: isSelected ? const Icon(Icons.check) : null,
-                      trailing: index >=
-                              2 // 👈 no trailing button for first two items
+                      trailing: index >= TuningPresets.defaultTunings.length
                           ? IconButton(
                               onPressed: () {
                                 context

@@ -26,7 +26,7 @@ class TunerTextWidget extends StatelessWidget {
               Text(
                 note.name,
                 style: TextStyle(
-                  color: _isTuned ? theme.secondary : theme.onPrimary,
+                  color: _isTuned ? theme.tertiary : theme.onPrimary,
                   fontSize: 65.0,
                   fontWeight: FontWeight.bold,
                 ),

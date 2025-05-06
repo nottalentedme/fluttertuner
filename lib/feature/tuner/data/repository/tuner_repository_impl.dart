@@ -31,7 +31,7 @@ class TunerRepositoryImpl implements TunerRepository {
   late StreamController<WrongNoteEntity> _noteStreamController;
   late StreamSubscription sub;
 
-  TuningMode _currentMode = TuningMode.scale;
+  TuningMode _currentMode = TuningMode.chromatic;
   int _currentStringIndex = 0;
 
   @override
