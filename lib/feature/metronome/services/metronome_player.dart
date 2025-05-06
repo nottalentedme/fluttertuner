@@ -13,7 +13,8 @@ class MetronomePlayer extends Service {
   }
 
   Future<void> _preload() async {
-    await _soloud.init();
+    await _soloud.init(sampleRate: 44100, bufferSize: 512);
+
     final ByteData data =
         await rootBundle.load('assets/sounds/metronome_click.wav');
     final Uint8List buffer = data.buffer.asUint8List();
