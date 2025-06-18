@@ -44,8 +44,8 @@ class TuningModeSwitchWidget extends StatelessWidget {
                   // переключения режима в кубите
                   context.read<TunerCubit>().toggleTuningMode();
                 },
-                activeTrackColor: theme.primary,
-                activeColor: theme.surface,
+                activeTrackColor: theme.outlineVariant,
+                activeColor: theme.surfaceTint,
               ),
             ],
           ),
